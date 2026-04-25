@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>修理メニュー・料金表 | Repair540</title>
+  <meta name="description" content="Repair540の修理メニューと料金表。iPhone・Android・iPadの画面修理・バッテリー交換・カメラ修理など税込価格で掲載。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <span>🔧</span><span>Repair<span class="accent">540</span></span>
+    </a>
+    <nav class="site-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="menu.html">修理メニュー</a></li>
+        <li><a href="blog.html">ブログ</a></li>
+        <li><a href="access.html">アクセス</a></li>
+        <li><a href="contact.html">お問い合わせ</a></li>
+      </ul>
+    </nav>
+    <a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK"
+       class="btn-line-sm" target="_blank" rel="noopener">LINE予約</a>
+    <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <ul>
+    <li><a href="index.html">ホーム</a></li>
+    <li><a href="menu.html">修理メニュー・料金表</a></li>
+    <li><a href="blog.html">ブログ</a></li>
+    <li><a href="access.html">アクセス</a></li>
+    <li><a href="contact.html">お問い合わせ</a></li>
+  </ul>
+  <a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK"
+     class="mn-line" target="_blank" rel="noopener">📲 LINEで無料相談・予約</a>
+</nav>
+
+<div class="header-spacer"></div>
+
+<!-- ═══ PAGE HERO ══════════════════════════════════════════════ -->
+<div class="page-hero">
+  <h1>修理メニュー・料金表</h1>
+  <p>すべて税込表示。修理前に必ずお見積もりをご提示します。</p>
+  <div class="breadcrumb">
+    <a href="index.html">ホーム</a>
+    <span>›</span>
+    <span>修理メニュー・料金表</span>
+  </div>
+</div>
+
+<!-- ═══ NOTICE ════════════════════════════════════════════════ -->
+<section class="section section-alt" style="padding:32px 0;">
+  <div class="container">
+    <div style="background:#fff3cd;border-left:4px solid #ffc107;border-radius:var(--radius);padding:16px 20px;font-size:.9rem;color:#856404;">
+      💡 <strong>ご来店前にLINEでご確認を</strong>：部品の在庫状況により即日対応できない場合があります。LINEから写真をお送りいただくと概算見積もりも可能です。
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICE TABLES ════════════════════════════════════════════ -->
+<section class="section">
+  <div class="container" id="prices-root">
+    <div id="tab-nav" class="tab-nav"></div>
+    <div id="tab-panels"></div>
+    <noscript>
+      <p style="text-align:center;color:var(--text-sub);">
+        料金表の表示にはJavaScriptが必要です。
+      </p>
+    </noscript>
+  </div>
+</section>
+
+<!-- ═══ FLOW ══════════════════════════════════════════════════ -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">修理の流れ</h2>
+    <p class="section-sub">最短30分〜、スムーズにお対応します</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:step;">
+      <style>
+        .step-card { background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 20px;text-align:center;position:relative; }
+        .step-num { display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:var(--primary);color:#fff;border-radius:50%;font-weight:800;font-size:.9rem;margin-bottom:12px; }
+        .step-card h3 { font-size:.95rem;font-weight:700;margin-bottom:6px; }
+        .step-card p  { font-size:.82rem;color:var(--text-sub);line-height:1.65; }
+        @media(max-width:768px){ .steps-row { grid-template-columns:repeat(2,1fr) !important; } }
+        @media(max-width:480px){ .steps-row { grid-template-columns:1fr !important; } }
+      </style>
+      <div class="step-card steps-row">
+        <div class="step-num">1</div>
+        <h3>ご来店 / LINE相談</h3>
+        <p>お気軽にご来店ください。LINEでの事前相談・予約がおすすめです。</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>診断・お見積もり</h3>
+        <p>端末の状態を確認し、修理内容と料金をご説明します（無料）。</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>修理作業</h3>
+        <p>ご了承いただいたら修理を開始します。最短30分〜が目安です。</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>動作確認・お渡し</h3>
+        <p>お客様と一緒に動作を確認してお渡しします。保証書もお渡しします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ════════════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="container">
+    <h2>まずはLINEでご相談ください</h2>
+    <p>写真を送るだけで概算見積もりをご提示。相談・見積もりは無料です。</p>
+    <div class="cta-btns">
+      <a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK"
+         class="btn btn-line" target="_blank" rel="noopener">📲 LINEで無料相談・予約</a>
+      <a href="contact.html" class="btn btn-ghost-white">お問い合わせフォーム</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="site-logo"><span>🔧</span><span>Repair<span class="accent">540</span></span></a>
+        <p>大分市都町のスマートフォン修理専門店。<br>iPhone・Androidの修理をスピーディに対応します。</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/repair540/" class="social-chip" target="_blank" rel="noopener">📸 @repair540</a>
+          <a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK" class="social-chip" target="_blank" rel="noopener">💬 LINE</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>メニュー</h4>
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="menu.html">修理メニュー・料金</a></li>
+          <li><a href="blog.html">ブログ</a></li>
+          <li><a href="access.html">アクセス</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-info">
+        <h4>店舗情報</h4>
+        <p><span class="icon">📍</span>〒870-0034 大分県大分市都町1丁目3-22 大分都町ビル1F-1</p>
+        <p><span class="icon">📞</span><a href="tel:07090900540" style="color:rgba(255,255,255,.6)">070-9090-0540</a></p>
+        <p><span class="icon">🕙</span>10:30〜19:00（不定休）</p>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2024 Repair540. All rights reserved.</p></div>
+  </div>
+</footer>
+
+<a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK"
+   class="float-line" target="_blank" rel="noopener">📲 LINE予約</a>
+
+<script src="main.js"></script>
+</body>
+</html>
