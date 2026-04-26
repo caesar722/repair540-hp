@@ -1,169 +1,732 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>修理メニュー・料金表 | Repair540</title>
-  <meta name="description" content="Repair540の修理メニューと料金表。iPhone・Android・iPadの画面修理・バッテリー交換・カメラ修理など税込価格で掲載。">
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Repair540の修理メニュー・料金表。iPhone・Androidの画面修理・バッテリー交換・カメラ修理など。大分市都町・最短即日対応。税込・作業工賃込み。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #0071e3;
+      --text: #1d1d1f;
+      --text-sub: #6e6e73;
+      --bg: #f5f5f7;
+      --white: #ffffff;
+      --border: #d2d2d7;
+      --radius: 12px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    body { font-family: 'Noto Sans JP', sans-serif; color: var(--text); background: var(--bg); font-size: 15px; line-height: 1.6; }
+
+    header { background: rgba(255,255,255,0.92); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .logo { font-size: 1.1rem; font-weight: 700; color: var(--text); text-decoration: none; }
+    nav { display: flex; gap: 20px; align-items: center; }
+    nav a { font-size: 0.85rem; color: var(--text); text-decoration: none; }
+    nav a:hover { color: var(--primary); }
+    .btn-line-header { background: #06c755; color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+    .mobile-nav { display: none; }
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .mobile-nav { display: flex; flex-direction: column; background: white; border-bottom: 1px solid var(--border); padding: 10px 20px; gap: 10px; }
+      .mobile-nav a { font-size: 0.9rem; color: var(--text); text-decoration: none; padding: 5px 0; border-bottom: 1px solid #f0f0f0; }
+      .mobile-nav .btn-line-header { align-self: flex-start; border-bottom: none; margin-top: 4px; }
+    }
+
+    .page-hero { background: white; text-align: center; padding: 40px 20px 28px; border-bottom: 1px solid var(--border); }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 12px; }
+    .breadcrumb a { color: var(--primary); text-decoration: none; }
+    .page-hero h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 6px; }
+    .page-hero p { color: var(--text-sub); font-size: 0.9rem; }
+
+    .notice { max-width: 960px; margin: 24px auto 0; padding: 0 20px; }
+    .notice-box { background: #fff8e1; border: 1px solid #ffe082; border-left: 4px solid #ffa000; border-radius: var(--radius); padding: 12px 16px; font-size: 0.88rem; line-height: 1.6; }
+
+    main { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
+
+    .gen-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+    .gen-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border); background: white; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all .2s; color: var(--text); font-family: inherit; }
+    .gen-btn.active, .gen-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+    .price-section { display: none; }
+    .price-section.active { display: block; }
+
+    .table-wrap { overflow-x: auto; margin-bottom: 16px; -webkit-overflow-scrolling: touch; }
+    .price-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); min-width: 460px; }
+    .price-table thead tr { background: var(--primary); color: white; }
+    .price-table th { padding: 11px 10px; text-align: center; font-weight: 700; white-space: nowrap; }
+    .price-table th:first-child { text-align: left; min-width: 155px; }
+    .price-table td { padding: 9px 10px; text-align: center; border-bottom: 1px solid #f0f0f0; white-space: nowrap; }
+    .price-table td:first-child { text-align: left; font-weight: 500; background: #fafafa; }
+    .price-table tbody tr:last-child td { border-bottom: none; }
+    .price-table tbody tr:hover { background: #f0f7ff; }
+    .price-table tbody tr:hover td:first-child { background: #e8f2ff; }
+    .dash { color: #ccc; }
+
+    .price-note { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px; font-size: 0.82rem; color: var(--text-sub); line-height: 1.9; margin-bottom: 32px; }
+    .price-note strong { color: var(--text); }
+
+    .other-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; margin-bottom: 28px; }
+    .other-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 16px; box-shadow: var(--shadow); }
+    .other-card .icon { font-size: 1.6rem; margin-bottom: 8px; }
+    .other-card h3 { font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; }
+    .other-card .other-price { font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .other-card p { font-size: 0.8rem; color: var(--text-sub); }
+
+    .flow-section { margin-bottom: 40px; }
+    .section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--primary); }
+    .flow-steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+    .flow-step { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 14px; text-align: center; box-shadow: var(--shadow); }
+    .step-num { width: 30px; height: 30px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.88rem; margin: 0 auto 10px; }
+    .flow-step h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 5px; }
+    .flow-step p { font-size: 0.8rem; color: var(--text-sub); }
+
+    .cta-box { background: var(--primary); border-radius: 16px; padding: 32px 20px; text-align: center; color: white; }
+    .cta-box h2 { font-size: 1.2rem; margin-bottom: 6px; }
+    .cta-box p { font-size: 0.88rem; opacity: 0.9; margin-bottom: 18px; }
+    .cta-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn-line { background: #06c755; color: white; padding: 11px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; text-decoration: none; }
+    .btn-outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.6); padding: 11px 24px; border-radius: 50px; font-size: 0.88rem; font-weight: 700; text-decoration: none; }
+
+    footer { background: var(--text); color: #f5f5f7; padding: 40px 20px 24px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-bottom: 28px; }
+    @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; gap: 20px; } }
+    .footer-logo { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .footer-desc { font-size: 0.82rem; color: #a1a1a6; line-height: 1.6; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 7px; }
+    .footer-links a { color: #a1a1a6; text-decoration: none; font-size: 0.85rem; }
+    .footer-links a:hover { color: white; }
+    .footer-info { font-size: 0.82rem; color: #a1a1a6; line-height: 2; }
+    .footer-bottom { border-top: 1px solid #3a3a3c; padding-top: 18px; text-align: center; font-size: 0.78rem; color: #6e6e73; }
+    .line-float { position: fixed; bottom: 20px; right: 20px; z-index: 200; }
+    .line-float a { background: #06c755; color: white; padding: 11px 18px; border-radius: 50px; font-size: 0.88rem; font-weight: 700; text-decoration: none; box-shadow: 0 4px 16px rgba(6,199,85,0.4); display: flex; align-items: center; gap: 5px; }
+  </style>
 </head>
 <body>
 
-<header class="site-header">
+<header>
   <div class="header-inner">
-    <a href="index.html" class="site-logo">
-      <span>🔧</span><span>Repair<span class="accent">540</span></span>
-    </a>
-    <nav class="site-nav">
-      <ul>
-        <li><a href="index.html">ホーム</a></li>
-        <li><a href="menu.html">修理メニュー</a></li>
-        <li><a href="blog.html">ブログ</a></li>
-        <li><a href="access.html">アクセス</a></li>
-        <li><a href="contact.html">お問い合わせ</a></li>
-      </ul>
+    <a href="index.html" class="logo">🔧 Repair540</a>
+    <nav>
+      <a href="index.html">ホーム</a>
+      <a href="menu.html">修理メニュー</a>
+      <a href="blog.html">ブログ</a>
+      <a href="access.html">アクセス</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://line.me/R/ti/p/@121zxdau" class="btn-line-header">💬 LINE相談・予約</a>
     </nav>
-    <a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK"
-       class="btn-line-sm" target="_blank" rel="noopener">LINE予約</a>
-    <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </header>
+<div class="mobile-nav">
+  <a href="index.html">ホーム</a>
+  <a href="menu.html">修理メニュー・料金表</a>
+  <a href="blog.html">ブログ</a>
+  <a href="access.html">アクセス</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://line.me/R/ti/p/@121zxdau" class="btn-line-header">📲 LINEで無料相談・予約</a>
+</div>
 
-<nav class="mobile-nav" id="mobile-nav">
-  <ul>
-    <li><a href="index.html">ホーム</a></li>
-    <li><a href="menu.html">修理メニュー・料金表</a></li>
-    <li><a href="blog.html">ブログ</a></li>
-    <li><a href="access.html">アクセス</a></li>
-    <li><a href="contact.html">お問い合わせ</a></li>
-  </ul>
-  <a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK"
-     class="mn-line" target="_blank" rel="noopener">📲 LINEで無料相談・予約</a>
-</nav>
-
-<div class="header-spacer"></div>
-
-<!-- ═══ PAGE HERO ══════════════════════════════════════════════ -->
-<div class="page-hero">
+<section class="page-hero">
+  <p class="breadcrumb"><a href="index.html">ホーム</a> › 修理メニュー・料金表</p>
   <h1>修理メニュー・料金表</h1>
-  <p>すべて税込表示。修理前に必ずお見積もりをご提示します。</p>
-  <div class="breadcrumb">
-    <a href="index.html">ホーム</a>
-    <span>›</span>
-    <span>修理メニュー・料金表</span>
+  <p>税込・作業工賃込み表示。修理前に必ずお見積もりをご提示します。</p>
+</section>
+
+<div class="notice">
+  <div class="notice-box">
+    💡 <strong>ご来店前にLINEでご確認を：</strong>部品の在庫状況により即日対応できない場合があります。LINEから写真をお送りいただくと概算見積もりも可能です。<br>
+    🎁 <strong>強化ガラスフィルムは半額・貼り付け工賃無料！</strong>修理と同時ご注文でお得になります。
   </div>
 </div>
 
-<!-- ═══ NOTICE ════════════════════════════════════════════════ -->
-<section class="section section-alt" style="padding:32px 0;">
-  <div class="container">
-    <div style="background:#fff3cd;border-left:4px solid #ffc107;border-radius:var(--radius);padding:16px 20px;font-size:.9rem;color:#856404;">
-      💡 <strong>ご来店前にLINEでご確認を</strong>：部品の在庫状況により即日対応できない場合があります。LINEから写真をお送りいただくと概算見積もりも可能です。
+<main>
+
+  <div class="gen-tabs">
+    <button class="gen-btn active" onclick="showGen('g16', this)">iPhone 16系</button>
+    <button class="gen-btn" onclick="showGen('g15', this)">iPhone 15系</button>
+    <button class="gen-btn" onclick="showGen('g14', this)">iPhone 14系</button>
+    <button class="gen-btn" onclick="showGen('g13', this)">iPhone 13系</button>
+    <button class="gen-btn" onclick="showGen('g12', this)">iPhone 12系</button>
+    <button class="gen-btn" onclick="showGen('g11', this)">iPhone 11系</button>
+    <button class="gen-btn" onclick="showGen('gx', this)">iPhone X系</button>
+    <button class="gen-btn" onclick="showGen('g78', this)">iPhone 7〜8系</button>
+    <button class="gen-btn" onclick="showGen('g56', this)">iPhone 5〜6系</button>
+    <button class="gen-btn" onclick="showGen('gipad', this)">📟 iPad</button>
+    <button class="gen-btn" onclick="showGen('gandroid', this)">🤖 Android</button>
+    <button class="gen-btn" onclick="showGen('gother', this)">その他修理</button>
+  </div>
+
+  <!-- iPhone 16系 -->
+  <div class="price-section active" id="gen-g16">
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>修理メニュー</th><th>16e</th><th>16</th><th>16Plus</th><th>16Pro</th><th>16ProMax</th></tr></thead>
+        <tbody>
+          <tr><td>ガラス割れ</td><td>¥19,800</td><td>¥24,200</td><td>¥25,300</td><td>¥38,500</td><td>¥36,800</td></tr>
+          <tr><td>液晶パネル破損</td><td>¥19,800</td><td>¥24,200</td><td>¥25,300</td><td>¥38,500</td><td>¥36,800</td></tr>
+          <tr><td>有機ELガラス割れ</td><td>¥27,500</td><td>¥38,500</td><td>¥39,600</td><td>¥41,800</td><td>¥49,500</td></tr>
+          <tr><td>有機ELパネル破損</td><td>¥27,500</td><td>¥38,500</td><td>¥39,600</td><td>¥41,800</td><td>¥49,500</td></tr>
+          <tr><td>有機ELプレミアム</td><td>¥33,000</td><td>¥55,000</td><td>¥55,000</td><td>¥66,000</td><td>¥77,000</td></tr>
+          <tr><td>バッテリー交換</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>ドックコネクター修理</td><td>¥16,500</td><td>¥16,500</td><td>¥19,800</td><td>¥17,600</td><td>¥19,800</td></tr>
+          <tr><td>フロントカメラ修理</td><td>¥16,500</td><td>¥16,500</td><td>¥16,500</td><td>¥16,500</td><td>¥16,500</td></tr>
+          <tr><td>アウトカメラ修理</td><td>¥27,500</td><td>¥27,500</td><td>¥27,500</td><td>¥27,500</td><td>¥27,500</td></tr>
+          <tr><td>Face ID 修理</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>イヤースピーカー交換</td><td>¥14,300</td><td>¥14,300</td><td>¥14,300</td><td>¥14,300</td><td>¥14,300</td></tr>
+          <tr><td>外部スピーカー交換</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>スリープボタン交換</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>アウトカメラレンズ</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td></tr>
+          <tr><td>背面ガラス修理</td><td>¥27,500</td><td>¥27,500</td><td>¥27,500</td><td>¥27,500</td><td>¥27,500</td></tr>
+          <tr><td>内部調整・データ関連</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>水没修理</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>基板修理</td><td>¥38,500</td><td>¥38,500</td><td>¥38,500</td><td>¥38,500</td><td>¥38,500</td></tr>
+          <tr><td>CPU修理</td><td>¥44,000</td><td>¥44,000</td><td>¥44,000</td><td>¥44,000</td><td>¥44,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-note">※ 税込・作業工賃込み。バッテリー交換は現在対応準備中のため、まずLINEでご相談ください。</div>
+  </div>
+
+  <!-- iPhone 15系 -->
+  <div class="price-section" id="gen-g15">
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>修理メニュー</th><th>15</th><th>15Plus</th><th>15Pro</th><th>15ProMax</th></tr></thead>
+        <tbody>
+          <tr><td>ガラス割れ</td><td>¥19,800</td><td>¥22,000</td><td>¥22,000</td><td>¥24,200</td></tr>
+          <tr><td>液晶パネル破損</td><td>¥19,800</td><td>¥22,000</td><td>¥22,000</td><td>¥24,200</td></tr>
+          <tr><td>有機ELパネル破損</td><td>¥29,700</td><td>¥38,500</td><td>¥41,800</td><td>¥48,400</td></tr>
+          <tr><td>有機ELプレミアム</td><td>¥39,800</td><td>¥42,800</td><td>¥60,500</td><td>¥66,000</td></tr>
+          <tr><td>バッテリー交換</td><td>¥9,900</td><td>¥9,900</td><td>¥9,900</td><td>¥9,900</td></tr>
+          <tr><td>ドックコネクター修理</td><td>¥15,400</td><td>¥15,400</td><td>¥15,400</td><td>¥15,400</td></tr>
+          <tr><td>インカメラ交換</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td></tr>
+          <tr><td>アウトカメラ交換</td><td>¥17,800</td><td>¥17,800</td><td>¥17,800</td><td>¥17,800</td></tr>
+          <tr><td>スピーカー系交換</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td></tr>
+          <tr><td>電源・マナー・ボリュームボタン</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>アウトカメラレンズ</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td></tr>
+          <tr><td>背面ガラス修理</td><td>¥19,800</td><td>¥19,800</td><td>¥19,800</td><td>¥27,500</td></tr>
+          <tr><td>水没修理</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>データ関連内部調整</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>基板修理</td><td>¥29,700</td><td>¥29,700</td><td>¥29,700</td><td>¥29,700</td></tr>
+          <tr><td>CPU修理</td><td>¥34,100</td><td>¥34,100</td><td>¥34,100</td><td>¥34,100</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-note">※ 税込・作業工賃込み。</div>
+  </div>
+
+  <!-- iPhone 14系 -->
+  <div class="price-section" id="gen-g14">
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>修理メニュー</th><th>14</th><th>14Plus</th><th>14Pro</th><th>14ProMax</th></tr></thead>
+        <tbody>
+          <tr><td>ガラス割れ</td><td>¥19,800</td><td>¥17,600</td><td>¥22,000</td><td>¥22,000</td></tr>
+          <tr><td>液晶パネル破損</td><td>¥22,000</td><td>¥24,200</td><td>¥36,300</td><td>¥38,500</td></tr>
+          <tr><td>有機ELパネル破損</td><td>¥25,300</td><td>¥27,500</td><td>¥36,300</td><td>¥44,000</td></tr>
+          <tr><td>有機ELプレミアム</td><td>¥33,000</td><td class="dash">—</td><td>¥49,800</td><td>¥66,000</td></tr>
+          <tr><td>バッテリー交換</td><td>¥9,900</td><td>¥9,900</td><td>¥9,900</td><td>¥9,900</td></tr>
+          <tr><td>ドックコネクター修理</td><td>¥15,400</td><td>¥15,400</td><td>¥15,400</td><td>¥15,400</td></tr>
+          <tr><td>フロントカメラ修理</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td></tr>
+          <tr><td>アウトカメラ修理</td><td>¥14,300</td><td>¥14,300</td><td>¥15,400</td><td>¥16,500</td></tr>
+          <tr><td>Face ID 修理</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>外部スピーカー交換</td><td>¥14,300</td><td>¥14,300</td><td>¥14,300</td><td>¥14,300</td></tr>
+          <tr><td>スリープボタン交換</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>アウトカメラレンズ</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td></tr>
+          <tr><td>背面ガラス修理</td><td>¥27,500</td><td>¥27,500</td><td>¥27,500</td><td>¥27,500</td></tr>
+          <tr><td>内部調整・データ関連</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>水没修理</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>基板修理</td><td>¥25,300</td><td>¥25,300</td><td>¥25,300</td><td>¥25,300</td></tr>
+          <tr><td>CPU修理</td><td>¥33,000</td><td>¥33,000</td><td>¥33,000</td><td>¥33,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-note">※ 税込・作業工賃込み。</div>
+  </div>
+
+  <!-- iPhone 13系 -->
+  <div class="price-section" id="gen-g13">
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>修理メニュー</th><th>13</th><th>13mini</th><th>13Pro</th><th>13ProMax</th></tr></thead>
+        <tbody>
+          <tr><td>ガラス割れ</td><td>¥9,900</td><td>¥11,000</td><td>¥17,600</td><td>¥18,700</td></tr>
+          <tr><td>液晶パネル破損</td><td>¥12,100</td><td>¥13,200</td><td>¥19,800</td><td>¥20,900</td></tr>
+          <tr><td>有機ELパネル破損</td><td>¥18,700</td><td>¥19,800</td><td>¥25,300</td><td>¥27,500</td></tr>
+          <tr><td>有機ELプレミアム</td><td>¥29,700</td><td>¥27,500</td><td>¥39,800</td><td>¥44,000</td></tr>
+          <tr><td>バッテリー交換</td><td>¥8,800</td><td>¥8,800</td><td>¥8,800</td><td>¥8,800</td></tr>
+          <tr><td>ドックコネクター修理</td><td>¥12,100</td><td>¥12,100</td><td>¥13,200</td><td>¥13,200</td></tr>
+          <tr><td>フロントカメラ修理</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td></tr>
+          <tr><td>アウトカメラ修理</td><td>¥16,500</td><td>¥16,500</td><td>¥17,800</td><td>¥17,800</td></tr>
+          <tr><td>Face ID 修理</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>外部スピーカー交換</td><td>¥14,800</td><td>¥14,800</td><td>¥17,600</td><td>¥17,600</td></tr>
+          <tr><td>スリープボタン交換</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>レンズカバー修理</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td></tr>
+          <tr><td>背面ガラス修理</td><td>¥18,700</td><td>¥18,700</td><td>¥18,700</td><td>¥18,700</td></tr>
+          <tr><td>内部調整・データ関連</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>水没修理</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>基板修理</td><td>¥23,100</td><td>¥23,100</td><td>¥23,100</td><td>¥23,100</td></tr>
+          <tr><td>CPU修理</td><td>¥29,700</td><td>¥29,700</td><td>¥29,700</td><td>¥29,700</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-note">※ 税込・作業工賃込み。</div>
+  </div>
+
+  <!-- iPhone 12系 -->
+  <div class="price-section" id="gen-g12">
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>修理メニュー</th><th>12</th><th>12mini</th><th>12Pro</th><th>12ProMax</th><th>SE3</th></tr></thead>
+        <tbody>
+          <tr><td>ガラス割れ</td><td>¥9,900</td><td>¥11,000</td><td>¥9,900</td><td>¥12,800</td><td>¥6,600</td></tr>
+          <tr><td>液晶パネル破損</td><td>¥14,300</td><td>¥14,300</td><td>¥14,300</td><td>¥15,400</td><td>¥7,700</td></tr>
+          <tr><td>有機ELパネル破損</td><td>¥17,600</td><td class="dash">—</td><td>¥17,600</td><td>¥19,800</td><td class="dash">—</td></tr>
+          <tr><td>液晶・有機ELプレミアム</td><td>¥22,000</td><td>¥24,200</td><td>¥22,000</td><td>¥29,800</td><td>¥9,900</td></tr>
+          <tr><td>バッテリー交換</td><td>¥7,700</td><td>¥7,700</td><td>¥8,800</td><td>¥8,800</td><td>¥5,500</td></tr>
+          <tr><td>ドックコネクター修理</td><td>¥9,900</td><td>¥9,900</td><td>¥9,900</td><td>¥9,900</td><td>¥6,600</td></tr>
+          <tr><td>フロントカメラ修理</td><td>¥9,900</td><td>¥9,900</td><td>¥16,500</td><td>¥16,500</td><td>¥6,600</td></tr>
+          <tr><td>アウトカメラ修理</td><td>¥11,000</td><td>¥11,000</td><td>¥22,000</td><td>¥17,800</td><td>¥7,700</td></tr>
+          <tr><td>Face ID 修理</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>ホームボタン</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>¥7,700</td></tr>
+          <tr><td>イヤースピーカー交換</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td><td class="dash">—</td></tr>
+          <tr><td>レンズカバー修理</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td class="dash">—</td></tr>
+          <tr><td>背面ガラス修理</td><td>¥18,700</td><td>¥18,700</td><td>¥18,700</td><td>¥18,700</td><td class="dash">—</td></tr>
+          <tr><td>内部調整・データ関連</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>水没修理</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>基板修理</td><td>¥23,100〜</td><td>¥23,100〜</td><td>¥23,100〜</td><td>¥23,100〜</td><td>¥23,100</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-note">※ 税込・作業工賃込み。</div>
+  </div>
+
+  <!-- iPhone 11系 -->
+  <div class="price-section" id="gen-g11">
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>修理メニュー</th><th>11</th><th>11Pro</th><th>11ProMax</th><th>SE2</th></tr></thead>
+        <tbody>
+          <tr><td>液晶パネル破損</td><td>¥8,500</td><td>¥9,900</td><td>¥12,100</td><td>¥5,500</td></tr>
+          <tr><td>有機ELガラス割れ</td><td class="dash">—</td><td>¥16,500</td><td>¥17,600</td><td class="dash">—</td></tr>
+          <tr><td>有機ELパネル破損</td><td class="dash">—</td><td>¥17,600</td><td>¥18,700</td><td class="dash">—</td></tr>
+          <tr><td>液晶・有機ELプレミアム</td><td>¥13,200</td><td>¥22,000</td><td>¥25,300</td><td>¥7,700</td></tr>
+          <tr><td>バッテリー交換</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td>¥4,400</td></tr>
+          <tr><td>ドックコネクター修理</td><td>¥6,930</td><td>¥6,930</td><td>¥6,930</td><td>¥5,940</td></tr>
+          <tr><td>フロントカメラ修理</td><td>¥8,800</td><td>¥9,900</td><td>¥9,900</td><td>¥6,600</td></tr>
+          <tr><td>アウトカメラ修理</td><td>¥9,900</td><td>¥11,800</td><td>¥11,800</td><td>¥7,700</td></tr>
+          <tr><td>Face ID 修理</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>外部スピーカー交換</td><td>¥13,200</td><td>¥13,200</td><td>¥13,200</td><td>¥6,600</td></tr>
+          <tr><td>スリープボタン交換</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>レンズカバー修理</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td></tr>
+          <tr><td>背面ガラス修理</td><td>¥16,500</td><td>¥16,500</td><td>¥16,500</td><td>¥13,200</td></tr>
+          <tr><td>内部調整・データ関連</td><td>¥3,300</td><td>¥3,300</td><td>¥3,300</td><td>¥3,300</td></tr>
+          <tr><td>水没修理</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>基板修理</td><td>¥19,800</td><td>¥19,800</td><td>¥19,800</td><td>¥19,800</td></tr>
+          <tr><td>CPU修理</td><td>¥27,500</td><td>¥27,500</td><td>¥27,500</td><td>¥27,500</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-note">※ 税込・作業工賃込み。</div>
+  </div>
+
+  <!-- iPhone X系 -->
+  <div class="price-section" id="gen-gx">
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>修理メニュー</th><th>X</th><th>XR</th><th>XS</th><th>XS MAX</th></tr></thead>
+        <tbody>
+          <tr><td>液晶パネル破損</td><td>¥9,900</td><td>¥9,900</td><td>¥9,900</td><td>¥11,000</td></tr>
+          <tr><td>有機ELガラス割れ</td><td>¥12,100</td><td class="dash">—</td><td>¥15,400</td><td>¥16,500</td></tr>
+          <tr><td>液晶・有機プレミアム</td><td>¥16,500</td><td>¥13,200</td><td>¥18,700</td><td>¥22,000</td></tr>
+          <tr><td>バッテリー交換</td><td>¥5,500</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td></tr>
+          <tr><td>ドックコネクター修理</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td></tr>
+          <tr><td>インカメラ交換</td><td>¥8,800</td><td>¥7,700</td><td>¥8,800</td><td>¥8,800</td></tr>
+          <tr><td>アウトカメラ交換</td><td>¥9,800</td><td>¥8,800</td><td>¥10,800</td><td>¥10,800</td></tr>
+          <tr><td>スピーカー系交換</td><td>¥9,900</td><td>¥9,900</td><td>¥11,000</td><td>¥11,000</td></tr>
+          <tr><td>電源・マナー・ボリュームボタン</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>アウトカメラレンズ</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td></tr>
+          <tr><td>背面ガラス修理</td><td>¥18,700</td><td>¥18,700</td><td>¥18,700</td><td>¥18,700</td></tr>
+          <tr><td>水没修理</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>データ関連内部調整</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>基板修理</td><td>¥19,800</td><td>¥19,800</td><td>¥19,800</td><td>¥19,800</td></tr>
+          <tr><td>CPU修理</td><td>¥26,400</td><td>¥26,400</td><td>¥26,400</td><td>¥26,400</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-note">※ 税込・作業工賃込み。</div>
+  </div>
+
+  <!-- iPhone 7〜8系 -->
+  <div class="price-section" id="gen-g78">
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>修理メニュー</th><th>7</th><th>7Plus</th><th>8</th><th>8Plus</th></tr></thead>
+        <tbody>
+          <tr><td>液晶パネル破損</td><td>¥5,500</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td></tr>
+          <tr><td>液晶プレミアム</td><td>¥7,700</td><td>¥8,800</td><td>¥8,800</td><td>¥8,800</td></tr>
+          <tr><td>バッテリー交換</td><td>¥4,400</td><td>¥4,400</td><td>¥4,400</td><td>¥4,400</td></tr>
+          <tr><td>ドックコネクター</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td></tr>
+          <tr><td>インカメラ交換</td><td>¥5,500</td><td>¥5,500</td><td>¥6,600</td><td>¥6,600</td></tr>
+          <tr><td>アウトカメラ交換</td><td>¥6,600</td><td>¥6,600</td><td>¥7,700</td><td>¥7,700</td></tr>
+          <tr><td>イヤースピーカー系交換</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td></tr>
+          <tr><td>ラウドスピーカー交換</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td></tr>
+          <tr><td>ホームボタン交換</td><td>¥7,700</td><td>¥7,700</td><td>¥7,700</td><td>¥7,700</td></tr>
+          <tr><td>電源・マナー・ボリュームボタン</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>アウトカメラレンズ</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td></tr>
+          <tr><td>背面ガラス修理</td><td class="dash">—</td><td class="dash">—</td><td>¥13,200</td><td>¥13,200</td></tr>
+          <tr><td>水没修理</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>データ関連内部調整</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>基板修理</td><td>¥16,500〜</td><td>¥16,500〜</td><td>¥16,500〜</td><td>¥16,500〜</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-note">※ 税込・作業工賃込み。</div>
+  </div>
+
+  <!-- iPhone 5〜6系 -->
+  <div class="price-section" id="gen-g56">
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>修理メニュー</th><th>6</th><th>6Plus</th><th>6s</th><th>6sPlus</th><th>5 / 5c / 5s / SE初代</th></tr></thead>
+        <tbody>
+          <tr><td>液晶パネル</td><td>¥5,800</td><td>¥5,800</td><td>¥5,800</td><td>¥5,800</td><td>¥5,800〜</td></tr>
+          <tr><td>液晶プレミアム</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td class="dash">—</td></tr>
+          <tr><td>バッテリー交換</td><td>¥4,400</td><td>¥4,400</td><td>¥4,400</td><td>¥4,400</td><td>¥4,000〜</td></tr>
+          <tr><td>ドックコネクター</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥4,800</td></tr>
+          <tr><td>インカメラ交換</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥4,800</td></tr>
+          <tr><td>アウトカメラ交換</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥4,800</td></tr>
+          <tr><td>イヤースピーカー交換</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥4,800</td></tr>
+          <tr><td>ラウドスピーカー交換</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥5,500</td><td>¥4,800</td></tr>
+          <tr><td>ホームボタン交換</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td>¥6,600</td><td class="dash">—</td></tr>
+          <tr><td>アウトカメラレンズ</td><td>¥4,800</td><td>¥4,800</td><td>¥4,800</td><td>¥4,800</td><td>¥4,800</td></tr>
+          <tr><td>水没修理</td><td>¥3,300〜</td><td>¥2,200〜</td><td>¥2,200〜</td><td>¥2,200〜</td><td>¥3,300〜</td></tr>
+          <tr><td>データ関連内部調整</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td><td>¥3,300〜</td></tr>
+          <tr><td>基板修理</td><td>¥16,500</td><td>¥16,500</td><td>¥16,500</td><td>¥16,500</td><td>¥16,500</td></tr>
+          <tr><td>CPU修理</td><td>¥25,300</td><td>¥25,300</td><td>¥25,300</td><td>¥25,300</td><td>¥25,300</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-note">※ iPhone 5系の価格は<strong>税抜き表示</strong>のものが含まれています。最終金額はご来店時にご確認ください。iPhone 6系は税込表示。</div>
+  </div>
+
+  <!-- iPad -->
+  <div class="price-section" id="gen-gipad">
+
+    <p style="font-size:0.85rem;color:var(--text-sub);margin-bottom:16px;">※ iPadはモデル番号（本体背面または設定 › 一般 › 情報に記載）でご確認ください。タッチ&液晶は一体型パネルのため分離修理不可の機種があります。</p>
+
+    <!-- iPad / iPad2〜7 -->
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:10px;color:var(--primary);">📱 iPad（無印）</h3>
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>機種名</th><th>モデル番号</th><th>タッチパネル</th><th>液晶不具合</th><th>タッチ&液晶</th><th>バッテリー</th><th>ドックコネクター</th></tr></thead>
+        <tbody>
+          <tr><td>iPad（初代）</td><td>A1219</td><td>部品無し</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>iPad（初代）</td><td>A1337</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>iPad2</td><td>A1395</td><td>¥14,300</td><td>¥16,500</td><td>¥22,000</td><td>¥13,750</td><td>¥13,750</td></tr>
+          <tr><td>iPad2</td><td>A1396</td><td>¥14,300</td><td>¥16,500</td><td>¥22,000</td><td>¥13,750</td><td>¥13,750</td></tr>
+          <tr><td>iPad2</td><td>A1397</td><td>¥14,300</td><td>¥16,500</td><td>¥22,000</td><td>¥13,750</td><td>¥13,750</td></tr>
+          <tr><td>iPad3</td><td>A1416</td><td>¥14,300</td><td>¥16,500</td><td>¥22,000</td><td>¥13,750</td><td>¥13,750</td></tr>
+          <tr><td>iPad3</td><td>A1430</td><td>¥14,300</td><td>¥16,500</td><td>¥22,000</td><td>¥13,750</td><td>¥13,750</td></tr>
+          <tr><td>iPad3</td><td>A1403</td><td>¥14,300</td><td>¥16,500</td><td>¥22,000</td><td>¥13,750</td><td>¥13,750</td></tr>
+          <tr><td>iPad4</td><td>A1458</td><td>¥14,300</td><td>¥17,050</td><td>¥22,550</td><td>¥13,750</td><td>¥13,750</td></tr>
+          <tr><td>iPad4</td><td>A1459</td><td>¥14,300</td><td>¥17,050</td><td>¥22,550</td><td>¥13,750</td><td>¥13,750</td></tr>
+          <tr><td>iPad4</td><td>A1460</td><td>¥14,300</td><td>¥17,050</td><td>¥22,550</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>iPad5</td><td>A1822</td><td>¥15,400</td><td>¥18,700</td><td>¥25,300</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>iPad5</td><td>A1823</td><td>¥15,400</td><td>¥18,700</td><td>¥25,300</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>iPad6</td><td>A1893</td><td>¥15,950</td><td>¥18,700</td><td>¥25,850</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>iPad6</td><td>A1954</td><td>¥15,950</td><td>¥18,700</td><td>¥25,850</td><td class="dash">—</td><td>¥15,400</td></tr>
+          <tr><td>iPad7</td><td>A2197</td><td>¥16,500</td><td>¥28,600</td><td>¥36,300</td><td class="dash">—</td><td>¥15,400</td></tr>
+          <tr><td>iPad7</td><td>A2200</td><td>¥16,500</td><td>¥28,600</td><td>¥36,300</td><td class="dash">—</td><td>¥15,400</td></tr>
+          <tr><td>iPad7</td><td>A2198</td><td>¥16,500</td><td>¥28,600</td><td>¥36,300</td><td>¥14,850</td><td>¥15,400</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- iPad Air -->
+    <h3 style="font-size:1rem;font-weight:700;margin:24px 0 10px;color:var(--primary);">💨 iPad Air</h3>
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>機種名</th><th>モデル番号</th><th>タッチパネル</th><th>液晶不具合</th><th>タッチ&液晶</th><th>バッテリー</th><th>ドックコネクター</th></tr></thead>
+        <tbody>
+          <tr><td>Air（第1世代）</td><td>A1474</td><td>¥15,400</td><td>¥18,700</td><td>¥25,300</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>Air（第1世代）</td><td>A1475</td><td>¥15,400</td><td>¥18,700</td><td>¥25,300</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>Air（第1世代）</td><td>A1476</td><td>¥15,400</td><td>¥18,700</td><td>¥25,300</td><td>¥15,400</td><td>¥15,400</td></tr>
+          <tr><td>Air2</td><td>A1566</td><td>¥26,400</td><td>一体型</td><td>一体型</td><td>¥15,400</td><td>¥15,400</td></tr>
+          <tr><td>Air2</td><td>A1567</td><td>¥26,400</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥15,400</td></tr>
+          <tr><td>Air3</td><td>A2152</td><td>¥30,800</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥15,400</td></tr>
+          <tr><td>Air3</td><td>A2123</td><td>¥30,800</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥15,400</td></tr>
+          <tr><td>Air3</td><td>A2153</td><td>¥30,800</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥15,400</td></tr>
+          <tr><td>Air3</td><td>A2154</td><td>¥30,800</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥15,400</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- iPad mini -->
+    <h3 style="font-size:1rem;font-weight:700;margin:24px 0 10px;color:var(--primary);">🔹 iPad mini</h3>
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>機種名</th><th>モデル番号</th><th>タッチパネル</th><th>液晶不具合</th><th>タッチ&液晶</th><th>バッテリー</th><th>ドックコネクター</th></tr></thead>
+        <tbody>
+          <tr><td>mini（第1世代）</td><td>A1432</td><td>¥14,300</td><td>¥16,500</td><td>¥22,000</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>mini（第1世代）</td><td>A1454</td><td>¥14,300</td><td>¥16,500</td><td>¥22,000</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>mini（第1世代）</td><td>A1455</td><td>¥14,300</td><td>¥16,500</td><td>¥22,000</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>Mini2</td><td>A1489</td><td>¥14,300</td><td>¥17,600</td><td>¥23,100</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>Mini2</td><td>A1490</td><td>¥14,300</td><td>¥17,600</td><td>¥23,100</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>Mini2</td><td>A1491</td><td>¥14,300</td><td>¥17,600</td><td>¥23,100</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>Mini3</td><td>A1599</td><td>¥15,950</td><td>¥17,600</td><td>¥24,750</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>Mini3</td><td>A1600</td><td>¥15,950</td><td>一体型</td><td>一体型</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>Mini4（第4世代）</td><td>A1538</td><td>¥24,750</td><td>一体型</td><td>一体型</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>Mini4（第4世代）</td><td>A1550</td><td>¥24,750</td><td>一体型</td><td>一体型</td><td>¥14,850</td><td>¥15,400</td></tr>
+          <tr><td>mini（第5世代）</td><td>A2133</td><td>¥26,400</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥15,400</td></tr>
+          <tr><td>mini（第5世代）</td><td>A2124</td><td>¥26,400</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥15,400</td></tr>
+          <tr><td>mini（第5世代）</td><td>A2126</td><td>¥26,400</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥15,400</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- iPad Pro -->
+    <h3 style="font-size:1rem;font-weight:700;margin:24px 0 10px;color:var(--primary);">⭐ iPad Pro</h3>
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>機種名</th><th>モデル番号</th><th>タッチパネル</th><th>液晶不具合</th><th>タッチ&液晶</th><th>バッテリー</th><th>ドックコネクター</th><th>基板修理</th></tr></thead>
+        <tbody>
+          <tr><td>Pro 9.7インチ</td><td>A1673</td><td>¥30,800</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 9.7インチ</td><td>A1674</td><td>¥30,800</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 9.7インチ</td><td>A1675</td><td>¥30,800</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 10.5インチ</td><td>A1701</td><td>¥31,900</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 10.5インチ</td><td>A1709</td><td>¥31,900</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ（第1世代）</td><td>A1652</td><td>¥34,100</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ（第1世代）</td><td>A1584</td><td>¥34,100</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ（第2世代）</td><td>A1670</td><td>¥49,500</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ（第2世代）</td><td>A1671</td><td>¥49,500</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ</td><td>A1821</td><td>¥49,500</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ</td><td>A1876</td><td>¥49,500</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ</td><td>A2014</td><td>¥49,500</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ</td><td>A1895</td><td>¥49,500</td><td>一体型</td><td>一体型</td><td>¥16,500</td><td>¥16,500</td><td>¥23,100</td></tr>
+          <tr><td>Pro 11インチ</td><td>A1980</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 11インチ</td><td>A2013</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 11インチ</td><td>A1934</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 11インチ</td><td>A1979</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 11インチ</td><td>A2228</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 11インチ</td><td>A2068</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 11インチ</td><td>A2230</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 11インチ</td><td>A2231</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ</td><td>A2229</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ</td><td>A2069</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ</td><td>A2232</td><td>¥50,600</td><td>一体型</td><td>一体型</td><td>¥23,100</td><td>¥17,600</td><td>¥23,100</td></tr>
+          <tr><td>Pro 12.9インチ（A2233〜）</td><td>A2233〜</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>Pro 11インチ（A2301〜）</td><td>A2301〜</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="price-note">
+      ※ 税込・作業工賃込み。<br>
+      ※ <strong>「一体型」</strong>はタッチパネルと液晶が一体化しているため、どちらかの故障でも両方の交換が必要です。<br>
+      ※ <strong>「—」</strong>は現在部品の取り扱いがない機種です。まずLINEでお問い合わせください。<br>
+      ※ モデル番号は本体背面、または「設定 › 一般 › 情報」でご確認いただけます。
     </div>
   </div>
-</section>
 
-<!-- ═══ PRICE TABLES ════════════════════════════════════════════ -->
-<section class="section">
-  <div class="container" id="prices-root">
-    <div id="tab-nav" class="tab-nav"></div>
-    <div id="tab-panels"></div>
-    <noscript>
-      <p style="text-align:center;color:var(--text-sub);">
-        料金表の表示にはJavaScriptが必要です。
+  <!-- Android -->
+  <div class="price-section" id="gen-gandroid">
+
+    <div style="background:white;border:1px solid var(--border);border-left:4px solid #34a853;border-radius:var(--radius);padding:20px 24px;margin-bottom:28px;box-shadow:var(--shadow);">
+      <div style="font-size:1.5rem;margin-bottom:10px;">🤖</div>
+      <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:10px;">Androidの修理について</h3>
+      <p style="font-size:0.92rem;line-height:1.9;color:var(--text);">
+        Androidは、液晶パネル交換・バッテリー交換等、<strong>機種によって修理価格が異なります</strong>ので、事前にご相談ください。<br>
+        LINEに機種名・症状・写真をお送りいただくと、スムーズにお見積もりが可能です。
       </p>
-    </noscript>
-  </div>
-</section>
+    </div>
 
-<!-- ═══ FLOW ══════════════════════════════════════════════════ -->
-<section class="section section-alt">
-  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:28px;">
+      <div class="other-card">
+        <div class="icon">📺</div>
+        <h3>液晶パネル・画面修理</h3>
+        <div class="other-price">要お見積もり</div>
+        <p>画面割れ・タッチ不良・液晶にじみなど。機種・部品により価格が異なります。</p>
+      </div>
+      <div class="other-card">
+        <div class="icon">🔋</div>
+        <h3>バッテリー交換</h3>
+        <div class="other-price">要お見積もり</div>
+        <p>電池の減りが早い・膨張・電源が落ちるなどのトラブルに対応。</p>
+      </div>
+      <div class="other-card">
+        <div class="icon">📷</div>
+        <h3>カメラ修理</h3>
+        <div class="other-price">要お見積もり</div>
+        <p>フロント・リアカメラのピンぼけ・映らない・レンズ割れなどに対応。</p>
+      </div>
+      <div class="other-card">
+        <div class="icon">⚡</div>
+        <h3>充電口修理</h3>
+        <div class="other-price">要お見積もり</div>
+        <p>充電が入らない・認識しないなどのUSB-C・Micro USB端子の修理。</p>
+      </div>
+      <div class="other-card">
+        <div class="icon">🌊</div>
+        <h3>水没修理・応急処置</h3>
+        <div class="other-price">¥3,300〜</div>
+        <p>水没後の内部洗浄・基板クリーニング。早めのご来店が復旧のカギです。</p>
+      </div>
+      <div class="other-card">
+        <div class="icon">💬</div>
+        <h3>その他のトラブル</h3>
+        <div class="other-price">まずご相談を</div>
+        <p>起動しない・動作不良・スピーカー不具合など、お気軽にご相談ください。</p>
+      </div>
+    </div>
+
+    <div style="background:#f0faf4;border:1px solid #a8d5b5;border-radius:var(--radius);padding:16px 20px;font-size:0.88rem;line-height:1.9;margin-bottom:28px;">
+      <strong>📋 対応実績のあるメーカー・機種例：</strong><br>
+      Samsung Galaxy / Google Pixel / SHARP AQUOS / Sony Xperia / OPPO / Xiaomi / Huawei / Fujitsu arrows など<br>
+      <span style="color:var(--text-sub);">※ 上記以外の機種もお気軽にご相談ください。部品の取り寄せが必要な場合、数日お時間をいただく場合があります。</span>
+    </div>
+
+    <div style="background:var(--primary);border-radius:16px;padding:24px 20px;text-align:center;color:white;margin-bottom:32px;">
+      <h3 style="font-size:1.05rem;margin-bottom:6px;">Androidの修理相談はLINEが便利です</h3>
+      <p style="font-size:0.88rem;opacity:0.9;margin-bottom:16px;">機種名・症状・写真をLINEで送るだけで概算お見積もりをご提示します。</p>
+      <a href="https://line.me/R/ti/p/@121zxdau"
+         style="background:#06c755;color:white;padding:11px 28px;border-radius:50px;font-size:0.9rem;font-weight:700;text-decoration:none;display:inline-block;">
+        📲 LINEで無料相談・お見積もり
+      </a>
+    </div>
+
+  </div>
+
+  <!-- その他修理 -->
+  <div class="price-section" id="gen-gother">
+    <div class="other-grid">
+      <div class="other-card">
+        <div class="icon">💾</div>
+        <h3>データバックアップ・移行</h3>
+        <div class="other-price">¥3,300〜</div>
+        <p>機種変更時のデータ移行・修理前の大切なデータの保全。</p>
+      </div>
+      <div class="other-card">
+        <div class="icon">🛡️</div>
+        <h3>強化ガラスフィルム貼り付け</h3>
+        <div class="other-price">半額・工賃無料！</div>
+        <p>修理と同時ご注文で強化ガラスが半額＋貼り付け工賃無料のキャンペーン実施中。</p>
+      </div>
+      <div class="other-card">
+        <div class="icon">🌊</div>
+        <h3>水没修理・応急処置</h3>
+        <div class="other-price">¥3,300〜</div>
+        <p>水没後の内部洗浄・基板クリーニング。早めのご来店が復旧のカギです。</p>
+      </div>
+      <div class="other-card">
+        <div class="icon">🔬</div>
+        <h3>基板修理</h3>
+        <div class="other-price">¥16,500〜</div>
+        <p>起動しない・再起動を繰り返すなど基板レベルの修理に対応。</p>
+      </div>
+      <div class="other-card">
+        <div class="icon">🖥️</div>
+        <h3>内部調整・クリーニング</h3>
+        <div class="other-price">¥3,300〜</div>
+        <p>動作不良・接触不良の内部調整・データ関連トラブルの対応。</p>
+      </div>
+      <div class="other-card">
+        <div class="icon">❓</div>
+        <h3>その他・不明なトラブル</h3>
+        <div class="other-price">まずご相談を</div>
+        <p>症状が特定できない場合もお気軽にLINEまたはご来店ください。Android・iPadも対応。</p>
+      </div>
+    </div>
+    <div class="price-note">※ 上記以外のご相談もお気軽にどうぞ。Android・iPadの修理もお問い合わせください。</div>
+  </div>
+
+  <!-- 修理の流れ -->
+  <div class="flow-section">
     <h2 class="section-title">修理の流れ</h2>
-    <p class="section-sub">最短30分〜、スムーズにお対応します</p>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:step;">
-      <style>
-        .step-card { background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 20px;text-align:center;position:relative; }
-        .step-num { display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:var(--primary);color:#fff;border-radius:50%;font-weight:800;font-size:.9rem;margin-bottom:12px; }
-        .step-card h3 { font-size:.95rem;font-weight:700;margin-bottom:6px; }
-        .step-card p  { font-size:.82rem;color:var(--text-sub);line-height:1.65; }
-        @media(max-width:768px){ .steps-row { grid-template-columns:repeat(2,1fr) !important; } }
-        @media(max-width:480px){ .steps-row { grid-template-columns:1fr !important; } }
-      </style>
-      <div class="step-card steps-row">
+    <div class="flow-steps">
+      <div class="flow-step">
         <div class="step-num">1</div>
         <h3>ご来店 / LINE相談</h3>
         <p>お気軽にご来店ください。LINEでの事前相談・予約がおすすめです。</p>
       </div>
-      <div class="step-card">
+      <div class="flow-step">
         <div class="step-num">2</div>
         <h3>診断・お見積もり</h3>
         <p>端末の状態を確認し、修理内容と料金をご説明します（無料）。</p>
       </div>
-      <div class="step-card">
+      <div class="flow-step">
         <div class="step-num">3</div>
         <h3>修理作業</h3>
         <p>ご了承いただいたら修理を開始します。最短30分〜が目安です。</p>
       </div>
-      <div class="step-card">
+      <div class="flow-step">
         <div class="step-num">4</div>
         <h3>動作確認・お渡し</h3>
         <p>お客様と一緒に動作を確認してお渡しします。保証書もお渡しします。</p>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ═══ CTA ════════════════════════════════════════════════════ -->
-<section class="cta-section">
-  <div class="container">
+  <div class="cta-box">
     <h2>まずはLINEでご相談ください</h2>
     <p>写真を送るだけで概算見積もりをご提示。相談・見積もりは無料です。</p>
-    <div class="cta-btns">
-      <a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK"
-         class="btn btn-line" target="_blank" rel="noopener">📲 LINEで無料相談・予約</a>
-      <a href="contact.html" class="btn btn-ghost-white">お問い合わせフォーム</a>
+    <div class="cta-buttons">
+      <a href="https://line.me/R/ti/p/@121zxdau" class="btn-line">💬 LINEで相談・見積もり</a>
+      <a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK" class="btn-outline">📅 LINE予約フォーム</a>
     </div>
   </div>
-</section>
 
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="site-logo"><span>🔧</span><span>Repair<span class="accent">540</span></span></a>
-        <p>大分市都町のスマートフォン修理専門店。<br>iPhone・Androidの修理をスピーディに対応します。</p>
-        <div class="footer-socials">
-          <a href="https://www.instagram.com/repair540/" class="social-chip" target="_blank" rel="noopener">📸 @repair540</a>
-          <a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK" class="social-chip" target="_blank" rel="noopener">💬 LINE</a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>メニュー</h4>
-        <ul>
-          <li><a href="index.html">ホーム</a></li>
-          <li><a href="menu.html">修理メニュー・料金</a></li>
-          <li><a href="blog.html">ブログ</a></li>
-          <li><a href="access.html">アクセス</a></li>
-          <li><a href="contact.html">お問い合わせ</a></li>
-        </ul>
-      </div>
-      <div class="footer-col footer-info">
-        <h4>店舗情報</h4>
-        <p><span class="icon">📍</span>〒870-0034 大分県大分市都町1丁目3-22 大分都町ビル1F-1</p>
-        <p><span class="icon">📞</span><a href="tel:07090900540" style="color:rgba(255,255,255,.6)">070-9090-0540</a></p>
-        <p><span class="icon">🕙</span>10:30〜19:00（不定休）</p>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-logo">🔧 Repair540</div>
+      <p class="footer-desc">大分市都町のスマートフォン修理専門店。<br>iPhone・Androidの修理をスピーディに対応します。</p>
+      <br>
+      <a href="https://www.instagram.com/repair540/" style="color:#a1a1a6;font-size:0.85rem;text-decoration:none;">📸 @repair540</a>&nbsp;&nbsp;
+      <a href="https://line.me/R/ti/p/@121zxdau" style="color:#a1a1a6;font-size:0.85rem;text-decoration:none;">💬 LINE</a>
+    </div>
+    <div class="footer-col">
+      <h4>メニュー</h4>
+      <ul class="footer-links">
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="menu.html">修理メニュー・料金</a></li>
+        <li><a href="blog.html">ブログ</a></li>
+        <li><a href="access.html">アクセス</a></li>
+        <li><a href="contact.html">お問い合わせ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>店舗情報</h4>
+      <div class="footer-info">
+        📍 〒870-0034<br>大分県大分市都町1丁目3-22<br>大分都町ビル1F-1<br>
+        📞 <a href="tel:07090900540" style="color:#a1a1a6;text-decoration:none;">070-9090-0540</a><br>
+        🕙 10:30〜19:00（不定休）
       </div>
     </div>
-    <div class="footer-bottom"><p>&copy; 2024 Repair540. All rights reserved.</p></div>
   </div>
+  <div class="footer-bottom">© 2024 Repair540. All rights reserved.</div>
 </footer>
 
-<a href="https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK"
-   class="float-line" target="_blank" rel="noopener">📲 LINE予約</a>
+<div class="line-float">
+  <a href="https://line.me/R/ti/p/@121zxdau">💬 LINE相談・予約</a>
+</div>
 
-<script src="main.js"></script>
+<script>
+  function showGen(gen, btn) {
+    document.querySelectorAll('.price-section').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.gen-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('gen-' + gen).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
 </body>
 </html>
