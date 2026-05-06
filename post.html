@@ -112,7 +112,8 @@
   const postId = parseInt(params.get('id'), 10);
   fetch('posts.json')
     .then(r => r.json())
-    .then(posts => {
+    .then(data => {
+      const posts = Array.isArray(data) ? data : (data.posts || []);
       const post = posts.find(p => p.id === postId);
       if (!post) {
         document.getElementById('post-area').innerHTML = '<p>記事が見つかりませんでした。</p>';
