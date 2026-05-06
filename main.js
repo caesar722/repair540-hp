@@ -1,6 +1,6 @@
 /* Repair540 — 共通 JavaScript */
 
-const LINE_URL = 'https://liff.line.me/2008597169-eYl5poPw?liff_id=2008597169-eYl5poPw&is=PHxf18sZPK';
+const LINE_URL = 'https://line.me/R/ti/p/@121zxdau';
 
 /* ── ハンバーガーメニュー ────────────────── */
 (function () {
@@ -159,7 +159,7 @@ async function loadPosts() {
             </div>
             <h3>${post.title}</h3>
             <p>${post.excerpt}</p>
-            <span class="blog-more">続きを読む →</span>
+            <a href="post.html?id=${post.id}" class="blog-more">続きを読む →</a>
           </div>
         </article>`;
     }).join('');
