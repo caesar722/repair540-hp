@@ -585,6 +585,7 @@ select.form-control {
     position: absolute;
     right: 20px;
     font-size: 22px;
+    color: #666;
 }
 
 .faq-item.active .faq-question::after {
