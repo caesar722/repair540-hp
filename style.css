@@ -620,7 +620,7 @@ select.form-control {
     max-width: 520px;
     margin: 0 auto;
     text-align: center;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .review-stars {
