@@ -657,28 +657,42 @@ select.form-control {
     opacity: 0.9;
     transform: translateY(-2px);
 }
+/* Holiday Section */
+
+.holiday-section {
+    padding: 20px 20px 60px;
+    background: #f7f9fc;
+}
+
 .holiday-card {
     background: #fff;
     border-radius: 18px;
-    padding: 28px;
-    text-align: center;
+    padding: 32px 24px;
     max-width: 520px;
     margin: 0 auto;
+    text-align: center;
     box-shadow: 0 6px 20px rgba(0,0,0,0.05);
 }
 
 .holiday-time {
-    font-size: 22px;
+    font-size: 28px;
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    color: #111;
 }
 
 .holiday-text {
+    font-size: 18px;
     color: #666;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .holiday-date {
     color: #007bff;
     font-weight: 600;
+    line-height: 1.9;
+}
+
+.holiday-date span {
+    font-size: 18px;
 }
