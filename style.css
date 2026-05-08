@@ -606,3 +606,54 @@ select.form-control {
     color: #555;
     line-height: 1.7;
 }
+/* Google Review Section */
+
+.review-section {
+    padding: 20px 20px 60px;
+    background: #f7f9fc;
+}
+
+.review-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 32px 24px;
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+.review-stars {
+    font-size: 30px;
+    color: #f5b301;
+    margin-bottom: 12px;
+}
+
+.review-score {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 16px;
+}
+
+.review-text {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 24px;
+}
+
+.review-button {
+    display: inline-block;
+    background: #007bff;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.review-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
