@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://caesar722.github.io/repair540-hp/sitemap.xml
