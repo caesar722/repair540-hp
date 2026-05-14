@@ -192,25 +192,18 @@ ul { list-style: none; }
   border-radius: 20px; transition: all var(--transition);
 }
 .social-chip:hover { color: #fff; border-color: rgba(255,255,255,.5); }
-.icon-instagram,
+.instagram-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 8px;
+  display: inline-block;
+  flex: 0 0 28px;
+  vertical-align: middle;
+}
 .icon-youtube {
   display: inline-block; width: 20px; height: 20px;
   flex: 0 0 20px; vertical-align: middle; position: relative;
-}
-.icon-instagram {
-  border-radius: 6px;
-  background:
-    radial-gradient(circle at 32% 105%, #feda75 0 22%, #fa7e1e 36%, transparent 48%),
-    radial-gradient(circle at 70% 18%, #5b51d8 0 20%, transparent 38%),
-    linear-gradient(135deg, #405de6 0%, #833ab4 32%, #c13584 55%, #e1306c 72%, #fd1d1d 100%);
-}
-.icon-instagram::before {
-  content: ''; position: absolute; inset: 5px;
-  border: 2px solid #fff; border-radius: 5px;
-}
-.icon-instagram::after {
-  content: ''; position: absolute; top: 5px; right: 5px;
-  width: 4px; height: 4px; background: #fff; border-radius: 50%;
 }
 .icon-youtube {
   width: 22px; flex-basis: 22px;
