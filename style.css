@@ -82,8 +82,8 @@ ul { list-style: none; }
   height: 48px;
   border-radius: 50%;
   object-fit: contain;
-  background: #fff;
-  padding: 2px;
+  background: transparent;
+  padding: 0;
   flex-shrink: 0;
   margin-right: 10px;
 }
@@ -173,8 +173,8 @@ ul { list-style: none; }
   height: 48px;
   border-radius: 50%;
   object-fit: contain;
-  background: #fff;
-  padding: 2px;
+  background: transparent;
+  padding: 0;
   flex-shrink: 0;
   margin-right: 10px;
 }
