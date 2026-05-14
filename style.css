@@ -572,6 +572,9 @@ select.form-control {
   flex: 1 1 190px;
   padding: 13px 18px;
 }
+.contact-actions .btn-line {
+  width: 100%;
+}
 .form-wrap {
   background: #fff; border-radius: var(--radius);
   box-shadow: var(--shadow); padding: 32px;
