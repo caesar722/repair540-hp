@@ -264,6 +264,24 @@ ul { list-style: none; }
   border: 2px solid rgba(255,255,255,.6);
 }
 .btn-ghost-white:hover { background: #fff; color: var(--primary); }
+.btn-phone {
+  background: #fff; color: var(--primary);
+  border: 2px solid var(--border);
+  box-shadow: none;
+}
+.btn-phone:hover {
+  background: var(--bg-alt); color: var(--primary-dark);
+  border-color: #D1D1D6;
+  transform: translateY(-1px);
+}
+.btn-phone-white {
+  background: transparent; color: #fff;
+  border-color: rgba(255,255,255,.55);
+}
+.btn-phone-white:hover {
+  background: rgba(255,255,255,.12); color: #fff;
+  border-color: rgba(255,255,255,.8);
+}
 
 /* ── Page Header (inner pages) ───────────── */
 .page-hero {
@@ -544,6 +562,16 @@ select.form-control {
 }
 .contact-alt h4 { font-size: .9rem; font-weight: 700; margin-bottom: 6px; }
 .contact-alt p  { font-size: .85rem; color: var(--text-sub); }
+.contact-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.contact-actions .btn {
+  flex: 1 1 190px;
+  padding: 13px 18px;
+}
 .form-wrap {
   background: #fff; border-radius: var(--radius);
   box-shadow: var(--shadow); padding: 32px;
@@ -582,6 +610,11 @@ select.form-control {
   .container { padding: 0 16px; }
   .hero-title { font-size: 1.75rem; }
   .btn { padding: 13px 22px; font-size: .95rem; }
+  .cta-btns .btn,
+  .contact-actions .btn {
+    width: 100%;
+    flex-basis: 100%;
+  }
   .float-line { bottom: 16px; right: 16px; padding: 11px 16px; font-size: .875rem; }
 }
 /* FAQ Section */
