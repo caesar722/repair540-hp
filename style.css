@@ -249,6 +249,13 @@ ul { list-style: none; }
   background: var(--line-green); color: #fff;
   padding: 16px 32px; font-size: 1.05rem;
 }
+.line-logo-img {
+  display: inline-block;
+  height: 1.2em;
+  width: auto;
+  flex: 0 0 auto;
+  vertical-align: middle;
+}
 .btn-line:hover {
   background: var(--line-dark); color: #fff;
   transform: translateY(-1px);
