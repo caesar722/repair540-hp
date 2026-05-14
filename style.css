@@ -167,12 +167,12 @@ ul { list-style: none; }
 }
 .footer-brand .site-logo { font-size: 1.1rem; margin-bottom: 14px; }
 .footer-logo-img {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  margin-right: 10px;
+  margin-right: 12px;
 }
 .footer-brand p { font-size: .85rem; line-height: 1.85; }
 .footer-col h4 {
