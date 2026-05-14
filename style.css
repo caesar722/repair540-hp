@@ -72,10 +72,21 @@ ul { list-style: none; }
   display: flex; align-items: center; gap: 20px;
 }
 .site-logo {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center;
   color: #fff; font-weight: 800; font-size: 1.25rem;
   letter-spacing: .03em; flex-shrink: 0;
   white-space: nowrap;
+}
+.site-logo-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+.site-logo > span:first-child {
+  margin-right: 8px;
 }
 .site-logo .accent { color: #5EB8FF; }
 
