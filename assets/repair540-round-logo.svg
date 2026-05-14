@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Repair540 logo">
+  <defs>
+    <clipPath id="clip">
+      <circle cx="256" cy="256" r="244"/>
+    </clipPath>
+    <linearGradient id="phone" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f64c8"/>
+      <stop offset="1" stop-color="#0d3d86"/>
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="244" fill="#ffcc32"/>
+  <g clip-path="url(#clip)">
+    <path d="M512 96v416H0v-96z" fill="#b455f2"/>
+    <path d="M512 222v290H150z" fill="#7b22bf" opacity=".75"/>
+  </g>
+  <text x="256" y="126" text-anchor="middle" fill="#11166f" font-family="Georgia, 'Times New Roman', serif" font-size="70" font-weight="700">Repair540</text>
+  <g transform="translate(78 220) rotate(-20 178 92)">
+    <rect x="0" y="0" width="356" height="184" rx="26" fill="#202326"/>
+    <rect x="18" y="18" width="320" height="138" rx="15" fill="url(#phone)"/>
+    <rect x="302" y="69" width="28" height="13" rx="6" fill="#111"/>
+    <rect x="32" y="130" width="105" height="24" rx="12" fill="#fff"/>
+    <g transform="translate(150 30)">
+      <rect x="0" y="0" width="42" height="42" rx="10" fill="#fff"/>
+      <circle cx="21" cy="21" r="12" fill="#34a853"/>
+      <path d="M21 9a12 12 0 0 1 11 17H21z" fill="#4285f4"/>
+      <path d="M11 27a12 12 0 0 1 10-18v18z" fill="#fbbc05"/>
+    </g>
+    <g transform="translate(204 24)">
+      <rect x="0" y="0" width="52" height="38" rx="9" fill="#e53935"/>
+      <path d="M16 12h24L20 25h20" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g transform="translate(74 65)">
+      <rect x="0" y="0" width="48" height="48" rx="12" fill="#28a745"/>
+      <path d="M17 17c6-7 16 2 9 8-6 6-1 14 8 10" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(137 86)">
+      <rect x="0" y="0" width="48" height="48" rx="12" fill="#fff"/>
+      <circle cx="24" cy="24" r="13" fill="#ffcc32"/>
+      <circle cx="24" cy="24" r="8" fill="#f44336"/>
+    </g>
+    <g transform="translate(196 78)">
+      <rect x="0" y="0" width="48" height="48" rx="12" fill="#28c2d1"/>
+      <circle cx="24" cy="24" r="14" fill="none" stroke="#c8f6ff" stroke-width="7"/>
+      <circle cx="24" cy="24" r="5" fill="#fff"/>
+    </g>
+    <g transform="translate(257 67)">
+      <rect x="0" y="0" width="54" height="48" rx="12" fill="#2fc3c7"/>
+      <path d="M21 14l18 10-18 10z" fill="#fff"/>
+    </g>
+    <g transform="translate(206 132)">
+      <rect x="0" y="0" width="50" height="42" rx="12" fill="#1faa59"/>
+      <circle cx="22" cy="20" r="12" fill="#fff"/>
+      <circle cx="18" cy="18" r="2.5" fill="#1faa59"/>
+      <circle cx="27" cy="18" r="2.5" fill="#1faa59"/>
+    </g>
+    <g transform="translate(38 88)">
+      <rect x="0" y="0" width="48" height="48" rx="12" fill="#fff"/>
+      <path d="M15 14h19v22H15z" fill="#13a448"/>
+      <path d="M18 18h13M18 23h13M18 28h13" stroke="#0b7f36" stroke-width="2"/>
+    </g>
+    <g transform="translate(104 130)">
+      <rect x="0" y="0" width="48" height="42" rx="11" fill="#fff"/>
+      <circle cx="24" cy="21" r="11" fill="#2f68c7"/>
+      <circle cx="24" cy="21" r="6" fill="#fff"/>
+    </g>
+  </g>
+</svg>
