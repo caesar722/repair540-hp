@@ -78,10 +78,12 @@ ul { list-style: none; }
   white-space: nowrap;
 }
 .site-logo-img {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #fff;
+  padding: 2px;
   flex-shrink: 0;
   margin-right: 10px;
 }
@@ -170,9 +172,11 @@ ul { list-style: none; }
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #fff;
+  padding: 2px;
   flex-shrink: 0;
-  margin-right: 12px;
+  margin-right: 10px;
 }
 .footer-brand p { font-size: .85rem; line-height: 1.85; }
 .footer-col h4 {
