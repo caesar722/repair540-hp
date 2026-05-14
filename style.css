@@ -215,10 +215,10 @@ ul { list-style: none; }
   font-size: .78rem; color: rgba(255,255,255,.35);
 }
 
-/* ── Floating LINE Button ───────────────── */
+/* ── Floating Contact Button ─────────────── */
 .float-line {
   position: fixed; bottom: 24px; right: 24px; z-index: 900;
-  display: flex; align-items: center; gap: 0;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
   background: var(--line-green); color: #fff;
   padding: 13px 20px; border-radius: 32px;
   font-weight: 700; font-size: .95rem;
@@ -229,6 +229,16 @@ ul { list-style: none; }
   background: var(--line-dark); color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 6px 22px rgba(6,199,85,.55);
+}
+.float-line .phone-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* ── Buttons ─────────────────────────────── */
