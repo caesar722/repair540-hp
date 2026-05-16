@@ -7,12 +7,20 @@
   <meta name="description" content="Repair540のブログ記事">
   <link rel="stylesheet" href="style.css">
   <style>
-    .post-content p { margin-bottom: 1.2em; line-height: 1.8; }
+    .post-card { background:#fff; border:1px solid var(--border); border-radius:18px; padding:32px; box-shadow:var(--shadow); }
+    .post-content p { margin-bottom: 1.2em; line-height: 1.9; }
+    .post-content .post-section-label { margin-top: 1.8em; margin-bottom: .6em; font-weight: 700; color: var(--primary); }
     .post-back { display: inline-block; margin-bottom: 24px; color: var(--primary); text-decoration: none; font-weight: 600; }
     .post-back:hover { text-decoration: underline; }
     .post-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; color: var(--text-sub); font-size: .875rem; }
     .post-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 24px; line-height: 1.4; }
     .post-body { border-top: 2px solid var(--border); padding-top: 24px; }
+    @media (max-width: 480px) {
+      .post-card { padding: 24px 18px; border-radius: 14px; }
+      .post-title { font-size: 1.45rem; }
+      .post-meta { flex-wrap: wrap; gap: 8px 10px; }
+      .post-content p { font-size: .95rem; line-height: 1.95; }
+    }
   </style>
 </head>
 <body>
@@ -123,22 +131,39 @@
         document.getElementById('post-area').innerHTML = '<p>記事が見つかりませんでした。</p>';
         return;
       }
+      const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+      const formattedDate = new Date(post.date).toLocaleDateString('ja-JP', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
       document.title = post.title + ' | Repair540';
       document.getElementById('breadcrumb-title').textContent = post.title;
       const paragraphs = post.content
         .split('\n')
         .map(line => line.trim())
         .filter(line => line.length > 0)
-        .map(line => '<p>' + line + '</p>')
+        .map(line => {
+          const className = line.endsWith('：') ? ' class="post-section-label"' : '';
+          return '<p' + className + '>' + escapeHtml(line) + '</p>';
+        })
         .join('');
       document.getElementById('post-area').innerHTML =
+        '<article class="post-card">' +
         '<div class="post-meta">' +
-        '<span>' + (post.emoji || '') + '</span>' +
-        '<span>' + post.date + '</span>' +
-        '<span class="blog-cat">' + post.category + '</span>' +
+        '<span>' + escapeHtml(post.emoji || '') + '</span>' +
+        '<span>' + formattedDate + '</span>' +
+        '<span class="blog-cat">' + escapeHtml(post.category) + '</span>' +
         '</div>' +
-        '<h1 class="post-title">' + post.title + '</h1>' +
-        '<div class="post-body post-content">' + paragraphs + '</div>';
+        '<h1 class="post-title">' + escapeHtml(post.title) + '</h1>' +
+        '<div class="post-body post-content">' + paragraphs + '</div>' +
+        '</article>';
     })
     .catch(() => {
       document.getElementById('post-area').innerHTML = '<p>記事の読み込みに失敗しました。</p>';

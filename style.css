@@ -428,13 +428,17 @@ ul { list-style: none; }
 /* ── Page Header (inner pages) ───────────── */
 .page-hero {
   background: linear-gradient(135deg, #1C1C1E 0%, #2D2D30 100%);
-  color: #fff; padding: 56px 0 44px; text-align: center;
+  color: #fff; padding: 56px 16px 44px; text-align: center;
 }
 .page-hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
-.page-hero p  { color: rgba(255,255,255,.65); font-size: 1rem; }
+.page-hero p  {
+  max-width: 640px; margin: 0 auto;
+  color: rgba(255,255,255,.65); font-size: 1rem;
+  overflow-wrap: anywhere;
+}
 .breadcrumb {
   display: flex; align-items: center; gap: 8px;
-  justify-content: center; margin-top: 14px;
+  justify-content: center; flex-wrap: wrap; margin-top: 14px;
   font-size: .8rem; color: rgba(255,255,255,.45);
 }
 .breadcrumb a { color: rgba(255,255,255,.55); }
@@ -764,7 +768,18 @@ select.form-control {
 
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
+  body { overflow-x: hidden; }
   .hero-title { font-size: 1.75rem; }
+  .page-hero { padding-left: 24px; padding-right: 24px; }
+  .page-hero p {
+    max-width: 300px;
+    font-size: .92rem;
+    line-height: 1.8;
+  }
+  .blog-filter .filter-btn {
+    padding: 6px 14px !important;
+    font-size: .82rem !important;
+  }
   .btn { padding: 13px 22px; font-size: .95rem; }
   .sns-link-row {
     align-items: stretch;
