@@ -763,6 +763,13 @@ select.form-control {
   .services-grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
+  .footer-socials {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer-socials .social-chip {
+    width: fit-content;
+  }
   .tab-btn { font-size: .875rem; padding: 8px 14px; }
 }
 
