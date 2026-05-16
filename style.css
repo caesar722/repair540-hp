@@ -224,6 +224,14 @@ ul { list-style: none; }
   flex: 0 0 28px;
   vertical-align: middle;
 }
+.youtube-logo {
+  width: 28px;
+  height: 20px;
+  object-fit: contain;
+  display: inline-block;
+  flex: 0 0 28px;
+  vertical-align: middle;
+}
 .icon-youtube {
   display: inline-block; width: 20px; height: 20px;
   flex: 0 0 20px; vertical-align: middle; position: relative;
@@ -278,6 +286,7 @@ ul { list-style: none; }
   box-shadow: 0 4px 14px rgba(6,199,85,.18);
 }
 .sns-link-row .instagram-logo,
+.sns-link-row .youtube-logo,
 .sns-link-row .line-logo-img,
 .sns-link-row img[alt="LINE"] {
   width: 24px !important;
@@ -285,6 +294,11 @@ ul { list-style: none; }
   flex: 0 0 24px;
   margin: 0;
   object-fit: contain;
+}
+.sns-link-row .youtube-logo {
+  width: 28px !important;
+  height: 20px !important;
+  flex-basis: 28px;
 }
 .sns-link-row .icon-youtube {
   width: 28px;
@@ -765,11 +779,17 @@ select.form-control {
     justify-content: center;
   }
   .sns-link-row .instagram-logo,
+  .sns-link-row .youtube-logo,
   .sns-link-row .line-logo-img,
   .sns-link-row img[alt="LINE"] {
     width: 22px !important;
     height: 22px !important;
     flex-basis: 22px;
+  }
+  .sns-link-row .youtube-logo {
+    width: 26px !important;
+    height: 18px !important;
+    flex-basis: 26px;
   }
   .sns-link-row .icon-youtube {
     width: 26px;
