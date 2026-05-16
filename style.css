@@ -244,6 +244,62 @@ ul { list-style: none; }
   line-height: 1.5;
   text-align: center;
 }
+.sns-link-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 10px;
+}
+.sns-link-row .sns-link-btn {
+  min-height: 56px;
+  padding: 13px 22px;
+  border-radius: 999px;
+  font-size: .94rem;
+  font-weight: 700;
+  line-height: 1.25;
+  gap: 10px;
+  min-width: 220px;
+}
+.sns-link-row .btn-outline {
+  background: #fff;
+  color: var(--primary);
+  border: 1.5px solid #D8E9FF;
+  box-shadow: 0 4px 14px rgba(0,102,204,.08);
+}
+.sns-link-row .btn-outline:hover {
+  background: #F2F8FF;
+  color: var(--primary-dark);
+  border-color: #B8D8FF;
+  box-shadow: 0 6px 18px rgba(0,102,204,.14);
+}
+.sns-link-row .btn-line {
+  box-shadow: 0 4px 14px rgba(6,199,85,.18);
+}
+.sns-link-row .instagram-logo,
+.sns-link-row .line-logo-img,
+.sns-link-row img[alt="LINE"] {
+  width: 24px !important;
+  height: 24px !important;
+  flex: 0 0 24px;
+  margin: 0;
+  object-fit: contain;
+}
+.sns-link-row .icon-youtube {
+  width: 28px;
+  height: 20px;
+  flex: 0 0 28px;
+  border-radius: 6px;
+  background: #FF0033;
+}
+.sns-link-row .icon-youtube::before {
+  left: 11px;
+  top: 5px;
+  border-left-width: 8px;
+  border-top-width: 5px;
+  border-bottom-width: 5px;
+}
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,.1);
   padding-top: 20px; text-align: center;
@@ -696,6 +752,34 @@ select.form-control {
   .container { padding: 0 16px; }
   .hero-title { font-size: 1.75rem; }
   .btn { padding: 13px 22px; font-size: .95rem; }
+  .sns-link-row {
+    align-items: stretch;
+    gap: 10px;
+  }
+  .sns-link-row .sns-link-btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    padding: 12px 18px;
+    font-size: .92rem;
+    justify-content: center;
+  }
+  .sns-link-row .instagram-logo,
+  .sns-link-row .line-logo-img,
+  .sns-link-row img[alt="LINE"] {
+    width: 22px !important;
+    height: 22px !important;
+    flex-basis: 22px;
+  }
+  .sns-link-row .icon-youtube {
+    width: 26px;
+    height: 18px;
+    flex-basis: 26px;
+  }
+  .sns-link-row .icon-youtube::before {
+    left: 10px;
+    top: 4px;
+  }
   .cta-btns .btn,
   .contact-actions .btn {
     width: 100%;
