@@ -776,27 +776,21 @@ select.form-control {
     white-space: nowrap;
   }
   .footer-socials .instagram-logo {
-    width: 28px;
-    height: 28px;
-    flex-basis: 28px;
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
   }
   .footer-socials .icon-youtube {
-    width: 26px;
-    height: 22px;
-    flex-basis: 26px;
+    width: 20px;
+    height: 18px;
+    flex-basis: 20px;
   }
   .footer-socials .icon-youtube::before {
-    left: 9px;
-    top: 5px;
-    border-left-width: 9px;
-    border-top-width: 6px;
-    border-bottom-width: 6px;
-  }
-  .footer-socials img[alt="LINE"] {
-    width: 24px !important;
-    height: 24px !important;
-    flex: 0 0 24px;
-    object-fit: contain;
+    left: 7px;
+    top: 4px;
+    border-left-width: 7px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
   }
   .tab-btn { font-size: .875rem; padding: 8px 14px; }
 }
