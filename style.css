@@ -207,7 +207,7 @@ ul { list-style: none; }
 .footer-col a { color: rgba(255,255,255,.6); font-size: .875rem; transition: color var(--transition); }
 .footer-col a:hover { color: #fff; }
 .footer-info p { font-size: .875rem; margin-bottom: 6px; display: flex; gap: 8px; }
-.footer-socials { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.footer-socials { display: flex; gap: 10px; margin-top: 16px; flex-wrap: nowrap; }
 .social-chip {
   display: inline-flex; align-items: center; gap: 6px;
   color: rgba(255,255,255,.65); font-size: .82rem;
@@ -764,11 +764,33 @@ select.form-control {
   .blog-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-socials {
-    flex-direction: column;
-    align-items: flex-start;
+    gap: 6px;
+    max-width: 100%;
   }
   .footer-socials .social-chip {
-    width: fit-content;
+    flex: 0 1 auto;
+    min-width: 0;
+    gap: 5px;
+    padding: 5px 8px;
+    font-size: .76rem;
+    white-space: nowrap;
+  }
+  .footer-socials .instagram-logo {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+  }
+  .footer-socials .icon-youtube {
+    width: 20px;
+    height: 18px;
+    flex-basis: 20px;
+  }
+  .footer-socials .icon-youtube::before {
+    left: 7px;
+    top: 4px;
+    border-left-width: 7px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
   }
   .tab-btn { font-size: .875rem; padding: 8px 14px; }
 }

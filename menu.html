@@ -101,8 +101,11 @@
     .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-bottom: 28px; }
     @media (max-width: 640px) {
       .footer-inner { grid-template-columns: 1fr; gap: 20px; }
-      .footer-socials { flex-direction: column; align-items: flex-start; }
-      .footer-socials .social-chip { width: fit-content; }
+      .footer-socials { gap: 6px; max-width: 100%; }
+      .footer-socials .social-chip { flex: 0 1 auto; min-width: 0; gap: 5px; font-size: 0.76rem; white-space: nowrap; }
+      .footer-socials .instagram-logo { width: 24px; height: 24px; flex-basis: 24px; }
+      .footer-socials .icon-youtube { width: 20px; height: 18px; flex-basis: 20px; }
+      .footer-socials .icon-youtube::before { left: 7px; top: 4px; border-left-width: 7px; border-top-width: 5px; border-bottom-width: 5px; }
     }
     .footer-logo { display: flex; align-items: center; font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
     .footer-logo-img { width: 48px; height: 48px; border-radius: 50%; object-fit: contain; background: transparent; padding: 0; flex-shrink: 0; margin-right: 10px; }
@@ -113,7 +116,7 @@
     .footer-links a { color: #a1a1a6; text-decoration: none; font-size: 0.85rem; }
     .footer-links a:hover { color: white; }
     .footer-info { font-size: 0.82rem; color: #a1a1a6; line-height: 2; }
-    .footer-socials { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .footer-socials { display: flex; gap: 10px; flex-wrap: nowrap; margin-top: 14px; }
     .social-chip { display: inline-flex; align-items: center; gap: 6px; color: #a1a1a6; font-size: 0.85rem; text-decoration: none; }
     .social-chip:hover { color: #fff; }
     .instagram-logo { width: 28px; height: 28px; object-fit: contain; border-radius: 8px; display: inline-block; flex: 0 0 28px; vertical-align: middle; }
