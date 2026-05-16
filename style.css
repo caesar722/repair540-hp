@@ -772,9 +772,11 @@ select.form-control {
   .hero-title { font-size: 1.75rem; }
   .page-hero { padding-left: 24px; padding-right: 24px; }
   .page-hero p {
-    max-width: 300px;
+    max-width: 250px;
     font-size: .92rem;
     line-height: 1.8;
+    white-space: normal;
+    word-break: break-word;
   }
   .blog-filter .filter-btn {
     padding: 6px 14px !important;
@@ -833,6 +835,26 @@ select.form-control {
     margin: 0 auto;
 }
 
+.faq-more,
+.faq-cta {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.faq-more {
+    margin-top: 28px;
+}
+
+.faq-page-section {
+    padding-top: 56px;
+}
+
+.faq-page-container {
+    margin-bottom: 32px;
+}
+
 .faq-item {
     background: #fff;
     border-radius: 14px;
@@ -879,6 +901,52 @@ select.form-control {
     margin: 0;
     color: #555;
     line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+    .faq-section {
+        padding: 10px 16px 48px;
+    }
+
+    .faq-page-section {
+        padding-top: 40px;
+    }
+
+    .faq-container {
+        max-width: calc(100vw - 32px);
+    }
+
+    .faq-item {
+        width: 100%;
+        max-width: calc(100vw - 48px);
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
+
+    .faq-question {
+        padding: 18px 48px 18px 16px;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .faq-question::after {
+        right: 16px;
+        top: 16px;
+    }
+
+    .faq-answer p {
+        padding: 0 16px 18px;
+        font-size: .92rem;
+        line-height: 1.85;
+    }
+
+    .faq-more .btn,
+    .faq-cta .btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 /* Google Review Section */
 
