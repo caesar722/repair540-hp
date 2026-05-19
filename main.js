@@ -144,8 +144,13 @@ async function loadPosts() {
   try {
     const res  = await fetch('posts.json');
     const data = await res.json();
+    const limit = parseInt(grid.dataset.limit || '', 10);
+    const posts = data.posts
+      .slice()
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
+    const visiblePosts = Number.isFinite(limit) ? posts.slice(0, limit) : posts;
 
-    grid.innerHTML = data.posts.map(post => {
+    grid.innerHTML = visiblePosts.map(post => {
       const date = new Date(post.date).toLocaleDateString('ja-JP', {
         year: 'numeric', month: 'long', day: 'numeric'
       });
