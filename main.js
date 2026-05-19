@@ -1,6 +1,118 @@
 /* Repair540 — 共通 JavaScript */
 
 const LINE_URL = 'https://line.me/R/ti/p/@121zxdau';
+const GA4_MEASUREMENT_ID = 'G-VB6TQCK198';
+
+function trackEvent(eventName, params = {}) {
+  if (typeof window.gtag !== 'function') return;
+  window.gtag('event', eventName, {
+    page_path: window.location.pathname + window.location.search,
+    page_title: document.title,
+    ...params
+  });
+}
+
+function getCleanText(text) {
+  return (text || '').replace(/\s+/g, ' ').trim();
+}
+
+function trackLinkClick(link) {
+  if (!link) return;
+
+  const href = link.getAttribute('href') || '';
+  const label = getCleanText(link.textContent).slice(0, 100);
+  const commonParams = {
+    link_text: label || link.getAttribute('aria-label') || '',
+    link_url: href
+  };
+
+  if (href.startsWith('tel:')) {
+    trackEvent('contact_click', {
+      ...commonParams,
+      contact_method: 'phone'
+    });
+    return;
+  }
+
+  if (href.includes('line.me')) {
+    trackEvent('contact_click', {
+      ...commonParams,
+      contact_method: 'line'
+    });
+    return;
+  }
+
+  if (href.includes('instagram.com')) {
+    trackEvent('social_click', {
+      ...commonParams,
+      social_platform: 'instagram'
+    });
+    return;
+  }
+
+  if (href.includes('youtube.com') || href.includes('youtu.be')) {
+    trackEvent('social_click', {
+      ...commonParams,
+      social_platform: 'youtube'
+    });
+    return;
+  }
+
+  if (
+    href.includes('google.com/maps') ||
+    href.includes('maps.app.goo.gl') ||
+    href.includes('goo.gl/maps')
+  ) {
+    trackEvent('location_click', {
+      ...commonParams,
+      destination: 'google_maps'
+    });
+    return;
+  }
+
+  if (/post\.html\?id=\d+/.test(href)) {
+    const postId = new URL(href, window.location.href).searchParams.get('id') || '';
+    trackEvent('blog_post_open', {
+      ...commonParams,
+      post_id: postId
+    });
+    return;
+  }
+
+  if (link.closest('.site-nav, .mobile-nav, .footer-nav, .footer-menu, .footer-grid')) {
+    trackEvent('navigation_click', {
+      ...commonParams,
+      navigation_area: link.closest('.mobile-nav')
+        ? 'mobile_nav'
+        : link.closest('.site-nav')
+          ? 'header_nav'
+          : 'footer_nav'
+    });
+  }
+}
+
+function initAnalytics() {
+  window.Repair540Analytics = {
+    measurementId: GA4_MEASUREMENT_ID,
+    trackEvent
+  };
+
+  document.addEventListener('click', (event) => {
+    const faqButton = event.target.closest('.faq-question');
+    if (faqButton) {
+      const faqItem = faqButton.closest('.faq-item');
+      if (faqItem && faqItem.classList.contains('active')) {
+        trackEvent('faq_open', {
+          faq_question: getCleanText(faqButton.textContent).slice(0, 120)
+        });
+      }
+      return;
+    }
+
+    const link = event.target.closest('a');
+    if (link) trackLinkClick(link);
+  });
+}
 
 /* ── ハンバーガーメニュー ────────────────── */
 (function () {
@@ -12,6 +124,11 @@ const LINE_URL = 'https://line.me/R/ti/p/@121zxdau';
     const open = btn.classList.toggle('open');
     nav.classList.toggle('open', open);
     btn.setAttribute('aria-expanded', open);
+    if (open) {
+      trackEvent('menu_open', {
+        menu_type: 'mobile_header'
+      });
+    }
   });
 
   document.addEventListener('click', (e) => {
@@ -43,6 +160,9 @@ function initTabs() {
       btn.classList.add('active');
       const target = document.getElementById(btn.dataset.tab);
       if (target) target.classList.add('active');
+      trackEvent('pricing_category_select', {
+        category_name: getCleanText(btn.textContent)
+      });
     });
   });
 }
@@ -175,6 +295,7 @@ async function loadPosts() {
 
 /* ── 初期化 ──────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  initAnalytics();
   loadPrices();
   loadPosts();
 });

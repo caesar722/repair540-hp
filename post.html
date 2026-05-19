@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ブログ記事 | Repair540</title>
-  <meta name="description" content="Repair540のブログ記事">
+  <title>ブログ記事｜大分市都町のiPhone修理・スマホ修理 Repair540</title>
+  <meta name="description" content="Repair540のブログ記事ページです。修理に役立つ情報や店舗からのお知らせをご案内しています。">
   <!-- Google Analytics 4 (GA4): Measurement ID for Repair540 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VB6TQCK198"></script>
   <script>
@@ -14,6 +14,9 @@
     // Official GA4 Measurement ID for Repair540.
     gtag('config', 'G-VB6TQCK198');
   </script>
+  <meta property="og:title" content="ブログ記事｜Repair540">
+  <meta property="og:description" content="Repair540のブログ記事ページです。">
+  <meta property="og:type" content="article">
   <link rel="stylesheet" href="style.css">
   <style>
     .post-card { background:#fff; border:1px solid var(--border); border-radius:18px; padding:32px; box-shadow:var(--shadow); }
@@ -155,7 +158,17 @@
         month: 'long',
         day: 'numeric'
       });
-      document.title = post.title + ' | Repair540';
+      const summaryText = (post.excerpt || post.content)
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 120);
+      document.title = post.title + '｜ブログ｜大分市都町のiPhone修理・スマホ修理 Repair540';
+      const descriptionTag = document.querySelector('meta[name="description"]');
+      const ogTitleTag = document.querySelector('meta[property="og:title"]');
+      const ogDescriptionTag = document.querySelector('meta[property="og:description"]');
+      if (descriptionTag) descriptionTag.setAttribute('content', summaryText);
+      if (ogTitleTag) ogTitleTag.setAttribute('content', post.title + '｜Repair540');
+      if (ogDescriptionTag) ogDescriptionTag.setAttribute('content', summaryText);
       document.getElementById('breadcrumb-title').textContent = post.title;
       const paragraphs = post.content
         .split('\n')
@@ -183,6 +196,13 @@
         '<h1 class="post-title">' + escapeHtml(post.title) + '</h1>' +
         '<div class="post-body post-content">' + paragraphs + '</div>' +
         '</article>';
+      if (window.Repair540Analytics && typeof window.Repair540Analytics.trackEvent === 'function') {
+        window.Repair540Analytics.trackEvent('blog_post_view', {
+          post_id: String(post.id),
+          post_title: post.title,
+          post_category: post.category
+        });
+      }
     })
     .catch(() => {
       document.getElementById('post-area').innerHTML = '<p>記事の読み込みに失敗しました。</p>';

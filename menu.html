@@ -747,12 +747,94 @@
 </div>
 
 <script>
+  function trackMenuEvent(eventName, params) {
+    if (typeof window.gtag !== 'function') return;
+    window.gtag('event', eventName, {
+      page_path: window.location.pathname + window.location.search,
+      page_title: document.title,
+      ...params
+    });
+  }
+
+  function getMenuLinkText(link) {
+    return (link.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 100);
+  }
+
   function showGen(gen, btn) {
     document.querySelectorAll('.price-section').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.gen-btn').forEach(el => el.classList.remove('active'));
     document.getElementById('gen-' + gen).classList.add('active');
     btn.classList.add('active');
+    trackMenuEvent('pricing_category_select', {
+      category_name: getMenuLinkText(btn)
+    });
   }
+
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a');
+    if (!link) return;
+
+    const href = link.getAttribute('href') || '';
+    const commonParams = {
+      link_text: getMenuLinkText(link) || link.getAttribute('aria-label') || '',
+      link_url: href
+    };
+
+    if (href.startsWith('tel:')) {
+      trackMenuEvent('contact_click', {
+        ...commonParams,
+        contact_method: 'phone'
+      });
+      return;
+    }
+
+    if (href.includes('line.me')) {
+      trackMenuEvent('contact_click', {
+        ...commonParams,
+        contact_method: 'line'
+      });
+      return;
+    }
+
+    if (href.includes('instagram.com')) {
+      trackMenuEvent('social_click', {
+        ...commonParams,
+        social_platform: 'instagram'
+      });
+      return;
+    }
+
+    if (href.includes('youtube.com') || href.includes('youtu.be')) {
+      trackMenuEvent('social_click', {
+        ...commonParams,
+        social_platform: 'youtube'
+      });
+      return;
+    }
+
+    if (
+      href.includes('google.com/maps') ||
+      href.includes('maps.app.goo.gl') ||
+      href.includes('goo.gl/maps')
+    ) {
+      trackMenuEvent('location_click', {
+        ...commonParams,
+        destination: 'google_maps'
+      });
+      return;
+    }
+
+    if (link.closest('.header nav, .mobile-nav, .footer-inner, .footer-links, .page-nav')) {
+      trackMenuEvent('navigation_click', {
+        ...commonParams,
+        navigation_area: link.closest('.mobile-nav')
+          ? 'mobile_nav'
+          : link.closest('.header nav')
+            ? 'header_nav'
+            : 'footer_nav'
+      });
+    }
+  });
 </script>
 
 </body>

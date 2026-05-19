@@ -353,6 +353,12 @@ if (form) {
         successMsg.style.display = 'block';
         successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         btn.textContent = '送信しました ✓';
+        if (window.Repair540Analytics && typeof window.Repair540Analytics.trackEvent === 'function') {
+          window.Repair540Analytics.trackEvent('generate_lead', {
+            form_name: 'contact_form',
+            lead_type: 'repair_inquiry'
+          });
+        }
       } else {
         throw new Error('送信失敗');
       }
