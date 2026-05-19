@@ -124,17 +124,26 @@ ul { list-style: none; }
 
 /* Hamburger */
 .hamburger {
-  display: none; flex-direction: column; gap: 5px;
+  display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
   background: none; border: none; cursor: pointer;
-  padding: 8px; margin-left: auto; flex-shrink: 0;
+  width: 46px; height: 52px; padding: 4px 6px; margin-left: auto; flex-shrink: 0;
 }
 .hamburger span {
   display: block; width: 24px; height: 2px;
   background: #fff; border-radius: 2px; transition: all .3s;
 }
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger::after {
+  content: 'MENU';
+  color: #fff;
+  font-size: .58rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .04em;
+  text-align: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 /* Mobile nav drawer */
 .mobile-nav {
