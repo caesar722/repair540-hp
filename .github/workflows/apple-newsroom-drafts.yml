@@ -1,0 +1,38 @@
+name: Generate Apple Newsroom Drafts
+
+on:
+  schedule:
+    - cron: '30 23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-drafts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate Apple Newsroom drafts
+        run: node scripts/generate-apple-newsroom-drafts.mjs
+
+      - name: Commit generated drafts
+        run: |
+          if git diff --quiet -- blog/posts; then
+            echo "No new drafts."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add blog/posts
+          git commit -m "Add Apple Newsroom blog draft"
+          git push
