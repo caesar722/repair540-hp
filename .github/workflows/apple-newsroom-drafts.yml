@@ -11,6 +11,8 @@ permissions:
 jobs:
   generate-drafts:
     runs-on: ubuntu-latest
+    env:
+      REPORT_FILE: apple-newsroom-run-report.json
 
     steps:
       - name: Checkout
@@ -22,17 +24,29 @@ jobs:
           node-version: '20'
 
       - name: Generate Apple Newsroom drafts
-        run: node scripts/generate-apple-newsroom-drafts.mjs
+        run: node scripts/generate-apple-newsroom-drafts.mjs --report-file=${REPORT_FILE}
+
+      - name: Read report
+        id: report
+        run: |
+          node -e 'const fs=require("fs"); const report=JSON.parse(fs.readFileSync(process.env.REPORT_FILE,"utf8")); fs.appendFileSync(process.env.GITHUB_OUTPUT, "draft_count=" + report.draftCount + "\n");'
 
       - name: Commit generated drafts
+        if: steps.report.outputs.draft_count != '0'
         run: |
-          if git diff --quiet -- blog/posts; then
-            echo "No new drafts."
-            exit 0
-          fi
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add blog/posts
           git commit -m "Add Apple Newsroom blog draft"
           git push
+
+      - name: Send LINE notification
+        if: steps.report.outputs.draft_count != '0'
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_TO: ${{ secrets.LINE_TO }}
+        run: node scripts/send-line-draft-notifications.mjs --report-file=${REPORT_FILE}
+
+# Required GitHub Secrets:
+# - LINE_CHANNEL_ACCESS_TOKEN : LINE Messaging API channel access token
+# - LINE_TO                   : push message destination userId / groupId / roomId
