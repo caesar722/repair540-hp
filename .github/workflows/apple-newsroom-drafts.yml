@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -34,11 +36,41 @@ jobs:
       - name: Commit generated drafts
         if: steps.report.outputs.draft_count != '0'
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          echo "Fetching latest origin/main..."
+          git fetch origin main
+
+          echo "Rebasing workflow branch onto latest origin/main..."
+          if ! git pull --rebase --autostash origin main; then
+            echo "::error::Failed to rebase onto origin/main before committing generated drafts."
+            echo "Git status:"
+            git status --short || true
+            echo "Recent commits:"
+            git log --oneline --decorate -5 || true
+            git rebase --abort || true
+            exit 1
+          fi
+
           git add blog/posts
+          if git diff --cached --quiet; then
+            echo "No staged blog draft changes after rebase."
+            exit 0
+          fi
+
           git commit -m "Add Apple Newsroom blog draft"
-          git push
+
+          echo "Pushing generated drafts to origin/main..."
+          if ! git push origin HEAD:main; then
+            echo "::error::Push rejected after commit. origin/main may have advanced during this workflow run."
+            echo "Git status:"
+            git status --short || true
+            echo "Recent commits:"
+            git log --oneline --decorate -5 || true
+            exit 1
+          fi
 
       - name: Send LINE notification
         if: steps.report.outputs.draft_count != '0'
