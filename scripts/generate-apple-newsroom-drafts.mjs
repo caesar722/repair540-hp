@@ -306,6 +306,16 @@ async function readJsonIfExists(filePath) {
   }
 }
 
+async function pathExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch (error) {
+    if (error.code === 'ENOENT') return false;
+    throw error;
+  }
+}
+
 async function fetchText(url) {
   const response = await fetch(url, {
     headers: {
@@ -465,6 +475,7 @@ async function main() {
   const unseenEntries = entries.filter((entry) => !state.seenEntryUrls.includes(entry.url));
   const targetEntries = isFirstRun ? entries.slice(0, 1) : unseenEntries;
   const generatedDrafts = [];
+  const skippedDrafts = [];
 
   for (const entry of targetEntries) {
     if (state.draftedEntryUrls.includes(entry.url)) {
@@ -477,6 +488,18 @@ async function main() {
     const content = buildDraftFileContent(entry, article);
     const title = buildNaturalTitle(article.headline || entry.title);
     const publishedDate = toIsoDate(article.datePublished || entry.updated);
+
+    if (await pathExists(filePath)) {
+      skippedDrafts.push({
+        title,
+        date: publishedDate,
+        sourceUrl: entry.url,
+        filePath: path.relative(process.cwd(), filePath),
+        reason: 'existing_file'
+      });
+      state.draftedEntryUrls.push(entry.url);
+      continue;
+    }
 
     await writeTextFile(filePath, content, options.dryRun);
 
@@ -512,12 +535,17 @@ async function main() {
     source: DEFAULT_SOURCE_NAME,
     checkedAt: new Date().toISOString(),
     draftCount: generatedDrafts.length,
+    skippedCount: skippedDrafts.length,
+    skippedDrafts,
     drafts: generatedDrafts
   };
 
   await writeReport(options.reportFile, report, options.dryRun);
 
   if (!generatedDrafts.length) {
+    if (skippedDrafts.length) {
+      console.log(`Skipped ${skippedDrafts.length} Apple Newsroom draft(s) because the same slug file already exists.`);
+    }
     console.log(isFirstRun ? 'No draft generated on bootstrap.' : 'No new Apple Newsroom drafts were needed.');
     return;
   }

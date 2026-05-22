@@ -11,8 +11,6 @@ permissions:
 jobs:
   generate-drafts:
     runs-on: ubuntu-latest
-    env:
-      REPORT_FILE: apple-newsroom-run-report.json
 
     steps:
       - name: Checkout
@@ -26,10 +24,14 @@ jobs:
           node-version: '20'
 
       - name: Generate Apple Newsroom drafts
-        run: node scripts/generate-apple-newsroom-drafts.mjs --report-file=${REPORT_FILE}
+        env:
+          REPORT_FILE: ${{ runner.temp }}/apple-newsroom-run-report.json
+        run: node scripts/generate-apple-newsroom-drafts.mjs --report-file="${REPORT_FILE}"
 
       - name: Read report
         id: report
+        env:
+          REPORT_FILE: ${{ runner.temp }}/apple-newsroom-run-report.json
         run: |
           node -e 'const fs=require("fs"); const report=JSON.parse(fs.readFileSync(process.env.REPORT_FILE,"utf8")); fs.appendFileSync(process.env.GITHUB_OUTPUT, "draft_count=" + report.draftCount + "\n");'
 
@@ -39,6 +41,17 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          echo "Staging generated blog draft files before rebase..."
+          git add blog/posts
+
+          if git diff --cached --quiet; then
+            echo "No staged blog draft changes before rebase."
+            exit 0
+          fi
+
+          echo "Cleaning any leftover untracked workflow report file..."
+          rm -f apple-newsroom-run-report.json
 
           echo "Fetching latest origin/main..."
           git fetch origin main
@@ -54,7 +67,6 @@ jobs:
             exit 1
           fi
 
-          git add blog/posts
           if git diff --cached --quiet; then
             echo "No staged blog draft changes after rebase."
             exit 0
@@ -75,9 +87,10 @@ jobs:
       - name: Send LINE notification
         if: steps.report.outputs.draft_count != '0'
         env:
+          REPORT_FILE: ${{ runner.temp }}/apple-newsroom-run-report.json
           LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
           LINE_TO: ${{ secrets.LINE_TO }}
-        run: node scripts/send-line-draft-notifications.mjs --report-file=${REPORT_FILE}
+        run: node scripts/send-line-draft-notifications.mjs --report-file="${REPORT_FILE}"
 
 # Required GitHub Secrets:
 # - LINE_CHANNEL_ACCESS_TOKEN : LINE Messaging API channel access token
