@@ -87,14 +87,14 @@ async function main() {
   }
 
   const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN;
-  const to = process.env.LINE_TO;
+  const to = process.env.LINE_USER_ID;
 
   if (!channelAccessToken) {
     throw new Error('Missing LINE_CHANNEL_ACCESS_TOKEN environment variable.');
   }
 
   if (!to) {
-    throw new Error('Missing LINE_TO environment variable.');
+    throw new Error('Missing LINE_USER_ID environment variable.');
   }
 
   const report = JSON.parse(await fs.readFile(reportFile, 'utf8'));

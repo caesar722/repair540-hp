@@ -23,7 +23,9 @@ GitHub Actions から LINE 通知を送る場合は、GitHub Secrets に以下�
 
 - `LINE_CHANNEL_ACCESS_TOKEN`
   - LINE Messaging API のチャネルアクセストークン
-- `LINE_TO`
-  - 通知先の `userId` または `groupId` または `roomId`
+- `LINE_USER_ID`
+  - 通知先管理者の `userId`
 
 通知は「新しいAppleニュースを検出して、下書きHTMLの生成に成功した時のみ」送信されます。
+
+`LINE_USER_ID` は、LINE公式アカウントを友だち追加したユーザーがボットにメッセージを送信した時の webhook に含まれる `source.userId` を使います。
