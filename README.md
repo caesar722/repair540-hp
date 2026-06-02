@@ -14,6 +14,7 @@ Repair540ホームページには、Apple公式Newsroom 日本版の新着記事
 ## 追加・変更ファイル
 
 - `.github/workflows/apple-newsroom-drafts.yml`
+- `.github/workflows/test-line-draft-notification.yml`
 - `scripts/generate-apple-newsroom-drafts.mjs`
 - `scripts/send-line-draft-notifications.mjs`
 - `blog/posts/apple-newsroom-state.json`
@@ -75,6 +76,19 @@ node scripts/send-line-draft-notifications.mjs --report-file=/tmp/apple-newsroom
 ### 3. GitHub Actions の手動実行
 
 GitHub の Actions 画面で `Generate Apple Newsroom Drafts` を `Run workflow` します。
+
+### 4. GitHub Actions で LINE 通知だけを送るテスト
+
+GitHub の Actions 画面で `Test LINE Draft Notification` を `Run workflow` します。
+
+入力項目:
+
+- `title`
+- `published_date`
+- `file_path`
+- `source_url`
+
+この workflow はダミーの下書きレポートをその場で作り、`LINE_CHANNEL_ACCESS_TOKEN` と `LINE_USER_ID` を使って Push Message を1通送ります。Apple公式Newsroom の新着有無には影響されません。
 
 ## 下書きブログの確認場所
 

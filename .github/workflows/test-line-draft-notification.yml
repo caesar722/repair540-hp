@@ -1,0 +1,74 @@
+name: Test LINE Draft Notification
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: '通知に表示するブログタイトル'
+        required: false
+        default: 'Repair540ブログ下書き通知テスト'
+      published_date:
+        description: '通知に表示する投稿日 (YYYY-MM-DD)'
+        required: false
+        default: '2026-06-02'
+      file_path:
+        description: '通知に表示する保存場所'
+        required: false
+        default: 'blog/posts/2026-06-02-test.html'
+      source_url:
+        description: '通知に表示するニュース元URL'
+        required: false
+        default: 'https://www.apple.com/jp/newsroom/'
+
+jobs:
+  send-test-notification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Ensure required secrets are present
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+        run: |
+          set -euo pipefail
+          test -n "${LINE_CHANNEL_ACCESS_TOKEN}" || { echo "::error::Missing secret LINE_CHANNEL_ACCESS_TOKEN"; exit 1; }
+          test -n "${LINE_USER_ID}" || { echo "::error::Missing secret LINE_USER_ID"; exit 1; }
+
+      - name: Create test report
+        env:
+          REPORT_FILE: ${{ runner.temp }}/line-test-report.json
+          INPUT_TITLE: ${{ inputs.title }}
+          INPUT_PUBLISHED_DATE: ${{ inputs.published_date }}
+          INPUT_FILE_PATH: ${{ inputs.file_path }}
+          INPUT_SOURCE_URL: ${{ inputs.source_url }}
+        run: |
+          node -e '
+            const fs = require("fs");
+            const report = {
+              draftCount: 1,
+              drafts: [
+                {
+                  title: process.env.INPUT_TITLE,
+                  date: process.env.INPUT_PUBLISHED_DATE,
+                  filePath: process.env.INPUT_FILE_PATH,
+                  sourceUrl: process.env.INPUT_SOURCE_URL
+                }
+              ]
+            };
+            fs.writeFileSync(process.env.REPORT_FILE, JSON.stringify(report, null, 2) + "\n");
+          '
+
+      - name: Send LINE test notification
+        env:
+          REPORT_FILE: ${{ runner.temp }}/line-test-report.json
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+        run: node scripts/send-line-draft-notifications.mjs --report-file="${REPORT_FILE}"
