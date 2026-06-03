@@ -10,13 +10,17 @@ Repair540ホームページには、Apple公式Newsroom 日本版の新着記事
 - 下書き生成に成功した時だけ LINE Messaging API の Push Message を送信
 - 下書き本文は Apple公式Newsroom の本文をもとに自然な日本語で要約
 - 本文内にニュース元URLを必ず掲載
+- LINE通知には下書き確認URLを含める
+- 内容確認後は GitHub Actions から公開 workflow を実行して `posts.json` へ自動反映
 
 ## 追加・変更ファイル
 
 - `.github/workflows/apple-newsroom-drafts.yml`
 - `.github/workflows/test-line-draft-notification.yml`
+- `.github/workflows/publish-apple-newsroom-draft.yml`
 - `scripts/generate-apple-newsroom-drafts.mjs`
 - `scripts/send-line-draft-notifications.mjs`
+- `scripts/publish-apple-newsroom-draft.mjs`
 - `blog/posts/apple-newsroom-state.json`
 - `blog/posts/README.md`
 
@@ -90,15 +94,30 @@ GitHub の Actions 画面で `Test LINE Draft Notification` を `Run workflow` �
 
 この workflow はダミーの下書きレポートをその場で作り、`LINE_CHANNEL_ACCESS_TOKEN` と `LINE_USER_ID` を使って Push Message を1通送ります。Apple公式Newsroom の新着有無には影響されません。
 
+### 5. 下書き確認後にブログへ公開する
+
+LINE通知に記載された `確認URL` を開き、内容確認後に GitHub の Actions 画面で `Publish Apple Newsroom Draft` を実行します。
+
+入力項目:
+
+- `draft_file`
+  - 例: `blog/posts/2026-05-21-apple-tv-to-air-first-major-live-pro-sports-event-shot-on-iphone-17-pro.html`
+- `category`
+  - 通常は `コラム`
+- `emoji`
+  - 通常は `📰`
+
+この workflow は下書きHTMLから `posts.json` 用データを自動生成し、`posts.json` と `sitemap.xml` を更新して GitHub へ push します。
+
 ## 下書きブログの確認場所
 
 - 保存先: `blog/posts/`
 - ファイル名: `YYYY-MM-DD-article-slug.html`
 
-下書きは自動公開されません。HTML を確認してから公開用データへ転記します。
+下書きは自動公開されません。HTML を確認してから `Publish Apple Newsroom Draft` workflow を実行します。
 
 ## 公開する時に編集するファイル
 
-- `posts.json`
-
-公開時は、生成された下書きHTMLを確認し、必要な表現調整を行ったうえで `posts.json` に記事データを追加します。
+- 基本は手動編集不要
+- 必要なら公開前に `blog/posts/*.html` の下書きを修正
+- 公開処理自体は workflow が `posts.json` と `sitemap.xml` を自動更新

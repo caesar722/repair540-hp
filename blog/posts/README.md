@@ -13,9 +13,9 @@
 
 1. 対象の `.html` 下書きを開く
 2. タイトル・本文・補足を必要に応じて調整する
-3. 公開時は `posts.json` に記事を追加する
+3. GitHub Actions の `Publish Apple Newsroom Draft` を実行する
 
-この仕組みは下書き作成までで止まり、サイトには自動公開しません。
+この仕組みは、下書き確認後に承認用 workflow を実行して初めてサイトへ反映します。
 
 ## GitHub Actions と LINE 通知
 

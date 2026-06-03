@@ -4,6 +4,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 
+const DEFAULT_SITE_BASE_URL = 'https://caesar722.github.io/repair540-hp/';
+
 function parseArgs(argv) {
   const options = {
     reportFile: null,
@@ -27,8 +29,14 @@ function parseArgs(argv) {
   return options;
 }
 
+function buildDraftUrl(filePath) {
+  const normalized = String(filePath || '').replace(/\\/g, '/').replace(/^\.\//, '');
+  return new URL(normalized, DEFAULT_SITE_BASE_URL).toString();
+}
+
 function buildNotificationText(draft) {
   const date = (draft.date || '').replace(/-/g, '/');
+  const draftUrl = draft.draftUrl || buildDraftUrl(draft.filePath);
 
   return [
     'Repair540ブログ下書きを作成しました。',
@@ -42,10 +50,13 @@ function buildNotificationText(draft) {
     '保存場所：',
     draft.filePath,
     '',
+    '確認URL：',
+    draftUrl,
+    '',
     'ニュース元：',
     draft.sourceUrl,
     '',
-    '内容を確認後、公開してください。'
+    '内容を確認後、GitHub Actions の「Publish Apple Newsroom Draft」を実行してください。'
   ].join('\n');
 }
 

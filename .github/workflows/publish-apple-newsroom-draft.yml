@@ -1,0 +1,77 @@
+name: Publish Apple Newsroom Draft
+
+on:
+  workflow_dispatch:
+    inputs:
+      draft_file:
+        description: '公開する下書きHTMLのパス'
+        required: true
+        default: 'blog/posts/2026-05-21-apple-tv-to-air-first-major-live-pro-sports-event-shot-on-iphone-17-pro.html'
+      category:
+        description: '公開カテゴリ'
+        required: false
+        default: 'コラム'
+      emoji:
+        description: '記事一覧で使う絵文字'
+        required: false
+        default: '📰'
+
+permissions:
+  contents: write
+
+jobs:
+  publish-draft:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Publish selected draft
+        env:
+          DRAFT_FILE: ${{ inputs.draft_file }}
+          CATEGORY: ${{ inputs.category }}
+          EMOJI: ${{ inputs.emoji }}
+        run: |
+          node scripts/publish-apple-newsroom-draft.mjs \
+            --draft-file="${DRAFT_FILE}" \
+            --category="${CATEGORY}" \
+            --emoji="${EMOJI}"
+
+      - name: Commit published post
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add posts.json sitemap.xml
+
+          if git diff --cached --quiet; then
+            echo "No publish changes were staged."
+            exit 0
+          fi
+
+          git fetch origin main
+
+          if ! git pull --rebase --autostash origin main; then
+            echo "::error::Failed to rebase onto origin/main before publishing draft."
+            git status --short || true
+            git log --oneline --decorate -5 || true
+            git rebase --abort || true
+            exit 1
+          fi
+
+          if git diff --cached --quiet; then
+            echo "No staged changes remained after rebase."
+            exit 0
+          fi
+
+          git commit -m "Publish Apple Newsroom draft"
+          git push origin HEAD:main

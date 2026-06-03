@@ -8,6 +8,7 @@ const DEFAULT_FEED_URL = 'https://www.apple.com/jp/newsroom/rss-feed.rss';
 const DEFAULT_OUTPUT_DIR = path.resolve(process.cwd(), 'blog/posts');
 const DEFAULT_STATE_FILE = path.join(DEFAULT_OUTPUT_DIR, 'apple-newsroom-state.json');
 const DEFAULT_SOURCE_NAME = 'Apple公式Newsroom 日本版';
+const DEFAULT_SITE_BASE_URL = 'https://caesar722.github.io/repair540-hp/';
 
 function parseArgs(argv) {
   const options = {
@@ -352,6 +353,11 @@ function buildDraftFileName(entry, article) {
   return `${date}-${slugify(urlSlug || article.headline || entry.title)}.html`;
 }
 
+function buildDraftUrl(filePath) {
+  const normalized = String(filePath || '').replace(/\\/g, '/').replace(/^\.\//, '');
+  return new URL(normalized, DEFAULT_SITE_BASE_URL).toString();
+}
+
 function buildDraftFileContent(entry, article) {
   const blogTitle = buildNaturalTitle(article.headline || entry.title);
   const dateIso = toIsoDate(article.datePublished || entry.updated);
@@ -507,7 +513,8 @@ async function main() {
       title,
       date: publishedDate,
       sourceUrl: entry.url,
-      filePath: path.relative(process.cwd(), filePath)
+      filePath: path.relative(process.cwd(), filePath),
+      draftUrl: buildDraftUrl(path.relative(process.cwd(), filePath))
     });
 
     state.draftedEntryUrls.push(entry.url);
