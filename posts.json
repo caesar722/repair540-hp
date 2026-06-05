@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 7,
+      "title": "Apple TV、iPhone 17 Proで撮影された初のメジャーリーグのプロフェッショナルスポーツイベントを生中継",
+      "date": "2026-05-21",
+      "category": "コラム",
+      "emoji": "📰",
+      "excerpt": "5月23日（日本時間5月24日）、Apple TVはメジャーリーグのプロフェッショナルスポーツイベントの生中継として初めて、iPhone 17 Proで撮影された特別なMLSの試合…",
+      "content": "Appleが2026年5月21日に公開した公式Newsroomの記事では、5月23日（日本時間5月24日）、Apple TVはメジャーリーグのプロフェッショナルスポーツイベントの生中継として初めて、iPhone 17 Proで撮影された特別なMLSの試合を配信します。\n\n今回の発表では、5月23日（土）、Apple TVは、iPhone 17 Proだけで撮影されたメジャーリーグサッカーの特別生中継を配信します。メジャーリーグのプロフェッショナルスポーツイベントの生中継全体をiPhoneで撮影するのは、これが初めてです。\n\nさらに、iPhone 17 Proが、ピッチでのチームのウォームアップ、選手紹介、ゴールの瞬間のアングル、スタジアム内の雰囲気など、試合中のライブ映像を撮影します。会場全体にカメラを配置することで、ファンが期待する高品質な映像はもちろん、iPhoneのコンパクトなサイズだからこそ実現できた、視聴者をよりアクションの近くに引き込む躍動感あふれる新しいアングルもお届けします。\n\niPhoneやiPadを日常的に使っている方にとって、今後の使い勝手や安全性に関わる情報として押さえておきたい内容です。\n\nニュース元：\nhttps://www.apple.com/jp/newsroom/2026/05/apple-tv-to-air-first-major-live-pro-sports-event-shot-on-iphone-17-pro/",
+      "sourceUrl": "https://www.apple.com/jp/newsroom/2026/05/apple-tv-to-air-first-major-live-pro-sports-event-shot-on-iphone-17-pro/",
+      "draftFile": "blog/posts/2026-05-21-apple-tv-to-air-first-major-live-pro-sports-event-shot-on-iphone-17-pro.html"
+    },
+    {
       "id": 6,
       "title": "強制再起動について",
       "date": "2026-05-18",
