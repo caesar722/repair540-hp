@@ -3,10 +3,14 @@ name: Publish Apple Newsroom Draft
 on:
   workflow_dispatch:
     inputs:
+      draft_title:
+        description: '公開する記事タイトル（推奨。完全一致、または一意に特定できる一部を入力）'
+        required: false
+        default: ''
       draft_file:
-        description: '公開する下書きHTMLのパス'
-        required: true
-        default: 'blog/posts/2026-05-21-apple-tv-to-air-first-major-live-pro-sports-event-shot-on-iphone-17-pro.html'
+        description: '公開する下書きHTMLのパス（タイトル指定しない場合）'
+        required: false
+        default: ''
       category:
         description: '公開カテゴリ'
         required: false
@@ -36,12 +40,24 @@ jobs:
 
       - name: Publish selected draft
         env:
+          DRAFT_TITLE: ${{ inputs.draft_title }}
           DRAFT_FILE: ${{ inputs.draft_file }}
           CATEGORY: ${{ inputs.category }}
           EMOJI: ${{ inputs.emoji }}
         run: |
+          set -euo pipefail
+          publish_args=()
+
+          if [ -n "${DRAFT_TITLE}" ]; then
+            publish_args+=("--draft-title=${DRAFT_TITLE}")
+          fi
+
+          if [ -n "${DRAFT_FILE}" ]; then
+            publish_args+=("--draft-file=${DRAFT_FILE}")
+          fi
+
           node scripts/publish-apple-newsroom-draft.mjs \
-            --draft-file="${DRAFT_FILE}" \
+            "${publish_args[@]}" \
             --category="${CATEGORY}" \
             --emoji="${EMOJI}"
 

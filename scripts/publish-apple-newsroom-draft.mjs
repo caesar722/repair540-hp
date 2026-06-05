@@ -6,6 +6,7 @@ import process from 'node:process';
 
 const DEFAULT_POSTS_FILE = path.resolve(process.cwd(), 'posts.json');
 const DEFAULT_SITEMAP_FILE = path.resolve(process.cwd(), 'sitemap.xml');
+const DEFAULT_DRAFTS_DIR = path.resolve(process.cwd(), 'blog/posts');
 const DEFAULT_CATEGORY = 'コラム';
 const DEFAULT_EMOJI = '📰';
 const SITE_BASE_URL = 'https://caesar722.github.io/repair540-hp/';
@@ -13,6 +14,7 @@ const SITE_BASE_URL = 'https://caesar722.github.io/repair540-hp/';
 function parseArgs(argv) {
   const options = {
     draftFile: null,
+    draftTitle: '',
     postsFile: DEFAULT_POSTS_FILE,
     sitemapFile: DEFAULT_SITEMAP_FILE,
     category: DEFAULT_CATEGORY,
@@ -30,6 +32,7 @@ function parseArgs(argv) {
     if (!value) continue;
 
     if (key === '--draft-file') options.draftFile = path.resolve(process.cwd(), value);
+    if (key === '--draft-title') options.draftTitle = value.trim();
     if (key === '--posts-file') options.postsFile = path.resolve(process.cwd(), value);
     if (key === '--sitemap-file') options.sitemapFile = path.resolve(process.cwd(), value);
     if (key === '--category') options.category = value;
@@ -75,6 +78,10 @@ function extractMetaContent(html, name) {
   const regex = new RegExp(`<meta[^>]+name=["']${name}["'][^>]+content=["']([\\s\\S]*?)["'][^>]*>`, 'i');
   const match = html.match(regex);
   return match ? decodeHtmlEntities(match[1]).trim() : '';
+}
+
+function normalizeTitle(value) {
+  return String(value).replace(/\s+/g, ' ').trim();
 }
 
 function getTokyoTodayIso() {
@@ -163,14 +170,79 @@ function updateSitemap(xml, postId, date) {
   return nextXml;
 }
 
+async function listDraftEntries() {
+  const entries = await fs.readdir(DEFAULT_DRAFTS_DIR, { withFileTypes: true });
+  const files = entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.html'))
+    .map((entry) => path.join(DEFAULT_DRAFTS_DIR, entry.name))
+    .sort();
+
+  const drafts = [];
+  for (const filePath of files) {
+    const html = await fs.readFile(filePath, 'utf8');
+    const title = decodeHtmlEntities(extractMatch(html, /<h1 class="draft-title">([\s\S]*?)<\/h1>/i, 'draft title'));
+    drafts.push({
+      filePath,
+      title,
+      html
+    });
+  }
+
+  return drafts;
+}
+
+async function resolveDraft(options) {
+  if (options.draftFile) {
+    const html = await fs.readFile(options.draftFile, 'utf8');
+    return {
+      filePath: options.draftFile,
+      html
+    };
+  }
+
+  if (!options.draftTitle) {
+    throw new Error('Missing --draft-file or --draft-title option.');
+  }
+
+  const drafts = await listDraftEntries();
+  const requested = normalizeTitle(options.draftTitle);
+  const exactMatches = drafts.filter((draft) => normalizeTitle(draft.title) === requested);
+
+  if (exactMatches.length === 1) {
+    return exactMatches[0];
+  }
+
+  const partialMatches = drafts.filter((draft) => normalizeTitle(draft.title).includes(requested));
+
+  if (partialMatches.length === 1) {
+    return partialMatches[0];
+  }
+
+  const matchedDrafts = exactMatches.length > 1 ? exactMatches : partialMatches;
+
+  if (matchedDrafts.length > 1) {
+    throw new Error(
+      [
+        `Multiple drafts matched title "${options.draftTitle}". Please use a more specific title or --draft-file.`,
+        ...matchedDrafts.map((draft) => `- ${draft.title} :: ${path.relative(process.cwd(), draft.filePath)}`)
+      ].join('\n')
+    );
+  }
+
+  throw new Error(
+    [
+      `No draft matched title "${options.draftTitle}". Available drafts:`,
+      ...drafts.map((draft) => `- ${draft.title} :: ${path.relative(process.cwd(), draft.filePath)}`)
+    ].join('\n')
+  );
+}
+
 async function main() {
   const options = parseArgs(process.argv.slice(2));
 
-  if (!options.draftFile) {
-    throw new Error('Missing --draft-file option.');
-  }
-
-  const draftHtml = await fs.readFile(options.draftFile, 'utf8');
+  const selectedDraft = await resolveDraft(options);
+  const draftHtml = selectedDraft.html;
+  const resolvedDraftFile = selectedDraft.filePath;
   const posts = JSON.parse(await fs.readFile(options.postsFile, 'utf8'));
   const sitemapXml = await fs.readFile(options.sitemapFile, 'utf8');
 
@@ -181,10 +253,13 @@ async function main() {
   const title = decodeHtmlEntities(extractMatch(draftHtml, /<h1 class="draft-title">([\s\S]*?)<\/h1>/i, 'draft title'));
   const excerpt = extractMetaContent(draftHtml, 'description');
   const sourceUrl = extractMetaContent(draftHtml, 'draft-source-url');
-  const sourceDate = extractMetaContent(draftHtml, 'draft-source-date') || parseDateFromFileName(options.draftFile);
+  const sourceDate = extractMetaContent(draftHtml, 'draft-source-date') || parseDateFromFileName(resolvedDraftFile);
   const date = getTokyoTodayIso();
-  const draftFile = path.relative(process.cwd(), options.draftFile);
+  const draftFile = path.relative(process.cwd(), resolvedDraftFile);
   const content = buildDraftContent(draftHtml, sourceUrl);
+
+  console.log(`Selected draft title: ${title}`);
+  console.log(`Selected draft file: ${draftFile}`);
 
   if (posts.posts.some((post) => post.sourceUrl === sourceUrl || (post.title === title && post.date === date))) {
     throw new Error('This draft appears to have already been published to posts.json.');

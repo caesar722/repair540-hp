@@ -101,14 +101,19 @@ LINE通知に記載された `確認URL` を開き、内容確認後に GitHub �
 
 入力項目:
 
+- `draft_title`
+  - 推奨
+  - 記事タイトルをそのまま入力
+  - 完全一致が基本ですが、一意に特定できる場合は一部入力でも公開できます
 - `draft_file`
+  - タイトルで指定しない場合に使う下書きHTMLパス
   - 例: `blog/posts/2026-05-21-apple-tv-to-air-first-major-live-pro-sports-event-shot-on-iphone-17-pro.html`
 - `category`
   - 通常は `コラム`
 - `emoji`
   - 通常は `📰`
 
-この workflow は下書きHTMLから `posts.json` 用データを自動生成し、`posts.json` と `sitemap.xml` を更新して GitHub へ push します。
+この workflow は下書きHTMLから `posts.json` 用データを自動生成し、`posts.json` と `sitemap.xml` を更新して GitHub へ push します。実行ログには、選択された記事タイトルも表示されます。
 
 公開された記事では、以下のように表示されます。
 
