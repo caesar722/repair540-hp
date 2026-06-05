@@ -158,6 +158,13 @@
         month: 'long',
         day: 'numeric'
       });
+      const formattedSourceDate = post.sourceDate
+        ? new Date(post.sourceDate).toLocaleDateString('ja-JP', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })
+        : '';
       const summaryText = (post.excerpt || post.content)
         .replace(/\s+/g, ' ')
         .trim()
@@ -190,7 +197,8 @@
         '<article class="post-card">' +
         '<div class="post-meta">' +
         '<span>' + escapeHtml(post.emoji || '') + '</span>' +
-        '<span>' + formattedDate + '</span>' +
+        '<span>投稿日：' + formattedDate + '</span>' +
+        (formattedSourceDate ? '<span>元記事日付：' + formattedSourceDate + '</span>' : '') +
         '<span class="blog-cat">' + escapeHtml(post.category) + '</span>' +
         '</div>' +
         '<h1 class="post-title">' + escapeHtml(post.title) + '</h1>' +

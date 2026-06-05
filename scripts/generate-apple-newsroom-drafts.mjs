@@ -385,6 +385,7 @@ function buildDraftFileContent(entry, article) {
   <meta name="draft-status" content="draft">
   <meta name="draft-source" content="${escapeHtml(DEFAULT_SOURCE_NAME)}">
   <meta name="draft-source-url" content="${escapeHtml(entry.url)}">
+  <meta name="draft-source-date" content="${escapeHtml(dateIso)}">
   <link rel="stylesheet" href="../../style.css">
   <style>
     body { background: #f5f7fb; }
@@ -415,14 +416,14 @@ function buildDraftFileContent(entry, article) {
       <h1 class="draft-title">${escapeHtml(blogTitle)}</h1>
       <div class="draft-meta">
         <span>カテゴリー：コラム</span>
-        <span>投稿日：${escapeHtml(dateJa)}</span>
-        <span>元記事日付：${escapeHtml(dateIso)}</span>
+        <span>投稿日：公開時に設定</span>
+        <span>元記事日付：${escapeHtml(dateJa)}</span>
       </div>
       <div class="draft-lead">
         ${renderedBody}
       </div>
       <div class="draft-note">
-        <p>このファイルは自動生成された下書きです。Repair540向けの表現や補足を確認したうえで、公開用に <code>posts.json</code> へ転記してください。</p>
+        <p>このファイルは自動生成された下書きです。Repair540向けの表現や補足を確認したうえで、GitHub Actions の <code>Publish Apple Newsroom Draft</code> を実行してください。ブログの投稿日は公開時点の日付で自動設定されます。</p>
       </div>
     </article>
   </main>

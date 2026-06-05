@@ -44,7 +44,7 @@ function buildNotificationText(draft) {
     'タイトル：',
     draft.title,
     '',
-    '投稿日：',
+    '元記事日付：',
     date,
     '',
     '保存場所：',

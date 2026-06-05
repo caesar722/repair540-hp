@@ -77,6 +77,18 @@ function extractMetaContent(html, name) {
   return match ? decodeHtmlEntities(match[1]).trim() : '';
 }
 
+function getTokyoTodayIso() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Tokyo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date());
+
+  const map = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${map.year}-${map.month}-${map.day}`;
+}
+
 function parseDateFromFileName(filePath) {
   const baseName = path.basename(filePath);
   const match = baseName.match(/^(\d{4}-\d{2}-\d{2})-/);
@@ -110,11 +122,12 @@ function buildSourceUrl(relativePath) {
   return new URL(normalized, SITE_BASE_URL).toString();
 }
 
-function buildPostRecord({ id, title, date, category, emoji, excerpt, content, sourceUrl, draftFile }) {
+function buildPostRecord({ id, title, date, sourceDate, category, emoji, excerpt, content, sourceUrl, draftFile }) {
   return {
     id,
     title,
     date,
+    sourceDate,
     category,
     emoji,
     excerpt,
@@ -168,7 +181,8 @@ async function main() {
   const title = decodeHtmlEntities(extractMatch(draftHtml, /<h1 class="draft-title">([\s\S]*?)<\/h1>/i, 'draft title'));
   const excerpt = extractMetaContent(draftHtml, 'description');
   const sourceUrl = extractMetaContent(draftHtml, 'draft-source-url');
-  const date = parseDateFromFileName(options.draftFile);
+  const sourceDate = extractMetaContent(draftHtml, 'draft-source-date') || parseDateFromFileName(options.draftFile);
+  const date = getTokyoTodayIso();
   const draftFile = path.relative(process.cwd(), options.draftFile);
   const content = buildDraftContent(draftHtml, sourceUrl);
 
@@ -181,6 +195,7 @@ async function main() {
     id: nextId,
     title,
     date,
+    sourceDate,
     category: options.category,
     emoji: options.emoji,
     excerpt,

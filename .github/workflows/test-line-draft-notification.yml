@@ -8,7 +8,7 @@ on:
         required: false
         default: 'Repair540ブログ下書き通知テスト'
       published_date:
-        description: '通知に表示する投稿日 (YYYY-MM-DD)'
+        description: '通知に表示する元記事日付 (YYYY-MM-DD)'
         required: false
         default: '2026-06-02'
       file_path:

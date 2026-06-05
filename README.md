@@ -11,6 +11,7 @@ Repair540ホームページには、Apple公式Newsroom 日本版の新着記事
 - 下書き本文は Apple公式Newsroom の本文をもとに自然な日本語で要約
 - 本文内にニュース元URLを必ず掲載
 - LINE通知には下書き確認URLを含める
+- 下書きには `元記事日付` を表示し、`投稿日` は公開 workflow 実行日で自動設定
 - 内容確認後は GitHub Actions から公開 workflow を実行して `posts.json` へ自動反映
 
 ## 追加・変更ファイル
@@ -108,6 +109,11 @@ LINE通知に記載された `確認URL` を開き、内容確認後に GitHub �
   - 通常は `📰`
 
 この workflow は下書きHTMLから `posts.json` 用データを自動生成し、`posts.json` と `sitemap.xml` を更新して GitHub へ push します。
+
+公開された記事では、以下のように表示されます。
+
+- `投稿日`: `Publish Apple Newsroom Draft` を実行した日
+- `元記事日付`: Apple公式Newsroom の掲載日
 
 ## 下書きブログの確認場所
 

@@ -17,6 +17,11 @@
 
 この仕組みは、下書き確認後に承認用 workflow を実行して初めてサイトへ反映します。
 
+公開後の記事表示ルール:
+
+- `投稿日`: 公開 workflow を実行した日
+- `元記事日付`: Apple公式Newsroom の掲載日
+
 ## GitHub Actions と LINE 通知
 
 GitHub Actions から LINE 通知を送る場合は、GitHub Secrets に以下を登録します。
