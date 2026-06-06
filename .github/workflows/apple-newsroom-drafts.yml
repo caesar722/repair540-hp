@@ -28,6 +28,9 @@ jobs:
           REPORT_FILE: ${{ runner.temp }}/apple-newsroom-run-report.json
         run: node scripts/generate-apple-newsroom-drafts.mjs --report-file="${REPORT_FILE}"
 
+      - name: Rebuild draft index
+        run: node scripts/build-apple-newsroom-drafts-index.mjs
+
       - name: Read report
         id: report
         env:
@@ -43,7 +46,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           echo "Staging generated blog draft files before rebase..."
-          git add blog/posts
+          git add blog/posts .github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml
 
           if git diff --cached --quiet; then
             echo "No staged blog draft changes before rebase."

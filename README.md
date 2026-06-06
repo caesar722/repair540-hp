@@ -11,17 +11,26 @@ Repair540ホームページには、Apple公式Newsroom 日本版の新着記事
 - 下書き本文は Apple公式Newsroom の本文をもとに自然な日本語で要約
 - 本文内にニュース元URLを必ず掲載
 - LINE通知には下書き確認URLを含める
+- `blog/posts/index-drafts.html` に下書き管理一覧を生成
 - 下書きには `元記事日付` を表示し、`投稿日` は公開 workflow 実行日で自動設定
 - 内容確認後は GitHub Actions から公開 workflow を実行して `posts.json` へ自動反映
+- 却下した下書きは `blog/posts/rejected/` に移動
+- `rejected/` 内で 30 日経過した下書きは日次 workflow で自動削除
 
 ## 追加・変更ファイル
 
 - `.github/workflows/apple-newsroom-drafts.yml`
 - `.github/workflows/test-line-draft-notification.yml`
 - `.github/workflows/publish-apple-newsroom-draft.yml`
+- `.github/workflows/reject-apple-newsroom-draft.yml`
+- `.github/workflows/cleanup-rejected-apple-newsroom-drafts.yml`
 - `scripts/generate-apple-newsroom-drafts.mjs`
+- `scripts/build-apple-newsroom-drafts-index.mjs`
 - `scripts/send-line-draft-notifications.mjs`
 - `scripts/publish-apple-newsroom-draft.mjs`
+- `scripts/reject-apple-newsroom-draft.mjs`
+- `scripts/cleanup-rejected-apple-newsroom-drafts.mjs`
+- `scripts/apple-newsroom-draft-utils.mjs`
 - `blog/posts/apple-newsroom-state.json`
 - `blog/posts/README.md`
 
@@ -99,15 +108,20 @@ GitHub の Actions 画面で `Test LINE Draft Notification` を `Run workflow` �
 
 LINE通知に記載された `確認URL` を開き、内容確認後に GitHub の Actions 画面で `Publish Apple Newsroom Draft` を実行します。
 
+下書きの全体一覧は `blog/posts/index-drafts.html` で確認できます。ここに
+
+- 記事タイトル
+- 元記事日付
+- 生成日
+- 公開状態
+
+が表示されます。
+
 入力項目:
 
 - `draft_title`
-  - 推奨
-  - 記事タイトルをそのまま入力
-  - 完全一致が基本ですが、一意に特定できる場合は一部入力でも公開できます
-- `draft_file`
-  - タイトルで指定しない場合に使う下書きHTMLパス
-  - 例: `blog/posts/2026-05-21-apple-tv-to-air-first-major-live-pro-sports-event-shot-on-iphone-17-pro.html`
+  - workflow 上で choice 選択できます
+  - `blog/posts/index-drafts.html` の下書き一覧と同じタイトルが表示されます
 - `category`
   - 通常は `コラム`
 - `emoji`
@@ -120,10 +134,23 @@ LINE通知に記載された `確認URL` を開き、内容確認後に GitHub �
 - `投稿日`: `Publish Apple Newsroom Draft` を実行した日
 - `元記事日付`: Apple公式Newsroom の掲載日
 
+### 6. 却下する
+
+GitHub の Actions 画面で `Reject Apple Newsroom Draft` を実行します。
+
+- `draft_title`
+  - workflow 上で choice 選択できます
+  - 選んだ下書きは `blog/posts/rejected/` へ移動します
+
+### 7. 却下済み記事の自動整理
+
+`Cleanup Rejected Apple Newsroom Drafts` が 1 日 1 回実行され、`rejected/` 内で 30 日経過した下書きを削除します。
+
 ## 下書きブログの確認場所
 
 - 保存先: `blog/posts/`
 - ファイル名: `YYYY-MM-DD-article-slug.html`
+- 一覧ページ: `blog/posts/index-drafts.html`
 
 下書きは自動公開されません。HTML を確認してから `Publish Apple Newsroom Draft` workflow を実行します。
 

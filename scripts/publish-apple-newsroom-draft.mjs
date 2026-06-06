@@ -3,6 +3,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { upsertMetaContent } from './apple-newsroom-draft-utils.mjs';
 
 const DEFAULT_POSTS_FILE = path.resolve(process.cwd(), 'posts.json');
 const DEFAULT_SITEMAP_FILE = path.resolve(process.cwd(), 'sitemap.xml');
@@ -173,7 +174,7 @@ function updateSitemap(xml, postId, date) {
 async function listDraftEntries() {
   const entries = await fs.readdir(DEFAULT_DRAFTS_DIR, { withFileTypes: true });
   const files = entries
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.html'))
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.html') && entry.name !== 'index-drafts.html')
     .map((entry) => path.join(DEFAULT_DRAFTS_DIR, entry.name))
     .sort();
 
@@ -193,6 +194,9 @@ async function listDraftEntries() {
 
 async function resolveDraft(options) {
   if (options.draftFile) {
+    if (String(options.draftFile).includes(`${path.sep}rejected${path.sep}`)) {
+      throw new Error('Rejected drafts cannot be published directly. Move them back manually if needed.');
+    }
     const html = await fs.readFile(options.draftFile, 'utf8');
     return {
       filePath: options.draftFile,
@@ -294,6 +298,11 @@ async function main() {
 
   await fs.writeFile(options.postsFile, `${JSON.stringify(nextPosts, null, 2)}\n`, 'utf8');
   await fs.writeFile(options.sitemapFile, nextSitemap, 'utf8');
+
+  let nextDraftHtml = draftHtml;
+  nextDraftHtml = upsertMetaContent(nextDraftHtml, 'draft-status', 'published');
+  nextDraftHtml = upsertMetaContent(nextDraftHtml, 'draft-published-date', date);
+  await fs.writeFile(resolvedDraftFile, nextDraftHtml, 'utf8');
 
   console.log(`Published draft: ${draftFile}`);
   console.log(`Created post id: ${nextId}`);

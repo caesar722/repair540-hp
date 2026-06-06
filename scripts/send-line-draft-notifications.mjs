@@ -37,6 +37,7 @@ function buildDraftUrl(filePath) {
 function buildNotificationText(draft) {
   const date = (draft.date || '').replace(/-/g, '/');
   const draftUrl = draft.draftUrl || buildDraftUrl(draft.filePath);
+  const draftsIndexUrl = buildDraftUrl('blog/posts/index-drafts.html');
 
   return [
     'Repair540ブログ下書きを作成しました。',
@@ -52,6 +53,9 @@ function buildNotificationText(draft) {
     '',
     '確認URL：',
     draftUrl,
+    '',
+    '下書き一覧：',
+    draftsIndexUrl,
     '',
     'ニュース元：',
     draft.sourceUrl,

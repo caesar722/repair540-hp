@@ -1,10 +1,10 @@
-name: Publish Apple Newsroom Draft
+name: Reject Apple Newsroom Draft
 
 on:
   workflow_dispatch:
     inputs:
       draft_title:
-        description: '公開する記事タイトル。blog/posts/index-drafts.html の下書き一覧から選択'
+        description: '却下する記事タイトル。blog/posts/index-drafts.html の下書き一覧から選択'
         required: true
         type: choice
         options:
@@ -13,20 +13,12 @@ on:
           - 'Appleが2026年Apple Design Awardsの受賞者を発表'
           - '2025年、App Storeは不正取引と見なされた取引22億ドル以上を阻止'
           - 'Appleが新しいアクセシビリティ機能とApple Intelligenceを活用したアップデートを発表'
-      category:
-        description: '公開カテゴリ'
-        required: false
-        default: 'コラム'
-      emoji:
-        description: '記事一覧で使う絵文字'
-        required: false
-        default: '📰'
 
 permissions:
   contents: write
 
 jobs:
-  publish-draft:
+  reject-draft:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,38 +32,31 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Publish selected draft
+      - name: Reject selected draft
         env:
           DRAFT_TITLE: ${{ inputs.draft_title }}
-          CATEGORY: ${{ inputs.category }}
-          EMOJI: ${{ inputs.emoji }}
-        run: |
-          set -euo pipefail
-          node scripts/publish-apple-newsroom-draft.mjs \
-            "--draft-title=${DRAFT_TITLE}" \
-            --category="${CATEGORY}" \
-            --emoji="${EMOJI}"
+        run: node scripts/reject-apple-newsroom-draft.mjs "--draft-title=${DRAFT_TITLE}"
 
       - name: Rebuild draft index
         run: node scripts/build-apple-newsroom-drafts-index.mjs
 
-      - name: Commit published post
+      - name: Commit rejected draft
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add posts.json sitemap.xml blog/posts .github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml
+          git add blog/posts .github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml
 
           if git diff --cached --quiet; then
-            echo "No publish changes were staged."
+            echo "No reject changes were staged."
             exit 0
           fi
 
           git fetch origin main
 
           if ! git pull --rebase --autostash origin main; then
-            echo "::error::Failed to rebase onto origin/main before publishing draft."
+            echo "::error::Failed to rebase onto origin/main before rejecting draft."
             git status --short || true
             git log --oneline --decorate -5 || true
             git rebase --abort || true
@@ -79,9 +64,9 @@ jobs:
           fi
 
           if git diff --cached --quiet; then
-            echo "No staged changes remained after rebase."
+            echo "No staged reject changes remained after rebase."
             exit 0
           fi
 
-          git commit -m "Publish Apple Newsroom draft"
+          git commit -m "Reject Apple Newsroom draft"
           git push origin HEAD:main

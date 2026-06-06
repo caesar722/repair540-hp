@@ -3,6 +3,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { getTokyoTodayIso } from './apple-newsroom-draft-utils.mjs';
 
 const DEFAULT_FEED_URL = 'https://www.apple.com/jp/newsroom/rss-feed.rss';
 const DEFAULT_OUTPUT_DIR = path.resolve(process.cwd(), 'blog/posts');
@@ -362,6 +363,7 @@ function buildDraftFileContent(entry, article) {
   const blogTitle = buildNaturalTitle(article.headline || entry.title);
   const dateIso = toIsoDate(article.datePublished || entry.updated);
   const dateJa = toJaDate(article.datePublished || entry.updated);
+  const generatedDate = getTokyoTodayIso();
   const excerpt = buildExcerpt(entry, article);
   const bodyParagraphs = buildDraftText(entry, article);
   const renderedBody = bodyParagraphs
@@ -386,6 +388,7 @@ function buildDraftFileContent(entry, article) {
   <meta name="draft-source" content="${escapeHtml(DEFAULT_SOURCE_NAME)}">
   <meta name="draft-source-url" content="${escapeHtml(entry.url)}">
   <meta name="draft-source-date" content="${escapeHtml(dateIso)}">
+  <meta name="draft-generated-date" content="${escapeHtml(generatedDate)}">
   <link rel="stylesheet" href="../../style.css">
   <style>
     body { background: #f5f7fb; }

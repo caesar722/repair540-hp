@@ -1,0 +1,61 @@
+name: Cleanup Rejected Apple Newsroom Drafts
+
+on:
+  schedule:
+    - cron: '45 23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup-rejected-drafts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Remove old rejected drafts
+        run: node scripts/cleanup-rejected-apple-newsroom-drafts.mjs
+
+      - name: Rebuild draft index
+        run: node scripts/build-apple-newsroom-drafts-index.mjs
+
+      - name: Commit cleanup changes
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add blog/posts .github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml
+
+          if git diff --cached --quiet; then
+            echo "No cleanup changes were staged."
+            exit 0
+          fi
+
+          git fetch origin main
+
+          if ! git pull --rebase --autostash origin main; then
+            echo "::error::Failed to rebase onto origin/main before cleanup."
+            git status --short || true
+            git log --oneline --decorate -5 || true
+            git rebase --abort || true
+            exit 1
+          fi
+
+          if git diff --cached --quiet; then
+            echo "No staged cleanup changes remained after rebase."
+            exit 0
+          fi
+
+          git commit -m "Cleanup rejected Apple Newsroom drafts"
+          git push origin HEAD:main
