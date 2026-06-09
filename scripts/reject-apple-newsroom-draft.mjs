@@ -4,13 +4,12 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import {
-  POSTS_JSON_FILE,
   REJECTED_DRAFTS_DIR,
-  collectDraftEntries,
+  collectActionableDraftEntries,
   ensureRejectedDir,
   getTokyoTodayIso,
-  normalizeTitle,
   relativeDraftPath,
+  resolveDraftSelection,
   upsertMetaContent
 } from './apple-newsroom-draft-utils.mjs';
 
@@ -35,42 +34,12 @@ function parseArgs(argv) {
 }
 
 async function resolveDraftByTitle(draftTitle) {
-  const requested = normalizeTitle(draftTitle);
-  if (!requested) {
+  if (!String(draftTitle).trim()) {
     throw new Error('Missing --draft-title option.');
   }
 
-  const payload = JSON.parse(await fs.readFile(POSTS_JSON_FILE, 'utf8'));
-  const publishedDrafts = new Set((payload.posts || []).map((post) => String(post.draftFile || '').replace(/\\/g, '/')));
-  const entries = (await collectDraftEntries()).filter((entry) => (
-    entry.status === 'draft' &&
-    !publishedDrafts.has(entry.relativePath) &&
-    entry.relativePath.startsWith('blog/posts/') &&
-    !entry.relativePath.startsWith('blog/posts/rejected/')
-  ));
-
-  const exactMatches = entries.filter((entry) => normalizeTitle(entry.title) === requested);
-  if (exactMatches.length === 1) return exactMatches[0];
-
-  const partialMatches = entries.filter((entry) => normalizeTitle(entry.title).includes(requested));
-  if (partialMatches.length === 1) return partialMatches[0];
-
-  const matches = exactMatches.length > 1 ? exactMatches : partialMatches;
-  if (matches.length > 1) {
-    throw new Error(
-      [
-        `Multiple drafts matched title "${draftTitle}". Please use a more specific title.`,
-        ...matches.map((entry) => `- ${entry.title}`)
-      ].join('\n')
-    );
-  }
-
-  throw new Error(
-    [
-      `No active draft matched title "${draftTitle}". Available drafts:`,
-      ...entries.map((entry) => `- ${entry.title}`)
-    ].join('\n')
-  );
+  const entries = await collectActionableDraftEntries();
+  return resolveDraftSelection(entries, draftTitle, '--draft-title');
 }
 
 async function main() {

@@ -3,7 +3,11 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
-import { upsertMetaContent } from './apple-newsroom-draft-utils.mjs';
+import {
+  collectActionableDraftEntries,
+  resolveDraftSelection,
+  upsertMetaContent
+} from './apple-newsroom-draft-utils.mjs';
 
 const DEFAULT_POSTS_FILE = path.resolve(process.cwd(), 'posts.json');
 const DEFAULT_SITEMAP_FILE = path.resolve(process.cwd(), 'sitemap.xml');
@@ -172,24 +176,7 @@ function updateSitemap(xml, postId, date) {
 }
 
 async function listDraftEntries() {
-  const entries = await fs.readdir(DEFAULT_DRAFTS_DIR, { withFileTypes: true });
-  const files = entries
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.html') && entry.name !== 'index-drafts.html')
-    .map((entry) => path.join(DEFAULT_DRAFTS_DIR, entry.name))
-    .sort();
-
-  const drafts = [];
-  for (const filePath of files) {
-    const html = await fs.readFile(filePath, 'utf8');
-    const title = decodeHtmlEntities(extractMatch(html, /<h1 class="draft-title">([\s\S]*?)<\/h1>/i, 'draft title'));
-    drafts.push({
-      filePath,
-      title,
-      html
-    });
-  }
-
-  return drafts;
+  return collectActionableDraftEntries();
 }
 
 async function resolveDraft(options) {
@@ -209,36 +196,7 @@ async function resolveDraft(options) {
   }
 
   const drafts = await listDraftEntries();
-  const requested = normalizeTitle(options.draftTitle);
-  const exactMatches = drafts.filter((draft) => normalizeTitle(draft.title) === requested);
-
-  if (exactMatches.length === 1) {
-    return exactMatches[0];
-  }
-
-  const partialMatches = drafts.filter((draft) => normalizeTitle(draft.title).includes(requested));
-
-  if (partialMatches.length === 1) {
-    return partialMatches[0];
-  }
-
-  const matchedDrafts = exactMatches.length > 1 ? exactMatches : partialMatches;
-
-  if (matchedDrafts.length > 1) {
-    throw new Error(
-      [
-        `Multiple drafts matched title "${options.draftTitle}". Please use a more specific title or --draft-file.`,
-        ...matchedDrafts.map((draft) => `- ${draft.title} :: ${path.relative(process.cwd(), draft.filePath)}`)
-      ].join('\n')
-    );
-  }
-
-  throw new Error(
-    [
-      `No draft matched title "${options.draftTitle}". Available drafts:`,
-      ...drafts.map((draft) => `- ${draft.title} :: ${path.relative(process.cwd(), draft.filePath)}`)
-    ].join('\n')
-  );
+  return resolveDraftSelection(drafts, options.draftTitle, '--draft-title');
 }
 
 async function main() {

@@ -20,6 +20,12 @@
 
 この仕組みは、下書き確認後に承認用 workflow を実行して初めてサイトへ反映します。
 
+iPhone版GitHubアプリから実行する場合:
+
+- `draft_candidates` に候補一覧が表示されます
+- `draft_title_manual` に候補一覧の番号、または記事タイトルを入力して実行します
+- Web版GitHubでは `draft_title` の選択欄も使えます
+
 公開後の記事表示ルール:
 
 - `投稿日`: 公開 workflow を実行した日
@@ -34,6 +40,9 @@ GitHub Actions から LINE 通知を送る場合は、GitHub Secrets に以下�
   - LINE Messaging API のチャネルアクセストークン
 - `LINE_USER_ID`
   - 通知先管理者の `userId`
+- `WORKFLOW_SYNC_TOKEN`（任意）
+  - `publish-apple-newsroom-draft.yml` と `reject-apple-newsroom-draft.yml` の候補一覧を自動更新したい場合に使う Personal Access Token
+  - workflow 更新権限を含むトークンを設定すると、Apple Newsroom下書きの生成・公開・却下後に GitHub Actions の候補一覧も同期されます
 
 通知は「新しいAppleニュースを検出して、下書きHTMLの生成に成功した時のみ」送信されます。
 

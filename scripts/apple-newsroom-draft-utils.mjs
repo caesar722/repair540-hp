@@ -213,3 +213,67 @@ export async function collectDraftEntries() {
 
   return entries;
 }
+
+export function isActionableDraftEntry(entry) {
+  return (
+    entry.status === 'draft' &&
+    entry.relativePath.startsWith('blog/posts/') &&
+    !entry.relativePath.startsWith('blog/posts/rejected/')
+  );
+}
+
+export async function collectActionableDraftEntries() {
+  return (await collectDraftEntries()).filter(isActionableDraftEntry);
+}
+
+export function formatDraftSelectionList(entries) {
+  if (!entries.length) {
+    return '（公開・却下できる下書きはありません）';
+  }
+
+  return entries.map((entry, index) => `${index + 1}. ${entry.title}`).join('\n');
+}
+
+export function resolveDraftSelection(entries, draftSelection, actionLabel = 'draft') {
+  const requested = normalizeTitle(draftSelection);
+  if (!requested) {
+    throw new Error(`Missing ${actionLabel} selection.`);
+  }
+
+  if (/^\d+$/.test(requested)) {
+    const index = Number(requested) - 1;
+    if (entries[index]) {
+      return entries[index];
+    }
+  }
+
+  const exactMatches = entries.filter((entry) => normalizeTitle(entry.title) === requested);
+  if (exactMatches.length === 1) return exactMatches[0];
+
+  const partialMatches = entries.filter((entry) => normalizeTitle(entry.title).includes(requested));
+  if (partialMatches.length === 1) return partialMatches[0];
+
+  const matches = exactMatches.length > 1 ? exactMatches : partialMatches;
+  const availableList = entries.map((entry, index) => `${index + 1}. ${entry.title}`);
+
+  if (matches.length > 1) {
+    throw new Error(
+      [
+        `Multiple drafts matched "${draftSelection}". Please use a more specific title or the draft number.`,
+        ...matches.map((entry) => `- ${entry.title}`),
+        '',
+        'Available drafts:',
+        ...availableList
+      ].join('\n')
+    );
+  }
+
+  throw new Error(
+    [
+      `No active draft matched "${draftSelection}". Use the draft number or exact title.`,
+      '',
+      'Available drafts:',
+      ...availableList
+    ].join('\n')
+  );
+}

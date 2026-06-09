@@ -40,16 +40,26 @@ jobs:
 
       - name: Commit generated drafts
         if: steps.report.outputs.draft_count != '0'
+        env:
+          WORKFLOW_SYNC_TOKEN: ${{ secrets.WORKFLOW_SYNC_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
-          COMMIT_PATHS="blog/posts"
-          IGNORED_WORKFLOW_FILES=".github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml"
+          CONTENT_PATHS="blog/posts"
+          WORKFLOW_PATHS=".github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml"
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          echo "Discarding generated workflow-file changes. GITHUB_TOKEN cannot push workflow file updates without workflows permission."
-          git restore ${IGNORED_WORKFLOW_FILES}
+          if [ -n "${WORKFLOW_SYNC_TOKEN}" ]; then
+            echo "Using WORKFLOW_SYNC_TOKEN to sync workflow dispatch candidate lists."
+            git remote set-url origin "https://x-access-token:${WORKFLOW_SYNC_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            COMMIT_PATHS="${CONTENT_PATHS} ${WORKFLOW_PATHS}"
+          else
+            echo "WORKFLOW_SYNC_TOKEN is not set. Workflow candidate list changes will be discarded."
+            git restore ${WORKFLOW_PATHS}
+            COMMIT_PATHS="${CONTENT_PATHS}"
+          fi
 
           echo "Staging generated draft-related files before rebase..."
           git add ${COMMIT_PATHS}
@@ -80,7 +90,9 @@ jobs:
           fi
 
           echo "Restaging draft-related files after rebase..."
-          git restore ${IGNORED_WORKFLOW_FILES}
+          if [ -z "${WORKFLOW_SYNC_TOKEN}" ]; then
+            git restore ${WORKFLOW_PATHS}
+          fi
           git add ${COMMIT_PATHS}
 
           if git diff --cached --quiet; then
@@ -145,3 +157,4 @@ jobs:
 # Required GitHub Secrets:
 # - LINE_CHANNEL_ACCESS_TOKEN : LINE Messaging API channel access token
 # - LINE_USER_ID              : push message destination userId
+# - WORKFLOW_SYNC_TOKEN       : optional PAT with workflow update permission for dispatch candidate sync

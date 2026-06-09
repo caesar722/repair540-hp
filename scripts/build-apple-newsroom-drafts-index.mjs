@@ -3,8 +3,10 @@
 import fs from 'node:fs/promises';
 import {
   DRAFT_INDEX_HTML_FILE,
+  collectActionableDraftEntries,
   collectDraftEntries,
   escapeHtml,
+  formatDraftSelectionList,
   formatJaDate,
   getTokyoTodayIso
 } from './apple-newsroom-draft-utils.mjs';
@@ -164,16 +166,22 @@ ${renderRows(entries)}
 }
 
 function buildChoiceOptions(entries) {
-  const titles = entries
-    .filter((entry) => entry.status === 'draft')
-    .map((entry) => entry.title);
-
-  const options = titles.length ? titles : ['（下書きなし）'];
+  const titles = entries.map((entry) => entry.title);
+  const options = titles.length ? titles : ['（公開・却下できる下書きなし）'];
   return options.map((title) => `          - '${title.replace(/'/g, "''")}'`).join('\n');
+}
+
+function buildDraftCandidatesDefault(entries) {
+  const list = formatDraftSelectionList(entries);
+  return list
+    .split('\n')
+    .map((line) => `          ${line}`)
+    .join('\n');
 }
 
 async function syncWorkflowChoices(entries) {
   const optionLines = buildChoiceOptions(entries);
+  const candidateLines = buildDraftCandidatesDefault(entries);
   const publishWorkflow = await fs.readFile(PUBLISH_WORKFLOW_FILE, 'utf8');
   const rejectWorkflow = await fs.readFile(REJECT_WORKFLOW_FILE, 'utf8');
 
@@ -183,11 +191,20 @@ async function syncWorkflowChoices(entries) {
     '\n      category:',
     [
       '      draft_title:',
-      "        description: '公開する記事タイトル。blog/posts/index-drafts.html の下書き一覧から選択'",
-      '        required: true',
+      "        description: 'Web版向け。公開する記事タイトルを選択'",
+      '        required: false',
       '        type: choice',
       '        options:',
-      optionLines
+      optionLines,
+      '      draft_title_manual:',
+      "        description: 'iPhone版GitHubアプリ用。下の候補一覧の番号または記事タイトルを入力'",
+      '        required: false',
+      "        default: ''",
+      '      draft_candidates:',
+      "        description: '候補一覧（表示専用・編集不要）'",
+      '        required: false',
+      '        default: |',
+      candidateLines
     ].join('\n')
   );
 
@@ -197,11 +214,20 @@ async function syncWorkflowChoices(entries) {
     '\n\npermissions:',
     [
       '      draft_title:',
-      "        description: '却下する記事タイトル。blog/posts/index-drafts.html の下書き一覧から選択'",
-      '        required: true',
+      "        description: 'Web版向け。却下する記事タイトルを選択'",
+      '        required: false',
       '        type: choice',
       '        options:',
-      optionLines
+      optionLines,
+      '      draft_title_manual:',
+      "        description: 'iPhone版GitHubアプリ用。下の候補一覧の番号または記事タイトルを入力'",
+      '        required: false',
+      "        default: ''",
+      '      draft_candidates:',
+      "        description: '候補一覧（表示専用・編集不要）'",
+      '        required: false',
+      '        default: |',
+      candidateLines
     ].join('\n')
   );
 
@@ -216,9 +242,10 @@ async function syncWorkflowChoices(entries) {
 
 async function main() {
   const entries = await collectDraftEntries();
+  const actionableEntries = await collectActionableDraftEntries();
   const html = buildHtml(entries);
   await fs.writeFile(DRAFT_INDEX_HTML_FILE, html, 'utf8');
-  await syncWorkflowChoices(entries);
+  await syncWorkflowChoices(actionableEntries);
   console.log(`Updated draft index: ${DRAFT_INDEX_HTML_FILE}`);
 }
 

@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       draft_title:
-        description: '却下する記事タイトル。blog/posts/index-drafts.html の下書き一覧から選択'
-        required: true
+        description: 'Web版向け。却下する記事タイトルを選択'
+        required: false
         type: choice
         options:
           - 'Apple Intelligence、パワフルなAI機能を日々の体験に'
@@ -19,6 +19,25 @@ on:
           - 'Appleが2026年Apple Design Awardsの受賞者を発表'
           - '2025年、App Storeは不正取引と見なされた取引22億ドル以上を阻止'
           - 'Appleが新しいアクセシビリティ機能とApple Intelligenceを活用したアップデートを発表'
+      draft_title_manual:
+        description: 'iPhone版GitHubアプリ用。下の候補一覧の番号または記事タイトルを入力'
+        required: false
+        default: ''
+      draft_candidates:
+        description: '候補一覧（表示専用・編集不要）'
+        required: false
+        default: |
+          1. Apple Intelligence、パワフルなAI機能を日々の体験に
+          2. Appleがこれまでよりはるかに有能でパーソナルなアシスタントであるSiri AIを発表
+          3. Appleがデベロッパのビジネスの成長と新たなユーザーへのリーチを支援するためにApp Storeの機能を拡大
+          4. Appleが新しいインテリジェンスフレームワークと先進的なツールでアプリ開発を加速
+          5. WWDC26：Apple、次世代のApple Intelligence、Siri AI、パワフルなペアレンタルコントロール、広範なソフトウェアの機能強化を発表
+          6. デジタル市場法の影響により、EU域内ではiOS 27とiPadOS 27へのSiri AIの提供が延期されます
+          7. App Storeのエコシステムが過去最高の1.4兆ドル規模に到達、世界中のデベロッパが引き続き躍進
+          8. AppleとMajor League Baseball、「フライデーナイト ベースボール」の7月のスケジュールを発表
+          9. Appleが2026年Apple Design Awardsの受賞者を発表
+          10. 2025年、App Storeは不正取引と見なされた取引22億ドル以上を阻止
+          11. Appleが新しいアクセシビリティ機能とApple Intelligenceを活用したアップデートを発表
 
 permissions:
   contents: write
@@ -41,18 +60,45 @@ jobs:
       - name: Reject selected draft
         env:
           DRAFT_TITLE: ${{ inputs.draft_title }}
-        run: node scripts/reject-apple-newsroom-draft.mjs "--draft-title=${DRAFT_TITLE}"
+          DRAFT_TITLE_MANUAL: ${{ inputs.draft_title_manual }}
+        run: |
+          set -euo pipefail
+          SELECTED_TITLE="${DRAFT_TITLE_MANUAL:-}"
+          if [ -z "${SELECTED_TITLE}" ]; then
+            SELECTED_TITLE="${DRAFT_TITLE:-}"
+          fi
+          if [ -z "${SELECTED_TITLE}" ] || [ "${SELECTED_TITLE}" = "（公開・却下できる下書きなし）" ]; then
+            echo "::error::却下対象が選択されていません。Web版は選択欄、iPhone版GitHubアプリは draft_title_manual に番号または記事タイトルを入力してください。"
+            exit 1
+          fi
+          node scripts/reject-apple-newsroom-draft.mjs "--draft-title=${SELECTED_TITLE}"
 
       - name: Rebuild draft index
         run: node scripts/build-apple-newsroom-drafts-index.mjs
 
       - name: Commit rejected draft
+        env:
+          WORKFLOW_SYNC_TOKEN: ${{ secrets.WORKFLOW_SYNC_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
+          CONTENT_PATHS="blog/posts"
+          WORKFLOW_PATHS=".github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml"
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add blog/posts .github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml
+          if [ -n "${WORKFLOW_SYNC_TOKEN}" ]; then
+            echo "Using WORKFLOW_SYNC_TOKEN to sync workflow dispatch candidate lists."
+            git remote set-url origin "https://x-access-token:${WORKFLOW_SYNC_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            COMMIT_PATHS="${CONTENT_PATHS} ${WORKFLOW_PATHS}"
+          else
+            echo "WORKFLOW_SYNC_TOKEN is not set. Workflow candidate list changes will be discarded."
+            git restore ${WORKFLOW_PATHS}
+            COMMIT_PATHS="${CONTENT_PATHS}"
+          fi
+
+          git add ${COMMIT_PATHS}
 
           if git diff --cached --quiet; then
             echo "No reject changes were staged."
@@ -68,6 +114,12 @@ jobs:
             git rebase --abort || true
             exit 1
           fi
+
+          if [ -z "${WORKFLOW_SYNC_TOKEN}" ]; then
+            git restore ${WORKFLOW_PATHS}
+          fi
+
+          git add ${COMMIT_PATHS}
 
           if git diff --cached --quiet; then
             echo "No staged reject changes remained after rebase."
