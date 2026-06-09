@@ -42,16 +42,20 @@ jobs:
         if: steps.report.outputs.draft_count != '0'
         run: |
           set -euo pipefail
-          STAGE_PATHS="blog/posts .github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml"
+          COMMIT_PATHS="blog/posts"
+          IGNORED_WORKFLOW_FILES=".github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml"
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          echo "Discarding generated workflow-file changes. GITHUB_TOKEN cannot push workflow file updates without workflows permission."
+          git restore ${IGNORED_WORKFLOW_FILES}
+
           echo "Staging generated draft-related files before rebase..."
-          git add ${STAGE_PATHS}
+          git add ${COMMIT_PATHS}
 
           if git diff --cached --quiet; then
-            echo "No staged draft changes before rebase. Exiting successfully."
+            echo "No draft file changes to commit before rebase. Exiting successfully."
             exit 0
           fi
 
@@ -76,10 +80,11 @@ jobs:
           fi
 
           echo "Restaging draft-related files after rebase..."
-          git add ${STAGE_PATHS}
+          git restore ${IGNORED_WORKFLOW_FILES}
+          git add ${COMMIT_PATHS}
 
           if git diff --cached --quiet; then
-            echo "No staged draft changes after rebase. Exiting successfully."
+            echo "No draft file changes to commit after rebase. Exiting successfully."
             exit 0
           fi
 
