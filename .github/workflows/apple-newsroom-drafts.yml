@@ -42,16 +42,21 @@ jobs:
         if: steps.report.outputs.draft_count != '0'
         run: |
           set -euo pipefail
+          STAGE_PATHS="blog/posts .github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml"
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          echo "Staging generated blog draft files before rebase..."
-          git add blog/posts .github/workflows/publish-apple-newsroom-draft.yml .github/workflows/reject-apple-newsroom-draft.yml
+          echo "Staging generated draft-related files before rebase..."
+          git add ${STAGE_PATHS}
 
           if git diff --cached --quiet; then
-            echo "No staged blog draft changes before rebase."
+            echo "No staged draft changes before rebase. Exiting successfully."
             exit 0
           fi
+
+          echo "Changed files before rebase:"
+          git diff --cached --name-status
 
           echo "Cleaning any leftover untracked workflow report file..."
           rm -f apple-newsroom-run-report.json
@@ -70,20 +75,57 @@ jobs:
             exit 1
           fi
 
+          echo "Restaging draft-related files after rebase..."
+          git add ${STAGE_PATHS}
+
           if git diff --cached --quiet; then
-            echo "No staged blog draft changes after rebase."
+            echo "No staged draft changes after rebase. Exiting successfully."
             exit 0
           fi
+
+          echo "Changed files to commit:"
+          git diff --cached --name-status
 
           git commit -m "Add Apple Newsroom blog draft"
 
           echo "Pushing generated drafts to origin/main..."
           if ! git push origin HEAD:main; then
-            echo "::error::Push rejected after commit. origin/main may have advanced during this workflow run."
+            echo "::warning::Initial push was rejected. Trying one fetch/rebase/push recovery."
+            echo "Remote main may have advanced during this workflow run."
+            echo "Fetching latest origin/main again..."
+            git fetch origin main || true
+            echo "Rebasing committed draft changes onto latest origin/main..."
+            if ! git pull --rebase origin main; then
+              echo "::error::Recovery rebase failed after push rejection."
+              echo "Git status:"
+              git status --short || true
+              echo "Changed files:"
+              git diff --name-status HEAD~1..HEAD || true
+              echo "Recent commits:"
+              git log --oneline --decorate -8 || true
+              echo "Remote head:"
+              git rev-parse origin/main || true
+              git rebase --abort || true
+              exit 1
+            fi
+
+            echo "Retrying push after recovery rebase..."
+            if git push origin HEAD:main; then
+              echo "Recovery push succeeded."
+              exit 0
+            fi
+
+            echo "::error::Push rejected after retry. origin/main advanced again or branch protections blocked the push."
             echo "Git status:"
             git status --short || true
+            echo "Changed files in the last commit:"
+            git diff --name-status HEAD~1..HEAD || true
             echo "Recent commits:"
-            git log --oneline --decorate -5 || true
+            git log --oneline --decorate -8 || true
+            echo "Local HEAD:"
+            git rev-parse HEAD || true
+            echo "Remote HEAD:"
+            git rev-parse origin/main || true
             exit 1
           fi
 
