@@ -8,6 +8,12 @@ on:
         required: true
         type: choice
         options:
+          - 'Apple Intelligence、パワフルなAI機能を日々の体験に'
+          - 'Appleがこれまでよりはるかに有能でパーソナルなアシスタントであるSiri AIを発表'
+          - 'Appleがデベロッパのビジネスの成長と新たなユーザーへのリーチを支援するためにApp Storeの機能を拡大'
+          - 'Appleが新しいインテリジェンスフレームワークと先進的なツールでアプリ開発を加速'
+          - 'WWDC26：Apple、次世代のApple Intelligence、Siri AI、パワフルなペアレンタルコントロール、広範なソフトウェアの機能強化を発表'
+          - 'デジタル市場法の影響により、EU域内ではiOS 27とiPadOS 27へのSiri AIの提供が延期されます'
           - 'App Storeのエコシステムが過去最高の1.4兆ドル規模に到達、世界中のデベロッパが引き続き躍進'
           - 'AppleとMajor League Baseball、「フライデーナイト ベースボール」の7月のスケジュールを発表'
           - 'Appleが2026年Apple Design Awardsの受賞者を発表'
