@@ -47,6 +47,10 @@ on:
         required: false
         default: '📰'
 
+concurrency:
+  group: blog-draft-writes
+  cancel-in-progress: false
+
 permissions:
   contents: write
 

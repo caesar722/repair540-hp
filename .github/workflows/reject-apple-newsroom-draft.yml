@@ -39,6 +39,10 @@ on:
           10. 2025年、App Storeは不正取引と見なされた取引22億ドル以上を阻止
           11. Appleが新しいアクセシビリティ機能とApple Intelligenceを活用したアップデートを発表
 
+concurrency:
+  group: blog-draft-writes
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
