@@ -58,4 +58,32 @@ jobs:
           fi
 
           git commit -m "Cleanup rejected Apple Newsroom drafts"
-          git push origin HEAD:main
+
+          echo "Rebasing committed cleanup changes onto latest origin/main before push..."
+          if ! git pull --rebase origin main; then
+            echo "::error::Failed to rebase committed cleanup changes onto origin/main before push."
+            git status --short || true
+            git log --oneline --decorate -8 || true
+            git rebase --abort || true
+            exit 1
+          fi
+
+          echo "Pushing cleanup changes to origin/main..."
+          if ! git push origin HEAD:main; then
+            echo "::warning::Initial push was rejected. Retrying once after pull --rebase."
+            git fetch origin main || true
+            if ! git pull --rebase origin main; then
+              echo "::error::Retry rebase failed after cleanup push rejection."
+              git status --short || true
+              git log --oneline --decorate -8 || true
+              git rebase --abort || true
+              exit 1
+            fi
+
+            if ! git push origin HEAD:main; then
+              echo "::error::Push rejected again after one retry while cleaning rejected drafts."
+              git status --short || true
+              git log --oneline --decorate -8 || true
+              exit 1
+            fi
+          fi

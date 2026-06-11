@@ -105,6 +105,17 @@ jobs:
 
           git commit -m "Add Apple Newsroom blog draft"
 
+          echo "Rebasing committed draft changes onto latest origin/main before push..."
+          if ! git pull --rebase origin main; then
+            echo "::error::Failed to rebase committed generated drafts onto origin/main before push."
+            echo "Git status:"
+            git status --short || true
+            echo "Recent commits:"
+            git log --oneline --decorate -8 || true
+            git rebase --abort || true
+            exit 1
+          fi
+
           echo "Pushing generated drafts to origin/main..."
           if ! git push origin HEAD:main; then
             echo "::warning::Initial push was rejected. Trying one fetch/rebase/push recovery."
