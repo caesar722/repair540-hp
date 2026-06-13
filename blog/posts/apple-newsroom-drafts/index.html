@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apple Newsroom下書き管理｜Repair540</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="../../../style.css">
+  <style>
+    body { background: #f5f7fb; }
+    .draft-admin-wrap { max-width: 1180px; margin: 0 auto; padding: 48px 20px 72px; }
+    .draft-admin-head { margin-bottom: 28px; }
+    .draft-admin-head h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); line-height: 1.3; margin-bottom: 10px; }
+    .draft-admin-head p { color: var(--text-sub); }
+    .draft-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 24px 0 32px; }
+    .draft-summary-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow); }
+    .draft-summary-card .label { display: block; color: var(--text-sub); font-size: .85rem; margin-bottom: 6px; }
+    .draft-summary-card .value { font-size: 1.5rem; font-weight: 800; }
+    .draft-list { display: grid; gap: 14px; }
+    .draft-row { display: grid; grid-template-columns: minmax(0, 3.4fr) 1.2fr 1.2fr .95fr; gap: 18px; align-items: center; background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; box-shadow: var(--shadow); }
+    .draft-row.status-draft { border-left: 5px solid #0b7aff; }
+    .draft-row.status-published { border-left: 5px solid #16a34a; }
+    .draft-row.status-rejected { border-left: 5px solid #9ca3af; }
+    .draft-cell-label { color: var(--text-sub); font-size: .8rem; margin-bottom: 4px; }
+    .draft-cell-title h2 { font-size: 1.02rem; line-height: 1.55; margin-bottom: 10px; }
+    .draft-cell-value { font-weight: 600; }
+    .draft-selection-card { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 8px 12px; border-radius: 12px; background: rgba(11,122,255,.08); }
+    .draft-selection-card .draft-cell-label { margin: 0; }
+    .draft-selection-number { font-size: 1rem; font-weight: 800; color: #0b7aff; }
+    .draft-links { display: flex; flex-wrap: wrap; gap: 8px; font-size: .88rem; }
+    .draft-link-sep { color: var(--text-sub); }
+    .draft-status-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 84px; padding: 8px 12px; border-radius: 999px; font-size: .85rem; font-weight: 700; }
+    .draft-status-badge.status-draft { background: rgba(11,122,255,.1); color: #0b7aff; }
+    .draft-status-badge.status-published { background: rgba(22,163,74,.12); color: #15803d; }
+    .draft-status-badge.status-rejected { background: rgba(107,114,128,.12); color: #4b5563; }
+    .draft-empty { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 28px; text-align: center; color: var(--text-sub); box-shadow: var(--shadow); }
+    .draft-note { margin-top: 18px; color: var(--text-sub); font-size: .9rem; }
+    @media (max-width: 900px) {
+      .draft-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .draft-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .draft-admin-wrap { padding: 28px 14px 48px; }
+      .draft-summary { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .draft-summary-card { padding: 14px 16px; }
+      .draft-summary-card .value { font-size: 1.25rem; }
+      .draft-row { grid-template-columns: 1fr; gap: 14px; padding: 16px; }
+      .draft-cell-title h2 { font-size: .98rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="draft-admin-wrap">
+    <div class="draft-admin-head">
+      <h1>Apple Newsroom下書き管理</h1>
+      <p>下書きの確認、公開済み判定、却下済みの保管状況を一覧で確認できます。公開・却下 workflow では、この一覧の選択番号または記事タイトルを入力してください。</p>
+    </div>
+
+    <section class="draft-summary" aria-label="下書き件数">
+      <div class="draft-summary-card"><span class="label">最終更新</span><span class="value">2026年6月13日</span></div>
+      <div class="draft-summary-card"><span class="label">下書き</span><span class="value">12</span></div>
+      <div class="draft-summary-card"><span class="label">公開済み</span><span class="value">2</span></div>
+      <div class="draft-summary-card"><span class="label">却下</span><span class="value">0</span></div>
+    </section>
+
+    <section class="draft-list" aria-label="下書き一覧">
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>Appleが様々なサービスに革新的な機能とインテリジェンス体験を導入</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">1</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-06-09-apple-unveils-innovative-features-and-intelligence-experiences-across-services.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/apple-unveils-innovative-features-and-intelligence-experiences-across-services/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月9日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月10日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>Apple Intelligence、パワフルなAI機能を日々の体験に</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">2</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-06-08-apple-intelligence-brings-powerful-ai-capabilities-into-everyday-experiences.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/apple-intelligence-brings-powerful-ai-capabilities-into-everyday-experiences/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月8日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月9日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>Appleがこれまでよりはるかに有能でパーソナルなアシスタントであるSiri AIを発表</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">3</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-06-08-apple-introduces-siri-ai-a-profoundly-more-capable-and-personal-assistant.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/apple-introduces-siri-ai-a-profoundly-more-capable-and-personal-assistant/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月8日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月9日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>Appleがデベロッパのビジネスの成長と新たなユーザーへのリーチを支援するためにApp Storeの機能を拡大</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">4</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-06-08-apple-expands-app-store-capabilities-to-help-developers-grow-and-reach-new-users.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/apple-expands-app-store-capabilities-to-help-developers-grow-and-reach-new-users/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月8日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月9日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>Appleが新しいインテリジェンスフレームワークと先進的なツールでアプリ開発を加速</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">5</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-06-08-apple-aids-app-development-with-new-intelligence-frameworks-and-advanced-tools.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/apple-aids-app-development-with-new-intelligence-frameworks-and-advanced-tools/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月8日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月9日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>WWDC26：Apple、次世代のApple Intelligence、Siri AI、パワフルなペアレンタルコントロール、広範なソフトウェアの機能強化を発表</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">6</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-06-08-apple-unveils-next-generation-of-apple-intelligence-siri-ai-and-more.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/apple-unveils-next-generation-of-apple-intelligence-siri-ai-and-more/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月8日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月9日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>デジタル市場法の影響により、EU域内ではiOS 27とiPadOS 27へのSiri AIの提供が延期されます</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">7</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-06-08-due-to-dma-siri-ai-delayed-in-eu-for-ios-27-and-ipados-27.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/due-to-dma-siri-ai-delayed-in-eu-for-ios-27-and-ipados-27/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月8日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月9日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>App Storeのエコシステムが過去最高の1.4兆ドル規模に到達、世界中のデベロッパが引き続き躍進</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">8</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-06-04-app-store-ecosystem-reaches-1-point-4-trillion-usd-as-developers-thrive-globally.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/app-store-ecosystem-reaches-1-point-4-trillion-usd-as-developers-thrive-globally/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月4日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月4日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>AppleとMajor League Baseball、「フライデーナイト ベースボール」の7月のスケジュールを発表</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">9</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-06-04-apple-and-major-league-baseball-announce-july-friday-night-baseball-schedule.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/apple-and-major-league-baseball-announce-july-friday-night-baseball-schedule/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月4日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月4日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>Appleが2026年Apple Design Awardsの受賞者を発表</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">10</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-06-03-apple-reveals-winners-of-the-2026-apple-design-awards.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/apple-reveals-winners-of-the-2026-apple-design-awards/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月3日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月3日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>2025年、App Storeは不正取引と見なされた取引22億ドル以上を阻止</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">11</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-05-20-the-app-store-stopped-over-2-point-2-billion-usd-in-fraudulent-transactions-in-2025.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/05/the-app-store-stopped-over-2-point-2-billion-usd-in-fraudulent-transactions-in-2025/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年5月20日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年5月20日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-draft">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>Appleが新しいアクセシビリティ機能とApple Intelligenceを活用したアップデートを発表</h2>
+          
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">12</div>
+            </div>
+  
+          <div class="draft-links"><a href="../2026-05-19-apple-unveils-new-accessibility-features-and-updates-with-apple-intelligence.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/05/apple-unveils-new-accessibility-features-and-updates-with-apple-intelligence/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年5月19日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年5月20日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-draft">下書き</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-published">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>Appleが子どもの安全の新しい機能をプレビュー</h2>
+          
+          <div class="draft-links"><a href="../2026-06-08-apple-previews-new-child-safety-features.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="../../../post.html?id=8" target="_blank" rel="noopener">公開記事</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/06/apple-previews-new-child-safety-features/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年6月8日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年6月9日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-published">公開済み</div>
+        </div>
+      </article>
+  
+
+      <article class="draft-row status-published">
+        <div class="draft-cell draft-cell-title">
+          <div class="draft-cell-label">記事タイトル</div>
+          <h2>Apple TV、iPhone 17 Proで撮影された初のメジャーリーグのプロフェッショナルスポーツイベントを生中継</h2>
+          
+          <div class="draft-links"><a href="../2026-05-21-apple-tv-to-air-first-major-live-pro-sports-event-shot-on-iphone-17-pro.html" target="_blank" rel="noopener">下書きを開く</a><span class="draft-link-sep">/</span><a href="../../../post.html?id=7" target="_blank" rel="noopener">公開記事</a><span class="draft-link-sep">/</span><a href="https://www.apple.com/jp/newsroom/2026/05/apple-tv-to-air-first-major-live-pro-sports-event-shot-on-iphone-17-pro/" target="_blank" rel="noopener">元記事</a></div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">元記事日付</div>
+          <div class="draft-cell-value">2026年5月21日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">生成日</div>
+          <div class="draft-cell-value">2026年5月21日</div>
+        </div>
+        <div class="draft-cell">
+          <div class="draft-cell-label">公開状態</div>
+          <div class="draft-status-badge status-published">公開済み</div>
+        </div>
+      </article>
+  
+    </section>
+
+    <p class="draft-note">公開は GitHub Actions の <code>Publish Apple Newsroom Draft</code>、却下は <code>Reject Apple Newsroom Draft</code> を使います。入力欄には、この一覧の選択番号または記事タイトルをそのまま入力してください。</p>
+  </main>
+</body>
+</html>

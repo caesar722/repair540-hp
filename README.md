@@ -11,7 +11,7 @@ Repair540ホームページには、Apple公式Newsroom 日本版の新着記事
 - 下書き本文は Apple公式Newsroom の本文をもとに自然な日本語で要約
 - 本文内にニュース元URLを必ず掲載
 - LINE通知には下書き確認URLを含める
-- `blog/posts/index-drafts.html` に下書き管理一覧を生成
+- `blog/posts/apple-newsroom-drafts/index.html` に下書き管理一覧を生成
 - 下書きには `元記事日付` を表示し、`投稿日` は公開 workflow 実行日で自動設定
 - 内容確認後は GitHub Actions から公開 workflow を実行して `posts.json` へ自動反映
 - 却下した下書きは `blog/posts/rejected/` に移動
@@ -108,7 +108,7 @@ GitHub の Actions 画面で `Test LINE Draft Notification` を `Run workflow` �
 
 LINE通知に記載された `確認URL` を開き、内容確認後に GitHub の Actions 画面で `Publish Apple Newsroom Draft` を実行します。
 
-下書きの全体一覧は `blog/posts/index-drafts.html` で確認できます。ここに
+下書きの全体一覧は `blog/posts/apple-newsroom-drafts/index.html` で確認できます。ここに
 
 - 記事タイトル
 - 元記事日付
@@ -119,9 +119,8 @@ LINE通知に記載された `確認URL` を開き、内容確認後に GitHub �
 
 入力項目:
 
-- `draft_title`
-  - workflow 上で choice 選択できます
-  - `blog/posts/index-drafts.html` の下書き一覧と同じタイトルが表示されます
+- `draft_title_manual`
+  - `blog/posts/apple-newsroom-drafts/index.html` に表示される選択番号、または記事タイトルを入力します
 - `category`
   - 通常は `コラム`
 - `emoji`
@@ -138,9 +137,9 @@ LINE通知に記載された `確認URL` を開き、内容確認後に GitHub �
 
 GitHub の Actions 画面で `Reject Apple Newsroom Draft` を実行します。
 
-- `draft_title`
-  - workflow 上で choice 選択できます
-  - 選んだ下書きは `blog/posts/rejected/` へ移動します
+- `draft_title_manual`
+  - `blog/posts/apple-newsroom-drafts/index.html` に表示される選択番号、または記事タイトルを入力します
+  - 入力した下書きは `blog/posts/rejected/` へ移動します
 
 ### 7. 却下済み記事の自動整理
 
@@ -150,7 +149,7 @@ GitHub の Actions 画面で `Reject Apple Newsroom Draft` を実行します。
 
 - 保存先: `blog/posts/`
 - ファイル名: `YYYY-MM-DD-article-slug.html`
-- 一覧ページ: `blog/posts/index-drafts.html`
+- 一覧ページ: `blog/posts/apple-newsroom-drafts/index.html`
 
 下書きは自動公開されません。HTML を確認してから `Publish Apple Newsroom Draft` workflow を実行します。
 

@@ -37,7 +37,7 @@ function buildDraftUrl(filePath) {
 function buildNotificationText(draft) {
   const date = (draft.date || '').replace(/-/g, '/');
   const draftUrl = draft.draftUrl || buildDraftUrl(draft.filePath);
-  const draftsIndexUrl = buildDraftUrl('blog/posts/index-drafts.html');
+  const draftsIndexUrl = buildDraftUrl('blog/posts/apple-newsroom-drafts/index.html');
 
   return [
     'Repair540ブログ下書きを作成しました。',
