@@ -21,6 +21,8 @@
   <style>
     .post-card { background:#fff; border:1px solid var(--border); border-radius:18px; padding:32px; box-shadow:var(--shadow); }
     .post-content p { margin-bottom: 1.2em; line-height: 1.9; }
+    .post-content a { color: var(--primary); text-decoration: underline; overflow-wrap: anywhere; }
+    .post-content a:hover { opacity: .85; }
     .post-content .post-section-label { margin-top: 1.8em; margin-bottom: .6em; font-weight: 700; color: var(--primary); }
     .post-content .post-list-line,
     .post-content .post-step-line { margin-bottom: .45em; padding-left: 1em; text-indent: -1em; }
@@ -153,6 +155,13 @@
         '"': '&quot;',
         "'": '&#39;'
       }[char]));
+      const linkifyText = value => {
+        const escaped = escapeHtml(value);
+        return escaped.replace(
+          /(https?:\/\/[^\s<]+)/g,
+          url => '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>'
+        );
+      };
       const formattedDate = new Date(post.date).toLocaleDateString('ja-JP', {
         year: 'numeric',
         month: 'long',
@@ -190,7 +199,7 @@
           } else if (/^\d+\.\s/.test(line)) {
             className = ' class="post-step-line"';
           }
-          return '<p' + className + '>' + escapeHtml(line) + '</p>';
+          return '<p' + className + '>' + linkifyText(line) + '</p>';
         })
         .join('');
       document.getElementById('post-area').innerHTML =
