@@ -1,29 +1,15 @@
 #!/usr/bin/env node
 
 import fs from 'node:fs/promises';
+import path from 'node:path';
 import {
   DRAFT_INDEX_HTML_FILE,
-  collectActionableDraftEntries,
   collectDraftEntries,
   escapeHtml,
-  formatDraftSelectionList,
   formatJaDate,
-  getTokyoTodayIso
+  getTokyoTodayIso,
+  collectActionableDraftEntries
 } from './apple-newsroom-draft-utils.mjs';
-
-const PUBLISH_WORKFLOW_FILE = '.github/workflows/publish-apple-newsroom-draft.yml';
-const REJECT_WORKFLOW_FILE = '.github/workflows/reject-apple-newsroom-draft.yml';
-
-function replaceBlock(source, startMarker, endMarker, replacement) {
-  const start = source.indexOf(startMarker);
-  const end = source.indexOf(endMarker, start);
-
-  if (start === -1 || end === -1) {
-    throw new Error(`Failed to replace block between "${startMarker}" and "${endMarker}".`);
-  }
-
-  return `${source.slice(0, start)}${replacement}${source.slice(end)}`;
-}
 
 function getStatusLabel(status) {
   return {
@@ -34,11 +20,11 @@ function getStatusLabel(status) {
 }
 
 function buildDraftHref(relativePath) {
-  return `./${relativePath.replace(/^blog\/posts\//, '')}`;
+  return `../${relativePath.replace(/^blog\/posts\//, '')}`;
 }
 
 function buildPublishedHref(postId) {
-  return `../../post.html?id=${postId}`;
+  return `../../../post.html?id=${postId}`;
 }
 
 function renderLinks(entry) {
@@ -57,7 +43,17 @@ function renderLinks(entry) {
   return links.join('<span class="draft-link-sep">/</span>');
 }
 
-function renderRows(entries) {
+function renderSelectionBadge(selectionNumber) {
+  if (!selectionNumber) return '';
+  return `
+            <div class="draft-selection-card">
+              <div class="draft-cell-label">選択番号</div>
+              <div class="draft-selection-number">${selectionNumber}</div>
+            </div>
+  `;
+}
+
+function renderRows(entries, selectionNumbers) {
   if (!entries.length) {
     return `<div class="draft-empty">現在管理対象のApple Newsroom下書きはありません。</div>`;
   }
@@ -67,6 +63,7 @@ function renderRows(entries) {
         <div class="draft-cell draft-cell-title">
           <div class="draft-cell-label">記事タイトル</div>
           <h2>${escapeHtml(entry.title)}</h2>
+          ${renderSelectionBadge(selectionNumbers.get(entry.relativePath))}
           <div class="draft-links">${renderLinks(entry)}</div>
         </div>
         <div class="draft-cell">
@@ -85,12 +82,15 @@ function renderRows(entries) {
   `).join('\n');
 }
 
-function buildHtml(entries) {
+function buildHtml(entries, actionableEntries) {
   const today = formatJaDate(getTokyoTodayIso());
   const counts = entries.reduce((acc, entry) => {
     acc[entry.status] = (acc[entry.status] || 0) + 1;
     return acc;
   }, { draft: 0, published: 0, rejected: 0 });
+  const selectionNumbers = new Map(
+    actionableEntries.map((entry, index) => [entry.relativePath, String(index + 1)])
+  );
 
   return `<!DOCTYPE html>
 <html lang="ja">
@@ -99,7 +99,7 @@ function buildHtml(entries) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apple Newsroom下書き管理｜Repair540</title>
   <meta name="robots" content="noindex,nofollow">
-  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../../style.css">
   <style>
     body { background: #f5f7fb; }
     .draft-admin-wrap { max-width: 1180px; margin: 0 auto; padding: 48px 20px 72px; }
@@ -118,6 +118,9 @@ function buildHtml(entries) {
     .draft-cell-label { color: var(--text-sub); font-size: .8rem; margin-bottom: 4px; }
     .draft-cell-title h2 { font-size: 1.02rem; line-height: 1.55; margin-bottom: 10px; }
     .draft-cell-value { font-weight: 600; }
+    .draft-selection-card { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 8px 12px; border-radius: 12px; background: rgba(11,122,255,.08); }
+    .draft-selection-card .draft-cell-label { margin: 0; }
+    .draft-selection-number { font-size: 1rem; font-weight: 800; color: #0b7aff; }
     .draft-links { display: flex; flex-wrap: wrap; gap: 8px; font-size: .88rem; }
     .draft-link-sep { color: var(--text-sub); }
     .draft-status-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 84px; padding: 8px 12px; border-radius: 999px; font-size: .85rem; font-weight: 700; }
@@ -144,7 +147,7 @@ function buildHtml(entries) {
   <main class="draft-admin-wrap">
     <div class="draft-admin-head">
       <h1>Apple Newsroom下書き管理</h1>
-      <p>下書きの確認、公開済み判定、却下済みの保管状況を一覧で確認できます。</p>
+      <p>下書きの確認、公開済み判定、却下済みの保管状況を一覧で確認できます。公開・却下 workflow では、この一覧の選択番号または記事タイトルを入力してください。</p>
     </div>
 
     <section class="draft-summary" aria-label="下書き件数">
@@ -155,97 +158,22 @@ function buildHtml(entries) {
     </section>
 
     <section class="draft-list" aria-label="下書き一覧">
-${renderRows(entries)}
+${renderRows(entries, selectionNumbers)}
     </section>
 
-    <p class="draft-note">公開は GitHub Actions の <code>Publish Apple Newsroom Draft</code>、却下は <code>Reject Apple Newsroom Draft</code> を使います。</p>
+    <p class="draft-note">公開は GitHub Actions の <code>Publish Apple Newsroom Draft</code>、却下は <code>Reject Apple Newsroom Draft</code> を使います。入力欄には、この一覧の選択番号または記事タイトルをそのまま入力してください。</p>
   </main>
 </body>
 </html>
 `;
 }
 
-function buildChoiceOptions(entries) {
-  const titles = entries.map((entry) => entry.title);
-  const options = titles.length ? titles : ['（公開・却下できる下書きなし）'];
-  return options.map((title) => `          - '${title.replace(/'/g, "''")}'`).join('\n');
-}
-
-function buildDraftCandidatesDefault(entries) {
-  const list = formatDraftSelectionList(entries);
-  return list
-    .split('\n')
-    .map((line) => `          ${line}`)
-    .join('\n');
-}
-
-async function syncWorkflowChoices(entries) {
-  const optionLines = buildChoiceOptions(entries);
-  const candidateLines = buildDraftCandidatesDefault(entries);
-  const publishWorkflow = await fs.readFile(PUBLISH_WORKFLOW_FILE, 'utf8');
-  const rejectWorkflow = await fs.readFile(REJECT_WORKFLOW_FILE, 'utf8');
-
-  const publishNext = replaceBlock(
-    publishWorkflow,
-    '      draft_title:',
-    '\n      category:',
-    [
-      '      draft_title:',
-      "        description: 'Web版向け。公開する記事タイトルを選択'",
-      '        required: false',
-      '        type: choice',
-      '        options:',
-      optionLines,
-      '      draft_title_manual:',
-      "        description: 'iPhone版GitHubアプリ用。下の候補一覧の番号または記事タイトルを入力'",
-      '        required: false',
-      "        default: ''",
-      '      draft_candidates:',
-      "        description: '候補一覧（表示専用・編集不要）'",
-      '        required: false',
-      '        default: |',
-      candidateLines
-    ].join('\n')
-  );
-
-  const rejectNext = replaceBlock(
-    rejectWorkflow,
-    '      draft_title:',
-    '\n\npermissions:',
-    [
-      '      draft_title:',
-      "        description: 'Web版向け。却下する記事タイトルを選択'",
-      '        required: false',
-      '        type: choice',
-      '        options:',
-      optionLines,
-      '      draft_title_manual:',
-      "        description: 'iPhone版GitHubアプリ用。下の候補一覧の番号または記事タイトルを入力'",
-      '        required: false',
-      "        default: ''",
-      '      draft_candidates:',
-      "        description: '候補一覧（表示専用・編集不要）'",
-      '        required: false',
-      '        default: |',
-      candidateLines
-    ].join('\n')
-  );
-
-  if (publishNext !== publishWorkflow) {
-    await fs.writeFile(PUBLISH_WORKFLOW_FILE, publishNext, 'utf8');
-  }
-
-  if (rejectNext !== rejectWorkflow) {
-    await fs.writeFile(REJECT_WORKFLOW_FILE, rejectNext, 'utf8');
-  }
-}
-
 async function main() {
   const entries = await collectDraftEntries();
   const actionableEntries = await collectActionableDraftEntries();
-  const html = buildHtml(entries);
+  const html = buildHtml(entries, actionableEntries);
+  await fs.mkdir(path.dirname(DRAFT_INDEX_HTML_FILE), { recursive: true });
   await fs.writeFile(DRAFT_INDEX_HTML_FILE, html, 'utf8');
-  await syncWorkflowChoices(actionableEntries);
   console.log(`Updated draft index: ${DRAFT_INDEX_HTML_FILE}`);
 }
 

@@ -12,7 +12,7 @@ export const SITE_BASE_URL = 'https://caesar722.github.io/repair540-hp/';
 export const BLOG_POSTS_DIR = path.resolve(process.cwd(), 'blog/posts');
 export const REJECTED_DRAFTS_DIR = path.join(BLOG_POSTS_DIR, 'rejected');
 export const POSTS_JSON_FILE = path.resolve(process.cwd(), 'posts.json');
-export const DRAFT_INDEX_HTML_FILE = path.join(BLOG_POSTS_DIR, 'index-drafts.html');
+export const DRAFT_INDEX_HTML_FILE = path.join(BLOG_POSTS_DIR, 'apple-newsroom-drafts', 'index.html');
 
 export function decodeHtmlEntities(value) {
   return String(value)

@@ -6,7 +6,7 @@
 
 - 1ファイル1記事のHTML形式
 - ファイル名は `YYYY-MM-DD-article-slug.html`
-- 管理一覧ページは `index-drafts.html`
+- 管理一覧ページは `apple-newsroom-drafts/index.html`
 - `apple-newsroom-state.json` で重複チェック済みの記事URLを管理
 - 新しいApple公式ニュースを検出した時のみ、新しい下書きを追加
 - 却下した下書きは `rejected/` に移動
@@ -22,9 +22,9 @@
 
 iPhone版GitHubアプリから実行する場合:
 
-- `draft_candidates` に候補一覧が表示されます
-- `draft_title_manual` に候補一覧の番号、または記事タイトルを入力して実行します
-- Web版GitHubでは `draft_title` の選択欄も使えます
+- `blog/posts/apple-newsroom-drafts/index.html` を開きます
+- `draft_title_manual` に一覧の番号、または記事タイトルを入力して実行します
+- Web版GitHub / iPhone版GitHubアプリともに同じ入力方式です
 
 公開後の記事表示ルール:
 
@@ -40,9 +40,6 @@ GitHub Actions から LINE 通知を送る場合は、GitHub Secrets に以下�
   - LINE Messaging API のチャネルアクセストークン
 - `LINE_USER_ID`
   - 通知先管理者の `userId`
-- `WORKFLOW_SYNC_TOKEN`（任意）
-  - `publish-apple-newsroom-draft.yml` と `reject-apple-newsroom-draft.yml` の候補一覧を自動更新したい場合に使う Personal Access Token
-  - workflow 更新権限を含むトークンを設定すると、Apple Newsroom下書きの生成・公開・却下後に GitHub Actions の候補一覧も同期されます
 
 通知は「新しいAppleニュースを検出して、下書きHTMLの生成に成功した時のみ」送信されます。
 
