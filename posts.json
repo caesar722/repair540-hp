@@ -1,6 +1,15 @@
 {
   "posts": [
     {
+      "id": 12,
+      "title": "iPhone SE2 Bluetooth・NFCアンテナ交換",
+      "date": "2026-06-19",
+      "category": "修理事例",
+      "emoji": "📡",
+      "excerpt": "iPhone SE2のBluetooth・NFCアンテナを交換しました。電子マネーのチャージ不良が改善し、部品交換で正常動作するようになりました。",
+      "content": "iPhone SE2の修理をご依頼いただきました。\n\n症状は、Bluetoothは正常に使えるものの、コンビニなどで電子マネーのチャージができないというものでした。\n\n点検したところ、Bluetoothは動作していましたが、NFC機能のみ正常に動作していない状態でした。\n\nBluetoothとNFCは同じアンテナ部品を使用していますが、それぞれ制御しているチップは異なります。\n\n今回はアンテナ部品を交換したところ、NFC機能も正常に動作するようになり、無事に修理完了となりました。\n\n交換した部品は、iPhone本体右上に取り付けられている非常に小さなアンテナ部品です。\n\n![iPhone SE2 Bluetooth・NFCアンテナ部品](assets/blog/iphone-se2-bluetooth-nfc-antenna-part.jpg)\n\n![iPhone SE2 Bluetooth・NFCアンテナ取り付け位置](assets/blog/iphone-se2-bluetooth-nfc-antenna-position.jpg)\n\nApple正規サービスでは本体交換になるケースもありますが、Repair540では部品交換による修理が可能な場合があります。\n\n無事に直って、お客様にも大変喜んでいただけました。\n\n修理内容：\n・機種：iPhone SE2\n・修理内容：Bluetooth・NFCアンテナ交換\n・作業時間：約30分\n・修理価格：5,500円（税込）\n\nBluetoothや電子マネー（Apple Pay・交通系ICなど）の反応が悪い、コンビニで決済やチャージができないなどのお困りごとがありましたら、お気軽にRepair540までご相談ください。"
+    },
+    {
       "id": 11,
       "title": "iPhoneSE2 バッテリー交換",
       "date": "2026-06-19",
