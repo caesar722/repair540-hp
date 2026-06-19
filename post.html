@@ -23,6 +23,8 @@
     .post-content p { margin-bottom: 1.2em; line-height: 1.9; }
     .post-content a { color: var(--primary); text-decoration: underline; overflow-wrap: anywhere; }
     .post-content a:hover { opacity: .85; }
+    .post-figure { margin: 1.4rem 0 1.8rem; }
+    .post-figure img { display: block; width: 100%; max-width: 680px; margin: 0 auto; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow); height: auto; }
     .post-content .post-section-label { margin-top: 1.8em; margin-bottom: .6em; font-weight: 700; color: var(--primary); }
     .post-content .post-list-line,
     .post-content .post-step-line { margin-bottom: .45em; padding-left: 1em; text-indent: -1em; }
@@ -155,9 +157,10 @@
         '"': '&quot;',
         "'": '&#39;'
       }[char]));
-      const linkifyText = value => {
+      const formatInlineText = value => {
         const escaped = escapeHtml(value);
-        return escaped.replace(
+        const emphasized = escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        return emphasized.replace(
           /(https?:\/\/[^\s<]+)/g,
           url => '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>'
         );
@@ -191,15 +194,19 @@
         .map(line => line.trim())
         .filter(line => line.length > 0)
         .map(line => {
+          const imageMatch = line.match(/^!\[([^\]]+)\]\(([^)]+)\)$/);
+          if (imageMatch) {
+            return '<figure class="post-figure"><img src="' + escapeHtml(imageMatch[2]) + '" alt="' + escapeHtml(imageMatch[1]) + '" loading="lazy"></figure>';
+          }
           let className = '';
           if (line.endsWith('：') || /^【.+】$/.test(line)) {
             className = ' class="post-section-label"';
-          } else if (line.startsWith('・')) {
+          } else if (line.startsWith('・') || line.startsWith('* ')) {
             className = ' class="post-list-line"';
           } else if (/^\d+\.\s/.test(line)) {
             className = ' class="post-step-line"';
           }
-          return '<p' + className + '>' + linkifyText(line) + '</p>';
+          return '<p' + className + '>' + formatInlineText(line) + '</p>';
         })
         .join('');
       document.getElementById('post-area').innerHTML =
