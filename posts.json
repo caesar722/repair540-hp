@@ -1,6 +1,17 @@
 {
   "posts": [
     {
+      "id": 13,
+      "title": "iPhoneの販売・買取もしてます",
+      "date": "2026-06-21",
+      "category": "お知らせ",
+      "emoji": "📱",
+      "thumbImage": "assets/blog/iphone-8-sale-black-64gb.jpg",
+      "thumbAlt": "販売中のiPhone 8 ブラック 64GB",
+      "excerpt": "Repair540ではiPhoneの販売・買取も行っています。今回は液晶パネル交換済み・バッテリー交換済みのiPhone 8をご紹介します。",
+      "content": "Repair540では、スマホやタブレットなどの修理だけでなく、iPhoneの販売・買取も行っています。\n\n中古iPhoneをお探しの方や、ご不要になったiPhoneの売却をご検討中の方もお気軽にご相談ください。\n\n今回ご紹介する商品はこちらです。\n\n![販売中のiPhone 8 ブラック 64GB](assets/blog/iphone-8-sale-black-64gb.jpg)\n\niPhone 8（ブラック・64GB）\n・液晶パネル交換済み\n・バッテリー交換済み\n\n販売価格：11,000円（税込）\n\n今回ご紹介した端末以外にも、販売用のiPhoneをご用意しております。\n在庫状況は随時変わりますので、お気軽にお問い合わせください。\n\nまた、iPhoneの買取も行っておりますので、機種変更などで不要になった端末がございましたら、ぜひ一度ご相談ください。"
+    },
+    {
       "id": 12,
       "title": "iPhone SE2 Bluetooth・NFCアンテナ交換",
       "date": "2026-06-19",

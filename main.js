@@ -274,9 +274,12 @@ async function loadPosts() {
       const date = new Date(post.date).toLocaleDateString('ja-JP', {
         year: 'numeric', month: 'long', day: 'numeric'
       });
+      const thumb = post.thumbImage
+        ? `<img src="${post.thumbImage}" alt="${post.thumbAlt || post.title}" loading="lazy">`
+        : post.emoji;
       return `
         <article class="blog-card">
-          <div class="blog-thumb">${post.emoji}</div>
+          <div class="blog-thumb">${thumb}</div>
           <div class="blog-body">
             <div class="blog-meta">
               <span class="blog-cat">${post.category}</span>
