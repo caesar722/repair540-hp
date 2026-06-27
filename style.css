@@ -543,6 +543,13 @@ select.form-control {
   padding: 6px 14px; border-radius: 20px;
   font-size: .82rem; font-weight: 500;
   margin-bottom: 20px; border: 1px solid rgba(255,255,255,.15);
+  text-decoration: none;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+.hero-badge:hover { background: rgba(255,255,255,.16); color: #fff; }
+.hero-badge:focus-visible {
+  outline: 2px solid rgba(255,255,255,.95);
+  outline-offset: 2px;
 }
 .hero-title {
   font-size: 2.8rem; font-weight: 800;
