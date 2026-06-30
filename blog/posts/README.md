@@ -9,6 +9,7 @@
 - 管理一覧ページは `apple-newsroom-drafts/index.html`
 - `apple-newsroom-state.json` で重複チェック済みの記事URLを管理
 - 新しいApple公式ニュースを検出した時のみ、新しい下書きを追加
+- 公開していない下書きは、生成日から 7 日経過すると自動削除
 - 却下した下書きは `rejected/` に移動
 
 ## 公開前の作業
@@ -45,4 +46,4 @@ GitHub Actions から LINE 通知を送る場合は、GitHub Secrets に以下�
 
 `LINE_USER_ID` は、LINE公式アカウントを友だち追加したユーザーがボットにメッセージを送信した時の webhook に含まれる `source.userId` を使います。
 
-`Cleanup Rejected Apple Newsroom Drafts` workflow が、`rejected/` 内で 30 日経過した下書きを自動削除します。
+`Cleanup Apple Newsroom Drafts` workflow が、公開していない下書きを 7 日後、`rejected/` 内の下書きを 30 日後に自動削除します。

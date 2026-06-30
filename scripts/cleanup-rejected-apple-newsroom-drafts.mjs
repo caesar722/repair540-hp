@@ -4,15 +4,19 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import {
+  BLOG_POSTS_DIR,
   REJECTED_DRAFTS_DIR,
   extractMetaContent,
   getTokyoTodayIso,
   isDraftHtmlFilename,
   parseDateFromFileName,
+  readDraftEntry,
+  readPostsMap,
   relativeDraftPath
 } from './apple-newsroom-draft-utils.mjs';
 
-const RETENTION_DAYS = 30;
+const DRAFT_RETENTION_DAYS = 7;
+const REJECTED_RETENTION_DAYS = 30;
 
 function diffDays(fromIsoDate, toIsoDate) {
   const from = new Date(`${fromIsoDate}T00:00:00+09:00`);
@@ -22,35 +26,68 @@ function diffDays(fromIsoDate, toIsoDate) {
 
 async function main() {
   const today = getTokyoTodayIso();
-  const removed = [];
+  const removedDrafts = [];
+  const removedRejectedDrafts = [];
+  const { byDraftFile } = await readPostsMap();
 
   try {
-    const entries = await fs.readdir(REJECTED_DRAFTS_DIR, { withFileTypes: true });
+    const directories = [BLOG_POSTS_DIR, REJECTED_DRAFTS_DIR];
 
-    for (const entry of entries) {
-      if (!entry.isFile() || !isDraftHtmlFilename(entry.name)) continue;
+    for (const directory of directories) {
+      let entries = [];
 
-      const filePath = path.join(REJECTED_DRAFTS_DIR, entry.name);
-      const html = await fs.readFile(filePath, 'utf8');
-      const rejectedDate = extractMetaContent(html, 'draft-rejected-date') || parseDateFromFileName(filePath);
+      try {
+        entries = await fs.readdir(directory, { withFileTypes: true });
+      } catch (error) {
+        if (error && error.code === 'ENOENT') continue;
+        throw error;
+      }
 
-      if (diffDays(rejectedDate, today) < RETENTION_DAYS) continue;
+      for (const entry of entries) {
+        if (!entry.isFile() || !isDraftHtmlFilename(entry.name)) continue;
 
-      await fs.rm(filePath, { force: true });
-      removed.push(relativeDraftPath(filePath));
+        const filePath = path.join(directory, entry.name);
+        const draftEntry = await readDraftEntry(filePath, byDraftFile);
+
+        if (draftEntry.status === 'draft') {
+          const generatedDate = draftEntry.generatedDate || parseDateFromFileName(filePath);
+          if (diffDays(generatedDate, today) < DRAFT_RETENTION_DAYS) continue;
+
+          await fs.rm(filePath, { force: true });
+          removedDrafts.push(relativeDraftPath(filePath));
+          continue;
+        }
+
+        if (draftEntry.status === 'rejected') {
+          const rejectedDate = extractMetaContent(draftEntry.html, 'draft-rejected-date') || parseDateFromFileName(filePath);
+          if (diffDays(rejectedDate, today) < REJECTED_RETENTION_DAYS) continue;
+
+          await fs.rm(filePath, { force: true });
+          removedRejectedDrafts.push(relativeDraftPath(filePath));
+        }
+      }
     }
   } catch (error) {
     if (error && error.code !== 'ENOENT') throw error;
   }
 
-  if (!removed.length) {
-    console.log('No rejected drafts were old enough to remove.');
+  if (!removedDrafts.length && !removedRejectedDrafts.length) {
+    console.log('No Apple Newsroom drafts were old enough to remove.');
     return;
   }
 
-  console.log(`Removed ${removed.length} rejected draft(s):`);
-  for (const filePath of removed) {
-    console.log(`- ${filePath}`);
+  if (removedDrafts.length) {
+    console.log(`Removed ${removedDrafts.length} stale draft(s) older than ${DRAFT_RETENTION_DAYS} day(s):`);
+    for (const filePath of removedDrafts) {
+      console.log(`- ${filePath}`);
+    }
+  }
+
+  if (removedRejectedDrafts.length) {
+    console.log(`Removed ${removedRejectedDrafts.length} rejected draft(s) older than ${REJECTED_RETENTION_DAYS} day(s):`);
+    for (const filePath of removedRejectedDrafts) {
+      console.log(`- ${filePath}`);
+    }
   }
 }
 

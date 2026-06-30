@@ -161,7 +161,7 @@ function buildHtml(entries, actionableEntries) {
 ${renderRows(entries, selectionNumbers)}
     </section>
 
-    <p class="draft-note">公開は GitHub Actions の <code>Publish Apple Newsroom Draft</code>、却下は <code>Reject Apple Newsroom Draft</code> を使います。入力欄には、この一覧の選択番号または記事タイトルをそのまま入力してください。</p>
+    <p class="draft-note">公開は GitHub Actions の <code>Publish Apple Newsroom Draft</code>、却下は <code>Reject Apple Newsroom Draft</code> を使います。入力欄には、この一覧の選択番号または記事タイトルをそのまま入力してください。公開していない下書きは生成日から7日経過すると自動削除されます。</p>
   </main>
 </body>
 </html>

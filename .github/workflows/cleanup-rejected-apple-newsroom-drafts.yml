@@ -1,4 +1,4 @@
-name: Cleanup Rejected Apple Newsroom Drafts
+name: Cleanup Apple Newsroom Drafts
 
 on:
   schedule:
@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 jobs:
-  cleanup-rejected-drafts:
+  cleanup-drafts:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Remove old rejected drafts
+      - name: Remove stale drafts
         run: node scripts/cleanup-rejected-apple-newsroom-drafts.mjs
 
       - name: Rebuild draft index
@@ -61,7 +61,7 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Cleanup rejected Apple Newsroom drafts"
+          git commit -m "Cleanup Apple Newsroom drafts"
 
           echo "Rebasing committed cleanup changes onto latest origin/main before push..."
           if ! git pull --rebase origin main; then
@@ -85,7 +85,7 @@ jobs:
             fi
 
             if ! git push origin HEAD:main; then
-              echo "::error::Push rejected again after one retry while cleaning rejected drafts."
+              echo "::error::Push rejected again after one retry while cleaning Apple Newsroom drafts."
               git status --short || true
               git log --oneline --decorate -8 || true
               exit 1
