@@ -10,6 +10,9 @@ const DEFAULT_OUTPUT_DIR = path.resolve(process.cwd(), 'blog/posts');
 const DEFAULT_STATE_FILE = path.join(DEFAULT_OUTPUT_DIR, 'apple-newsroom-state.json');
 const DEFAULT_SOURCE_NAME = 'Apple公式Newsroom 日本版';
 const DEFAULT_SITE_BASE_URL = 'https://caesar722.github.io/repair540-hp/';
+const DEFAULT_USER_AGENT = 'Mozilla/5.0';
+const FETCH_RETRY_ATTEMPTS = 2;
+const FETCH_RETRY_DELAY_MS = 5000;
 
 function parseArgs(argv) {
   const options = {
@@ -318,18 +321,127 @@ async function pathExists(filePath) {
   }
 }
 
-async function fetchText(url) {
-  const response = await fetch(url, {
-    headers: {
-      'User-Agent': 'Repair540 Apple Newsroom Draft Bot/1.0'
-    }
-  });
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-  if (!response.ok) {
-    throw new Error(`Fetch failed: ${response.status} ${response.statusText} (${url})`);
+function trimForLog(value, maxLength = 240) {
+  const text = normalizeWhitespace(String(value || ''));
+  if (!text) return '';
+  return text.length > maxLength ? `${text.slice(0, maxLength).trim()}…` : text;
+}
+
+function createFetchFailureDetails({ url, label, attempt, response, error, responseSnippet }) {
+  const status = response?.status ?? null;
+  const statusText = response?.statusText ?? '';
+  const details = {
+    url,
+    label,
+    attempt,
+    status,
+    statusText,
+    message: error instanceof Error ? error.message : String(error),
+    name: error instanceof Error ? error.name : 'Error',
+    cause: error instanceof Error && error.cause ? String(error.cause) : '',
+    responseSnippet: responseSnippet || ''
+  };
+
+  const parts = [
+    `label=${label}`,
+    `url=${url}`,
+    `attempt=${attempt}/${FETCH_RETRY_ATTEMPTS}`
+  ];
+
+  if (status !== null) {
+    parts.push(`status=${status}`);
   }
 
-  return response.text();
+  if (statusText) {
+    parts.push(`statusText=${statusText}`);
+  }
+
+  if (details.message) {
+    parts.push(`message=${details.message}`);
+  }
+
+  if (details.cause) {
+    parts.push(`cause=${details.cause}`);
+  }
+
+  if (details.responseSnippet) {
+    parts.push(`response=${details.responseSnippet}`);
+  }
+
+  details.logLine = parts.join(' | ');
+  return details;
+}
+
+async function fetchText(url, { label = 'resource' } = {}) {
+  let lastFailure = null;
+
+  for (let attempt = 1; attempt <= FETCH_RETRY_ATTEMPTS; attempt += 1) {
+    let response = null;
+
+    try {
+      console.log(`[fetch] ${label} attempt ${attempt}/${FETCH_RETRY_ATTEMPTS}: ${url}`);
+
+      response = await fetch(url, {
+        headers: {
+          'User-Agent': DEFAULT_USER_AGENT,
+          'Accept': 'application/rss+xml, application/atom+xml, text/html;q=0.9, */*;q=0.8'
+        }
+      });
+
+      if (!response.ok) {
+        const responseText = await response.text();
+        const failure = createFetchFailureDetails({
+          url,
+          label,
+          attempt,
+          response,
+          error: new Error(`Fetch failed with HTTP ${response.status} ${response.statusText}`),
+          responseSnippet: trimForLog(responseText)
+        });
+
+        console.error(`[fetch] failed | ${failure.logLine}`);
+        lastFailure = failure;
+
+        if (attempt < FETCH_RETRY_ATTEMPTS) {
+          console.log(`[fetch] retrying in ${FETCH_RETRY_DELAY_MS / 1000}s: ${url}`);
+          await sleep(FETCH_RETRY_DELAY_MS);
+          continue;
+        }
+
+        throw Object.assign(new Error(failure.logLine), { details: failure });
+      }
+
+      return await response.text();
+    } catch (error) {
+      const failure = error?.details || createFetchFailureDetails({
+        url,
+        label,
+        attempt,
+        response,
+        error
+      });
+
+      if (!error?.details) {
+        console.error(`[fetch] failed | ${failure.logLine}`);
+      }
+
+      lastFailure = failure;
+
+      if (attempt < FETCH_RETRY_ATTEMPTS) {
+        console.log(`[fetch] retrying in ${FETCH_RETRY_DELAY_MS / 1000}s: ${url}`);
+        await sleep(FETCH_RETRY_DELAY_MS);
+        continue;
+      }
+    }
+  }
+
+  const finalError = new Error(`Fetch failed after ${FETCH_RETRY_ATTEMPTS} attempt(s): ${url}`);
+  finalError.details = lastFailure;
+  throw finalError;
 }
 
 async function ensureDirectory(dirPath) {
@@ -337,7 +449,7 @@ async function ensureDirectory(dirPath) {
 }
 
 async function loadArticle(entry) {
-  const html = await fetchText(entry.url);
+  const html = await fetchText(entry.url, { label: 'article' });
   const newsArticle = extractNewsArticleJson(html);
 
   return {
@@ -468,15 +580,70 @@ async function writeReport(filePath, report, dryRun) {
   await fs.writeFile(filePath, payload, 'utf8');
 }
 
+function createBaseReport() {
+  return {
+    source: DEFAULT_SOURCE_NAME,
+    checkedAt: new Date().toISOString(),
+    result: 'no_new_articles',
+    summary: '新規記事なし',
+    draftCount: 0,
+    skippedCount: 0,
+    skippedDrafts: [],
+    drafts: [],
+    errors: []
+  };
+}
+
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   await ensureDirectory(options.outputDir);
+  const report = createBaseReport();
 
-  const feedXml = await fetchText(options.feedUrl);
-  const entries = parseEntriesFromFeed(feedXml);
+  let entries = [];
+
+  try {
+    const feedXml = await fetchText(options.feedUrl, { label: 'feed' });
+    entries = parseEntriesFromFeed(feedXml);
+  } catch (error) {
+    const failure = error?.details
+      ? {
+          ...error.details,
+          stage: 'feed'
+        }
+      : {
+          stage: 'feed',
+          url: options.feedUrl,
+          label: 'feed',
+          status: null,
+          statusText: '',
+          message: error instanceof Error ? error.message : String(error)
+        };
+
+    report.result = 'fetch_failed';
+    report.summary = '取得失敗';
+    report.errors.push(failure);
+
+    await writeReport(options.reportFile, report, options.dryRun);
+    console.error(`[apple-newsroom] feed fetch failed. url=${failure.url} message=${failure.message}${failure.status ? ` status=${failure.status}` : ''}${failure.statusText ? ` statusText=${failure.statusText}` : ''}`);
+    console.log('[apple-newsroom] wrote failure report and exited without generating drafts.');
+    return;
+  }
 
   if (!entries.length) {
-    throw new Error('Apple Newsroom feed did not return any entries.');
+    report.result = 'fetch_failed';
+    report.summary = '取得失敗';
+    report.errors.push({
+      stage: 'feed',
+      url: options.feedUrl,
+      label: 'feed',
+      status: null,
+      statusText: '',
+      message: 'Apple Newsroom feed did not return any entries.'
+    });
+
+    await writeReport(options.reportFile, report, options.dryRun);
+    console.error(`[apple-newsroom] feed returned no entries. url=${options.feedUrl}`);
+    return;
   }
 
   const existingState = await readJsonIfExists(options.stateFile);
@@ -492,7 +659,40 @@ async function main() {
       continue;
     }
 
-    const article = await loadArticle(entry);
+    let article;
+
+    try {
+      article = await loadArticle(entry);
+    } catch (error) {
+      const failure = error?.details
+        ? {
+            ...error.details,
+            stage: 'article',
+            sourceUrl: entry.url,
+            title: entry.title
+          }
+        : {
+            stage: 'article',
+            sourceUrl: entry.url,
+            title: entry.title,
+            label: 'article',
+            status: null,
+            statusText: '',
+            message: error instanceof Error ? error.message : String(error)
+          };
+
+      report.errors.push(failure);
+      skippedDrafts.push({
+        title: buildNaturalTitle(entry.title),
+        date: toIsoDate(entry.updated),
+        sourceUrl: entry.url,
+        filePath: '',
+        reason: 'article_fetch_failed'
+      });
+      console.error(`[apple-newsroom] article fetch failed. title=${entry.title} url=${entry.url} message=${failure.message}${failure.status ? ` status=${failure.status}` : ''}${failure.statusText ? ` statusText=${failure.statusText}` : ''}`);
+      continue;
+    }
+
     const fileName = buildDraftFileName(entry, article);
     const filePath = path.join(options.outputDir, fileName);
     const content = buildDraftFileContent(entry, article);
@@ -542,20 +742,28 @@ async function main() {
     await writeJsonIfChanged(options.stateFile, state, options.dryRun);
   }
 
-  const report = {
-    source: DEFAULT_SOURCE_NAME,
-    checkedAt: new Date().toISOString(),
-    draftCount: generatedDrafts.length,
-    skippedCount: skippedDrafts.length,
-    skippedDrafts,
-    drafts: generatedDrafts
-  };
+  report.result = generatedDrafts.length ? 'generated' : (report.errors.length ? 'fetch_failed' : 'no_new_articles');
+  report.summary = generatedDrafts.length ? `下書き${generatedDrafts.length}件を作成` : (report.errors.length ? '取得失敗' : '新規記事なし');
+  report.draftCount = generatedDrafts.length;
+  report.skippedCount = skippedDrafts.length;
+  report.skippedDrafts = skippedDrafts;
+  report.drafts = generatedDrafts;
 
   await writeReport(options.reportFile, report, options.dryRun);
 
   if (!generatedDrafts.length) {
-    if (skippedDrafts.length) {
-      console.log(`Skipped ${skippedDrafts.length} Apple Newsroom draft(s) because the same slug file already exists.`);
+    const existingFileSkips = skippedDrafts.filter((draft) => draft.reason === 'existing_file').length;
+    const articleFetchSkips = skippedDrafts.filter((draft) => draft.reason === 'article_fetch_failed').length;
+
+    if (existingFileSkips) {
+      console.log(`Skipped ${existingFileSkips} Apple Newsroom draft(s) because the same slug file already exists.`);
+    }
+    if (articleFetchSkips) {
+      console.log(`Skipped ${articleFetchSkips} Apple Newsroom draft(s) because the article page could not be fetched.`);
+    }
+    if (report.errors.length) {
+      console.log('[apple-newsroom] completed with fetch errors. See report for details.');
+      return;
     }
     console.log(isFirstRun ? 'No draft generated on bootstrap.' : 'No new Apple Newsroom drafts were needed.');
     return;
@@ -568,6 +776,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error(error instanceof Error ? error.message : String(error));
+  console.error(error instanceof Error ? error.stack || error.message : String(error));
   process.exitCode = 1;
 });

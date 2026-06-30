@@ -40,7 +40,7 @@ jobs:
         env:
           REPORT_FILE: ${{ runner.temp }}/apple-newsroom-run-report.json
         run: |
-          node -e 'const fs=require("fs"); const report=JSON.parse(fs.readFileSync(process.env.REPORT_FILE,"utf8")); fs.appendFileSync(process.env.GITHUB_OUTPUT, "draft_count=" + report.draftCount + "\n");'
+          node -e 'const fs=require("fs"); const report=JSON.parse(fs.readFileSync(process.env.REPORT_FILE,"utf8")); console.log("Report result:", report.result); console.log("Report summary:", report.summary); if (Array.isArray(report.errors) && report.errors.length) { console.log("Report errors:"); for (const error of report.errors) { console.log(JSON.stringify(error)); } } fs.appendFileSync(process.env.GITHUB_OUTPUT, "draft_count=" + report.draftCount + "\n"); fs.appendFileSync(process.env.GITHUB_OUTPUT, "report_result=" + report.result + "\n");'
 
       - name: Commit generated drafts
         if: steps.report.outputs.draft_count != '0'
