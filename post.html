@@ -198,6 +198,10 @@
           if (imageMatch) {
             return '<figure class="post-figure"><img src="' + escapeHtml(imageMatch[2]) + '" alt="' + escapeHtml(imageMatch[1]) + '" loading="lazy"></figure>';
           }
+          const h2Match = line.match(/^##\s+(.+)$/);
+          if (h2Match) {
+            return '<h2>' + formatInlineText(h2Match[1]) + '</h2>';
+          }
           let className = '';
           if (line.endsWith('：') || /^【.+】$/.test(line)) {
             className = ' class="post-section-label"';
