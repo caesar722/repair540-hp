@@ -17,6 +17,11 @@
   <meta property="og:title" content="ブログ記事｜Repair540">
   <meta property="og:description" content="Repair540のブログ記事ページです。">
   <meta property="og:type" content="article">
+  <meta property="og:image" content="https://caesar722.github.io/repair540-hp/assets/repair540-logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ブログ記事｜Repair540">
+  <meta name="twitter:description" content="Repair540のブログ記事ページです。">
+  <meta name="twitter:image" content="https://caesar722.github.io/repair540-hp/assets/repair540-logo.png">
   <link rel="stylesheet" href="style.css">
   <style>
     .post-card { background:#fff; border:1px solid var(--border); border-radius:18px; padding:32px; box-shadow:var(--shadow); }
@@ -185,9 +190,18 @@
       const descriptionTag = document.querySelector('meta[name="description"]');
       const ogTitleTag = document.querySelector('meta[property="og:title"]');
       const ogDescriptionTag = document.querySelector('meta[property="og:description"]');
+      const ogImageTag = document.querySelector('meta[property="og:image"]');
+      const twitterTitleTag = document.querySelector('meta[name="twitter:title"]');
+      const twitterDescriptionTag = document.querySelector('meta[name="twitter:description"]');
+      const twitterImageTag = document.querySelector('meta[name="twitter:image"]');
+      const imageUrl = post.thumbImage ? new URL(post.thumbImage, location.href).href : '';
       if (descriptionTag) descriptionTag.setAttribute('content', summaryText);
       if (ogTitleTag) ogTitleTag.setAttribute('content', post.title + '｜Repair540');
       if (ogDescriptionTag) ogDescriptionTag.setAttribute('content', summaryText);
+      if (ogImageTag && imageUrl) ogImageTag.setAttribute('content', imageUrl);
+      if (twitterTitleTag) twitterTitleTag.setAttribute('content', post.title + '｜Repair540');
+      if (twitterDescriptionTag) twitterDescriptionTag.setAttribute('content', summaryText);
+      if (twitterImageTag && imageUrl) twitterImageTag.setAttribute('content', imageUrl);
       document.getElementById('breadcrumb-title').textContent = post.title;
       const paragraphs = post.content
         .split('\n')
