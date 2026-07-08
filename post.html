@@ -194,7 +194,8 @@
       const twitterTitleTag = document.querySelector('meta[name="twitter:title"]');
       const twitterDescriptionTag = document.querySelector('meta[name="twitter:description"]');
       const twitterImageTag = document.querySelector('meta[name="twitter:image"]');
-      const imageUrl = post.thumbImage ? new URL(post.thumbImage, location.href).href : '';
+      const imagePath = post.ogImage || post.thumbImage || '';
+      const imageUrl = imagePath ? new URL(imagePath, location.href).href : '';
       if (descriptionTag) descriptionTag.setAttribute('content', summaryText);
       if (ogTitleTag) ogTitleTag.setAttribute('content', post.title + '｜Repair540');
       if (ogDescriptionTag) ogDescriptionTag.setAttribute('content', summaryText);
