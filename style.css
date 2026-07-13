@@ -591,32 +591,6 @@ select.form-control {
 }
 .phone-sub { color: var(--text-sub); font-size: .8rem; text-align: center; }
 
-/* ── Campaign Banner ─────────────────── */
-.campaign-banner-section {
-  padding: 28px 0 0;
-  background: var(--bg);
-}
-.campaign-banner-link {
-  display: block;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-.campaign-banner-link:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-.campaign-banner-link:focus-visible {
-  outline: 3px solid rgba(0, 102, 204, 0.28);
-  outline-offset: 4px;
-}
-.campaign-banner-image {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 /* ── Service Cards ───────────────────── */
 .services-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
@@ -842,8 +816,6 @@ select.form-control {
   .section-title { font-size: 1.45rem; }
   .hero { padding: 64px 0 56px; }
   .hero-title { font-size: 2.1rem; }
-  .campaign-banner-section { padding-top: 20px; }
-  .campaign-banner-link { border-radius: 14px; }
   .services-grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
