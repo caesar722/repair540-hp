@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ブログ記事｜大分市都町のiPhone修理・スマホ修理 Repair540</title>
   <meta name="description" content="Repair540のブログ記事ページです。修理に役立つ情報や店舗からのお知らせをご案内しています。">
+  <meta name="keywords" content="iPhone修理, スマホ修理, Repair540, 大分市">
   <!-- Google Analytics 4 (GA4): Measurement ID for Repair540 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VB6TQCK198"></script>
   <script>
@@ -165,9 +166,13 @@
       const formatInlineText = value => {
         const escaped = escapeHtml(value);
         const emphasized = escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-        return emphasized.replace(
+        const autoLinked = emphasized.replace(
           /(https?:\/\/[^\s<]+)/g,
           url => '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>'
+        );
+        return autoLinked.replace(
+          /\[([^\]]+)\]\(((?:\.\/)?[A-Za-z0-9._/-]+\.html(?:\?[^)\s]+)?)\)/g,
+          (_, label, url) => '<a href="' + url + '">' + label + '</a>'
         );
       };
       const formattedDate = new Date(post.date).toLocaleDateString('ja-JP', {
@@ -186,8 +191,11 @@
         .replace(/\s+/g, ' ')
         .trim()
         .slice(0, 120);
-      document.title = post.title + '｜ブログ｜大分市都町のiPhone修理・スマホ修理 Repair540';
+      const seoTitle = post.seoTitle || (post.title + '｜ブログ｜大分市都町のiPhone修理・スマホ修理 Repair540');
+      const seoDescription = post.seoDescription || summaryText;
+      document.title = seoTitle;
       const descriptionTag = document.querySelector('meta[name="description"]');
+      const keywordsTag = document.querySelector('meta[name="keywords"]');
       const ogTitleTag = document.querySelector('meta[property="og:title"]');
       const ogDescriptionTag = document.querySelector('meta[property="og:description"]');
       const ogImageTag = document.querySelector('meta[property="og:image"]');
@@ -196,12 +204,13 @@
       const twitterImageTag = document.querySelector('meta[name="twitter:image"]');
       const imagePath = post.ogImage || post.thumbImage || '';
       const imageUrl = imagePath ? new URL(imagePath, location.href).href : '';
-      if (descriptionTag) descriptionTag.setAttribute('content', summaryText);
-      if (ogTitleTag) ogTitleTag.setAttribute('content', post.title + '｜Repair540');
-      if (ogDescriptionTag) ogDescriptionTag.setAttribute('content', summaryText);
+      if (descriptionTag) descriptionTag.setAttribute('content', seoDescription);
+      if (keywordsTag && post.keywords) keywordsTag.setAttribute('content', post.keywords);
+      if (ogTitleTag) ogTitleTag.setAttribute('content', seoTitle);
+      if (ogDescriptionTag) ogDescriptionTag.setAttribute('content', seoDescription);
       if (ogImageTag && imageUrl) ogImageTag.setAttribute('content', imageUrl);
-      if (twitterTitleTag) twitterTitleTag.setAttribute('content', post.title + '｜Repair540');
-      if (twitterDescriptionTag) twitterDescriptionTag.setAttribute('content', summaryText);
+      if (twitterTitleTag) twitterTitleTag.setAttribute('content', seoTitle);
+      if (twitterDescriptionTag) twitterDescriptionTag.setAttribute('content', seoDescription);
       if (twitterImageTag && imageUrl) twitterImageTag.setAttribute('content', imageUrl);
       document.getElementById('breadcrumb-title').textContent = post.title;
       const paragraphs = post.content
