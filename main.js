@@ -274,6 +274,9 @@ async function loadPosts() {
       const date = new Date(post.date).toLocaleDateString('ja-JP', {
         year: 'numeric', month: 'long', day: 'numeric'
       });
+      const postUrl = post.slug
+        ? `post.html?slug=${encodeURIComponent(post.slug)}`
+        : `post.html?id=${post.id}`;
       const thumb = post.thumbImage
         ? `<img src="${post.thumbImage}" alt="${post.thumbAlt || post.title}" loading="lazy">`
         : post.emoji;
@@ -287,7 +290,7 @@ async function loadPosts() {
             </div>
             <h3>${post.title}</h3>
             <p>${post.excerpt}</p>
-            <a href="post.html?id=${post.id}" class="blog-more">続きを読む →</a>
+            <a href="${postUrl}" class="blog-more">続きを読む →</a>
           </div>
         </article>`;
     }).join('');

@@ -18,11 +18,13 @@
   <meta property="og:title" content="ブログ記事｜Repair540">
   <meta property="og:description" content="Repair540のブログ記事ページです。">
   <meta property="og:type" content="article">
+  <meta property="og:url" content="https://caesar722.github.io/repair540-hp/post.html">
   <meta property="og:image" content="https://caesar722.github.io/repair540-hp/assets/repair540-logo.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ブログ記事｜Repair540">
   <meta name="twitter:description" content="Repair540のブログ記事ページです。">
   <meta name="twitter:image" content="https://caesar722.github.io/repair540-hp/assets/repair540-logo.png">
+  <link rel="canonical" href="https://caesar722.github.io/repair540-hp/post.html">
   <link rel="stylesheet" href="style.css">
   <style>
     .post-card { background:#fff; border:1px solid var(--border); border-radius:18px; padding:32px; box-shadow:var(--shadow); }
@@ -30,7 +32,7 @@
     .post-content a { color: var(--primary); text-decoration: underline; overflow-wrap: anywhere; }
     .post-content a:hover { opacity: .85; }
     .post-figure { margin: 1.4rem 0 1.8rem; }
-    .post-figure img { display: block; width: 100%; max-width: 680px; margin: 0 auto; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow); height: auto; }
+    .post-figure img { display: block; width: 100%; max-width: 100%; margin: 0 auto; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow); height: auto; }
     .post-content .post-section-label { margin-top: 1.8em; margin-bottom: .6em; font-weight: 700; color: var(--primary); }
     .post-content .post-list-line,
     .post-content .post-step-line { margin-bottom: .45em; padding-left: 1em; text-indent: -1em; }
@@ -147,11 +149,12 @@
 (function () {
   const params = new URLSearchParams(location.search);
   const postId = parseInt(params.get('id'), 10);
+  const postSlug = params.get('slug') || '';
   fetch('posts.json')
     .then(r => r.json())
     .then(data => {
       const posts = Array.isArray(data) ? data : (data.posts || []);
-      const post = posts.find(p => p.id === postId);
+      const post = posts.find(p => postSlug ? p.slug === postSlug : p.id === postId);
       if (!post) {
         document.getElementById('post-area').innerHTML = '<p>記事が見つかりませんでした。</p>';
         return;
@@ -202,8 +205,14 @@
       const twitterTitleTag = document.querySelector('meta[name="twitter:title"]');
       const twitterDescriptionTag = document.querySelector('meta[name="twitter:description"]');
       const twitterImageTag = document.querySelector('meta[name="twitter:image"]');
+      const ogUrlTag = document.querySelector('meta[property="og:url"]');
+      const canonicalTag = document.querySelector('link[rel="canonical"]');
       const imagePath = post.ogImage || post.thumbImage || '';
       const imageUrl = imagePath ? new URL(imagePath, location.href).href : '';
+      const canonicalUrl = new URL(
+        post.slug ? 'post.html?slug=' + encodeURIComponent(post.slug) : 'post.html?id=' + post.id,
+        location.href
+      ).href;
       if (descriptionTag) descriptionTag.setAttribute('content', seoDescription);
       if (keywordsTag && post.keywords) keywordsTag.setAttribute('content', post.keywords);
       if (ogTitleTag) ogTitleTag.setAttribute('content', seoTitle);
@@ -212,6 +221,8 @@
       if (twitterTitleTag) twitterTitleTag.setAttribute('content', seoTitle);
       if (twitterDescriptionTag) twitterDescriptionTag.setAttribute('content', seoDescription);
       if (twitterImageTag && imageUrl) twitterImageTag.setAttribute('content', imageUrl);
+      if (ogUrlTag) ogUrlTag.setAttribute('content', canonicalUrl);
+      if (canonicalTag) canonicalTag.setAttribute('href', canonicalUrl);
       document.getElementById('breadcrumb-title').textContent = post.title;
       const paragraphs = post.content
         .split('\n')
