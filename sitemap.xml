@@ -32,7 +32,7 @@
   </url>
   <url>
     <loc>https://caesar722.github.io/repair540-hp/blog.html</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -93,6 +93,12 @@
   <url>
     <loc>https://caesar722.github.io/repair540-hp/post.html?id=8</loc>
     <lastmod>2026-06-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://caesar722.github.io/repair540-hp/blog/posts/2026-07-25-iphone16-nfc-antenna-repair.html</loc>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

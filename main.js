@@ -274,9 +274,9 @@ async function loadPosts() {
       const date = new Date(post.date).toLocaleDateString('ja-JP', {
         year: 'numeric', month: 'long', day: 'numeric'
       });
-      const postUrl = post.slug
+      const postUrl = post.url || (post.slug
         ? `post.html?slug=${encodeURIComponent(post.slug)}`
-        : `post.html?id=${post.id}`;
+        : `post.html?id=${post.id}`);
       const thumb = post.thumbImage
         ? `<img src="${post.thumbImage}" alt="${post.thumbAlt || post.title}" loading="lazy">`
         : post.emoji;

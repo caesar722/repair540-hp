@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": 20,
+      "slug": "2026-07-25-iphone16-nfc-antenna-repair",
+      "url": "blog/posts/2026-07-25-iphone16-nfc-antenna-repair.html",
+      "title": "iPhone16 NFCアンテナ交換｜NFC決済ができない症状を修理しました",
+      "date": "2026-07-25",
+      "category": "修理事例",
+      "emoji": "📱",
+      "thumbImage": "assets/blog/iphone16-nfc-antenna-repair.jpg",
+      "thumbAlt": "iPhone16 NFCアンテナ交換で取り外した部品",
+      "ogImage": "assets/blog/iphone16-nfc-antenna-repair.jpg",
+      "excerpt": "iPhone16でNFC決済ができない症状を点検し、途中から折れていたNFCアンテナを新品に交換しました。",
+      "seoTitle": "iPhone16 NFCアンテナ交換｜NFC決済ができない症状を修理しました｜Repair540",
+      "seoDescription": "iPhone16のNFCアンテナ交換修理事例。NFC決済ができない症状の原因は折れたアンテナでした。Repair540で約90分、16,500円（税込）で修理を行いました。",
+      "keywords": "iPhone16 NFCアンテナ交換, iPhone16 NFC決済できない, iPhone16 タッチ決済 修理, iPhone16 修理 大分, Repair540",
+      "content": "![iPhone16 NFCアンテナ交換で取り外した部品](assets/blog/iphone16-nfc-antenna-repair.jpg)\n\n今回は、iPhone16でNFC決済ができなくなったという症状でご来店いただきました。\n\n端末を分解して点検したところ、NFCアンテナが途中から折れている状態でした。\n\n落下などの衝撃によってダメージを受けた可能性が考えられます。\n\nNFCアンテナを新品に交換したところ、NFC決済も正常に利用できるようになり、無事修理完了となりました。\n\nNFCアンテナが故障すると、タッチ決済や一部の非接触機能が利用できなくなることがあります。\n\n「急にタッチ決済が反応しなくなった」「原因が分からない」という場合も、Repair540では点検・修理が可能ですので、お気軽にご相談ください。\n\n## 修理内容\n\n・機種：iPhone16\n・修理内容：NFCアンテナ交換\n・作業時間：約90分\n・修理料金：16,500円（税込）\n\n## Repair540からのコメント\n\niPhoneは落下時に画面だけでなく、内部のアンテナやケーブル類が損傷することもあります。\n\n「タッチ決済が使えない」「交通系ICカードが反応しない」などの症状がありましたら、部品交換で改善するケースもあります。\n\nRepair540では、原因をしっかり確認した上で最適な修理をご提案いたしますので、お困りの際はお気軽にご相談ください。"
+    },
+    {
       "id": 19,
       "title": "AppleCare+が日本で拡大、新しい盗難・紛失に対する保証とプランのオプションが追加に",
       "date": "2026-07-24",
