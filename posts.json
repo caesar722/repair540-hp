@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": 21,
+      "slug": "2026-07-26-repair540-name-origin",
+      "url": "blog/posts/2026-07-26-repair540-name-origin.html",
+      "title": "「Repair540」の店名の由来",
+      "date": "2026-07-26",
+      "category": "コラム",
+      "emoji": "💡",
+      "thumbImage": "assets/blog/signal-for-help-hand-sign.jpg",
+      "thumbAlt": "SOSを表すハンドサインの3つの動作",
+      "ogImage": "assets/blog/signal-for-help-hand-sign.jpg",
+      "excerpt": "世界共通のSOSハンドサイン「Signal For Help」と、Repair540という店名に込めた想いをご紹介します。",
+      "seoTitle": "「Repair540」の店名の由来｜Repair540",
+      "seoDescription": "Repair540という店名に込めた想いと、世界共通のSOSハンドサイン「Signal For Help」と数字540のつながりをご紹介します。",
+      "keywords": "Repair540 店名 由来, Signal For Help, SOS ハンドサイン, 540 意味, スマホ修理 大分",
+      "content": "皆さんは、新しく始まった水谷豊さんと伊藤蘭さんの娘・趣里さん主演の「大空港」をご覧になられましたか？\n\nその中で、「助けて（SOS）」の意味を表す世界共通のハンドサイン「Signal For Help」が出てきました。\n\nこの手の形を数字で表すと、**5 → 4 → 0**となります。\n\n実は、この「5・4・0」が、当店 **Repair540** の店名の由来です。"
+    },
+    {
       "id": 20,
       "slug": "2026-07-25-iphone16-nfc-antenna-repair",
       "url": "blog/posts/2026-07-25-iphone16-nfc-antenna-repair.html",
