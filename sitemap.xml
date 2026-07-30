@@ -32,7 +32,7 @@
   </url>
   <url>
     <loc>https://caesar722.github.io/repair540-hp/blog.html</loc>
-    <lastmod>2026-07-26</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -111,6 +111,12 @@
   <url>
     <loc>https://caesar722.github.io/repair540-hp/post.html?id=19</loc>
     <lastmod>2026-07-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://caesar722.github.io/repair540-hp/blog/posts/2026-07-30-zte-libero-5g-iii-dock-connector-repair.html</loc>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
