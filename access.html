@@ -14,7 +14,7 @@
     // Official GA4 Measurement ID for Repair540.
     gtag('config', 'G-VB6TQCK198');
   </script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=store-info-202608">
 </head>
 <body>
 
@@ -54,7 +54,13 @@
 
 <div class="page-hero">
   <h1>アクセス</h1>
-  <p>大分県大分市都町 — 10:30〜19:00 不定休</p>
+  <div class="access-store-summary" aria-label="店舗の住所、営業時間、店休日">
+    <p class="access-store-line" data-store-info="addressShort">大分県大分市都町</p>
+    <p class="access-store-line" data-store-info="open">10:30〜19:00</p>
+    <p class="access-store-line" data-store-info="holiday">不定休</p>
+    <p class="access-holiday-title" data-store-info="holidayTitle">8月店休日</p>
+    <p class="access-holiday-dates store-holiday-dates" data-store-info="holidayDates">5日・6日・14日・15日・20日・21日・24日・28日・29日</p>
+  </div>
   <div class="breadcrumb">
     <a href="index.html">ホーム</a>
     <span>›</span>
@@ -104,7 +110,7 @@
             <span class="label">営業時間</span>
             <span class="val">
               <table class="hours-table">
-                <tr><td>月〜日</td><td>10:30〜19:00 <span class="badge-open">不定休</span></td></tr>
+                <tr><td>月〜日</td><td><span data-store-info="open">10:30〜19:00</span> <span class="badge-open" data-store-info="holiday">不定休</span></td></tr>
               </table>
               <small style="color:var(--text-sub);font-size:.78rem;display:block;margin-top:6px;">
                 ※年末年始・臨時休業は SNS にてお知らせします
@@ -196,7 +202,7 @@
         <h4>店舗情報</h4>
         <p><span class="icon">📍</span><a class="map-address-link" href="https://maps.google.com/?q=%E5%A4%A7%E5%88%86%E5%B8%82%E9%83%BD%E7%94%BA+Repair540" target="_blank" rel="noopener noreferrer" aria-label="Repair540の住所をGoogleマップで開く">〒870-0034 大分県大分市都町1丁目3-22<br> 大分都町ビル1F-1</a></p>
         <p><span class="icon">📞</span><a href="tel:07090900540" style="color:rgba(255,255,255,.6)">070-9090-0540</a></p>
-        <p><span class="icon">🕙</span>10:30〜19:00（不定休）</p>
+        <p><span class="icon">🕙</span><span data-store-info="open">10:30〜19:00</span>（<span data-store-info="holiday">不定休</span>）</p>
       </div>
     </div>
     <div class="footer-bottom"><p>&copy; 2026 Repair540. All rights reserved.</p></div>
@@ -208,6 +214,7 @@
   電話する
 </a>
 
+<script src="store-info.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

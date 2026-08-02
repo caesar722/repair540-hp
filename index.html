@@ -110,7 +110,7 @@
     ]
   }
   </script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=store-info-202608">
 
 <script type="application/ld+json">
 {
@@ -221,7 +221,7 @@
         <div class="phone-mockup">
           <div class="phone-emoji">📱</div>
           <div class="phone-label">最短即日<br>修理対応</div>
-          <div class="phone-sub">10:30〜19:00 不定休</div>
+          <div class="phone-sub"><span data-store-info="open">10:30〜19:00</span> <span data-store-info="holiday">不定休</span></div>
         </div>
       </div>
     </div>
@@ -454,7 +454,7 @@
         <a href="faq.html" class="btn btn-outline">よくある質問一覧を見る</a>
     </div>
 </section>
-<section class="holiday-section">
+<section class="holiday-section" id="store-hours">
 
     <h2 class="section-title">
         営業案内
@@ -463,16 +463,16 @@
     <div class="holiday-card">
 
         <div class="holiday-time">
-            🕒 10:30〜19:00
+            🕒 <span data-store-info="open">10:30〜19:00</span>
         </div>
 
-        <div class="holiday-text">
+        <div class="holiday-text" data-store-info="holiday">
             不定休
         </div>
 
         <div class="holiday-date">
-            <span>8月店休日</span><br>
-            5日・6日・14日・15日・20日・21日・24日・28日・29日
+            <span data-store-info="holidayTitle">8月店休日</span><br>
+            <span class="store-holiday-dates" data-store-info="holidayDates">5日・6日・14日・15日・20日・21日・24日・28日・29日</span>
         </div>
 
     </div>
@@ -545,7 +545,7 @@
         <h4>店舗情報</h4>
         <p><span class="icon">📍</span><a class="map-address-link" href="https://maps.google.com/?q=%E5%A4%A7%E5%88%86%E5%B8%82%E9%83%BD%E7%94%BA+Repair540" target="_blank" rel="noopener noreferrer" aria-label="Repair540の住所をGoogleマップで開く">〒870-0034 大分県大分市都町1丁目3-22<br> 大分都町ビル1F-1</a></p>
         <p><span class="icon">📞</span><a href="tel:07090900540" style="color:rgba(255,255,255,.6)">070-9090-0540</a></p>
-        <p><span class="icon">🕙</span>10:30〜19:00（不定休）</p>
+        <p><span class="icon">🕙</span><span data-store-info="open">10:30〜19:00</span>（<span data-store-info="holiday">不定休</span>）</p>
         <p><span class="icon">✉️</span><a href="contact.html" style="color:rgba(255,255,255,.6)">お問い合わせフォーム</a></p>
       </div>
     </div>
@@ -561,6 +561,7 @@
   電話する
 </a>
 
+<script src="store-info.js"></script>
 <script src="main.js"></script>
 <script>
 document.querySelectorAll('.faq-question').forEach(button => {

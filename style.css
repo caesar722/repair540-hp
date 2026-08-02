@@ -467,6 +467,40 @@ ul { list-style: none; }
 .breadcrumb a { color: rgba(255,255,255,.55); }
 .breadcrumb a:hover { color: #fff; }
 
+.access-store-summary {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+.page-hero .access-store-line,
+.page-hero .access-holiday-title,
+.page-hero .access-holiday-dates {
+  max-width: none;
+  margin: 0;
+}
+.page-hero .access-store-line {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+.page-hero .access-store-line + .access-store-line { margin-top: 4px; }
+.page-hero .access-holiday-title {
+  margin-top: 16px;
+  color: #0A84FF;
+  font-weight: 700;
+}
+.page-hero .access-holiday-dates {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+  color: rgba(255,255,255,.82);
+  font-weight: 600;
+  line-height: 1.8;
+  text-align: center;
+  overflow-wrap: normal;
+}
+.store-holiday-date-item { white-space: nowrap; }
+
 /* ── Card ─────────────────────────────── */
 .card {
   background: #fff; border-radius: var(--radius);
@@ -1121,4 +1155,34 @@ select.form-control {
 
 .holiday-date span {
     font-size: 18px;
+}
+
+.holiday-date .store-holiday-dates {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+    font-size: inherit;
+}
+
+@media (max-width: 480px) {
+    .access-store-summary { width: 100%; }
+    .page-hero .access-store-line { font-size: .95rem; }
+    .page-hero .access-holiday-title { font-size: 1rem; }
+    .page-hero .access-holiday-dates {
+        font-size: .9rem;
+        padding: 0 2px;
+    }
+    .holiday-card { padding: 32px 18px; }
+    .holiday-time { font-size: clamp(22px, 7.2vw, 28px); white-space: nowrap; }
+    .holiday-text { white-space: nowrap; }
+    .holiday-date { overflow-wrap: normal; }
+    .footer-brand,
+    .footer-col,
+    .footer-brand .site-logo,
+    .footer-brand .site-logo > span {
+        min-width: 0;
+        max-width: 100%;
+    }
+    .footer-brand .site-logo { white-space: normal; }
 }
