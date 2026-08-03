@@ -193,6 +193,17 @@
 
 <div class="header-spacer"></div>
 
+<!-- NEWSバー：ページ末尾の newsText / newsLink だけで内容を更新できます -->
+<aside class="news-bar" aria-label="お知らせ">
+  <a class="news-bar-link" id="news-bar-link" href="#">
+    <span class="news-label" aria-hidden="true">NEWS</span>
+    <span class="news-marquee">
+      <span class="news-track" id="news-track"></span>
+    </span>
+    <span class="news-arrow" aria-hidden="true">›</span>
+  </a>
+</aside>
+
 <!-- ═══ HERO ══════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="container">
@@ -564,6 +575,27 @@
 <script src="store-info.js"></script>
 <script src="main.js"></script>
 <script>
+// NEWSバーは、以下の文章とリンク先を書き換えるだけで更新できます。
+const newsText = "サマーバッテリー交換キャンペーン実施中！";
+const newsLink = "https://repair540-summer-battery.caesar722.chatgpt.site";
+
+const newsBarLink = document.getElementById('news-bar-link');
+const newsTrack = document.getElementById('news-track');
+
+if (newsBarLink && newsTrack) {
+    newsBarLink.href = newsLink;
+    newsBarLink.setAttribute('aria-label', `${newsText} 詳細を見る`);
+
+    // 同じ文を2つ並べ、途切れず自然にループさせます。
+    [false, true].forEach(isDuplicate => {
+        const item = document.createElement('span');
+        item.className = 'news-text';
+        item.textContent = newsText;
+        if (isDuplicate) item.setAttribute('aria-hidden', 'true');
+        newsTrack.appendChild(item);
+    });
+}
+
 document.querySelectorAll('.faq-question').forEach(button => {
     button.addEventListener('click', () => {
         const faqItem = button.parentElement;
