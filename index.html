@@ -575,25 +575,55 @@
 <script src="store-info.js"></script>
 <script src="main.js"></script>
 <script>
-// NEWSバーは、以下の文章とリンク先を書き換えるだけで更新できます。
-const newsText = "サマーバッテリー交換キャンペーン実施中！";
-const newsLink = "https://repair540-summer-battery.caesar722.chatgpt.site";
+// 通常のNEWS内容は期間限定表示の終了後にも再利用します。
+const regularNews = {
+    text: "サマーバッテリー交換キャンペーン実施中！",
+    link: "https://repair540-summer-battery.caesar722.chatgpt.site"
+};
+const temporaryNews = {
+    text: "8月16日は都合によりお休みします。",
+    // 2026年8月17日 0:00（JST）＝ 2026年8月16日 15:00（UTC）
+    endsAt: Date.parse("2026-08-16T15:00:00Z")
+};
 
 const newsBarLink = document.getElementById('news-bar-link');
 const newsTrack = document.getElementById('news-track');
 
 if (newsBarLink && newsTrack) {
-    newsBarLink.href = newsLink;
-    newsBarLink.setAttribute('aria-label', `${newsText} 詳細を見る`);
+    const newsArrow = newsBarLink.querySelector('.news-arrow');
 
-    // 同じ文を2つ並べ、途切れず自然にループさせます。
-    [false, true].forEach(isDuplicate => {
-        const item = document.createElement('span');
-        item.className = 'news-text';
-        item.textContent = newsText;
-        if (isDuplicate) item.setAttribute('aria-hidden', 'true');
-        newsTrack.appendChild(item);
-    });
+    function renderNews() {
+        const isTemporary = Date.now() < temporaryNews.endsAt;
+        const news = isTemporary ? temporaryNews : regularNews;
+
+        newsTrack.replaceChildren();
+        newsBarLink.setAttribute('aria-label', isTemporary ? news.text : `${news.text} 詳細を見る`);
+
+        if (isTemporary) {
+            newsBarLink.removeAttribute('href');
+            if (newsArrow) newsArrow.hidden = true;
+        } else {
+            newsBarLink.href = news.link;
+            if (newsArrow) newsArrow.hidden = false;
+        }
+
+        // 同じ文を2つ並べ、途切れず自然にループさせます。
+        [false, true].forEach(isDuplicate => {
+            const item = document.createElement('span');
+            item.className = 'news-text';
+            item.textContent = news.text;
+            if (isDuplicate) item.setAttribute('aria-hidden', 'true');
+            newsTrack.appendChild(item);
+        });
+    }
+
+    renderNews();
+
+    // ページを開いたまま日付が変わった場合も、JST 0:00に通常表示へ戻します。
+    const timeUntilRegularNews = temporaryNews.endsAt - Date.now();
+    if (timeUntilRegularNews > 0) {
+        window.setTimeout(renderNews, timeUntilRegularNews);
+    }
 }
 
 document.querySelectorAll('.faq-question').forEach(button => {
