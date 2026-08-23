@@ -952,6 +952,8 @@ select.form-control {
 .mail-fee strong { display: block; color: var(--primary); }
 .mail-cta { margin-top: 38px; padding: 32px 24px; text-align: center; border-radius: var(--radius); background: #eef7ff; }
 .mail-cta p { margin: 8px 0 18px; }
+.mail-cta .btn-line { gap: 10px; }
+.mail-line-logo { display: block; width: 28px; height: auto; flex: 0 0 auto; }
 
 /* ── Contact ─────────────────────────── */
 .contact-grid {
@@ -1012,6 +1014,7 @@ select.form-control {
   .services-grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
   .mail-flow { grid-template-columns: 1fr 1fr; }
+  .mail-line-logo { width: 40px; }
   .footer-grid { grid-template-columns: 1fr; }
   .tab-btn { font-size: .875rem; padding: 8px 14px; }
 }
@@ -1081,7 +1084,7 @@ select.form-control {
   .mail-flow li { min-height: 0; padding: 16px 14px 16px 52px; }
   .mail-flow li::before { top: 15px; }
   .mail-fee-grid { grid-template-columns: 1fr; }
-  .mail-cta .btn { width: 100%; }
+  .mail-cta .btn { width: 100%; padding-right: 16px; padding-left: 16px; }
 }
 /* FAQ Section */
 .faq-section {
