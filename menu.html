@@ -63,6 +63,19 @@
     .gen-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border); background: white; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all .2s; color: var(--text); font-family: inherit; }
     .gen-btn.active, .gen-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
+    .series-links { margin-bottom: 28px; }
+    .mail-guide { margin-bottom: 24px; padding: 16px 18px; border: 1px solid #b9d9f7; border-left: 4px solid var(--primary); border-radius: var(--radius); background: #f2f8ff; }
+    .mail-guide h2 { margin-bottom: 5px; color: var(--primary); font-size: 1.02rem; }
+    .mail-guide p { color: var(--text-sub); font-size: .88rem; line-height: 1.7; }
+    .mail-guide a { display: inline-block; margin-top: 7px; color: var(--primary); font-size: .88rem; font-weight: 700; text-decoration: none; }
+    .series-links h2 { font-size: 1.1rem; margin-bottom: 12px; }
+    .series-card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .series-card { display: block; background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 12px; color: var(--text); text-align: center; text-decoration: none; font-weight: 700; box-shadow: var(--shadow); transition: transform .2s, border-color .2s; }
+    .series-card:hover { transform: translateY(-2px); border-color: var(--primary); color: var(--primary); }
+    .series-card span { display: block; color: var(--primary); font-size: .8rem; font-weight: 500; margin-top: 3px; }
+    @media (max-width: 700px) { .series-card-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 380px) { .series-card-grid { grid-template-columns: 1fr; } }
+
     .price-section { display: none; }
     .price-section.active { display: block; }
 
@@ -143,6 +156,7 @@
     <nav>
       <a href="index.html">ホーム</a>
       <a href="menu.html">修理メニュー</a>
+      <a href="mail-in-repair.html">郵送修理</a>
       <a href="blog.html">ブログ</a>
       <a href="access.html">アクセス</a>
       <a href="contact.html">お問い合わせ</a>
@@ -153,6 +167,7 @@
 <div class="mobile-nav">
   <a href="index.html">ホーム</a>
   <a href="menu.html">修理メニュー・料金表</a>
+  <a href="mail-in-repair.html">📦 郵送修理</a>
   <a href="blog.html">ブログ</a>
   <a href="access.html">アクセス</a>
   <a href="contact.html">お問い合わせ</a>
@@ -162,7 +177,7 @@
 <section class="page-hero">
   <p class="breadcrumb"><a href="index.html">ホーム</a> › 修理メニュー・料金表</p>
   <h1>修理メニュー・料金表</h1>
-  <p>税込・作業工賃込み表示。修理前に必ずお見積もりをご提示します。</p>
+  <p>税込・作業工賃込み表示。郵送修理も同額です。修理前に必ずお見積もりをご提示します。</p>
 </section>
 
 <div class="notice">
