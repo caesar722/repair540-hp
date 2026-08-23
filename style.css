@@ -929,6 +929,30 @@ select.form-control {
 }
 .map-links { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
 
+/* ── Mail-in repair service ─────────── */
+.mail-repair-promo { padding: 28px 0 0; background: #fff; }
+.mail-repair-card { display: block; max-width: 900px; margin: 0 auto; padding: 22px 26px; border: 1px solid #b9d9f7; border-left: 5px solid var(--primary); border-radius: var(--radius); background: #f2f8ff; color: var(--text); text-decoration: none; box-shadow: 0 5px 18px rgba(0,113,227,.08); transition: transform .2s, box-shadow .2s; }
+.mail-repair-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,113,227,.14); }
+.mail-repair-card h2 { margin-bottom: 7px; color: var(--primary); font-size: 1.25rem; }
+.mail-repair-card p { color: var(--text-sub); line-height: 1.75; }
+.mail-repair-card .mail-repair-link { display: inline-block; margin-top: 9px; color: var(--primary); font-weight: 700; }
+.mail-service { width: 100%; max-width: 860px; min-width: 0; margin: 0 auto; }
+.mail-intro { font-size: 1.04rem; line-height: 1.95; }
+.mail-intro, .mail-section { min-width: 0; overflow-wrap: anywhere; }
+.mail-intro strong { display: block; margin-bottom: 12px; color: var(--primary); font-size: 1.28rem; line-height: 1.55; overflow-wrap: anywhere; }
+.mail-section { margin-top: 34px; padding: 28px; border: 1px solid var(--border); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); }
+.mail-section h2 { margin-bottom: 14px; color: var(--primary); font-size: 1.3rem; }
+.mail-section p { line-height: 1.85; }
+.mail-list { margin: 14px 0 0; padding-left: 1.4rem; line-height: 1.85; }
+.mail-flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; list-style: none; counter-reset: flow; }
+.mail-flow li { position: relative; min-height: 112px; padding: 46px 15px 16px; border-radius: 10px; background: var(--bg-alt); line-height: 1.6; counter-increment: flow; }
+.mail-flow li::before { content: counter(flow); position: absolute; top: 12px; left: 15px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 700; }
+.mail-fee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.mail-fee { padding: 16px; border-radius: 10px; background: var(--bg-alt); }
+.mail-fee strong { display: block; color: var(--primary); }
+.mail-cta { margin-top: 38px; padding: 32px 24px; text-align: center; border-radius: var(--radius); background: #eef7ff; }
+.mail-cta p { margin: 8px 0 18px; }
+
 /* ── Contact ─────────────────────────── */
 .contact-grid {
   display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px;
@@ -976,6 +1000,7 @@ select.form-control {
 
 @media (max-width: 768px) {
   :root { --header-h: 56px; }
+  .header-inner { width: 100%; }
   .site-nav, .btn-line-sm { display: none; }
   .hamburger { display: flex; }
   .section { padding: 52px 0; }
@@ -986,6 +1011,7 @@ select.form-control {
   .campaign-banner-link { border-radius: 14px; }
   .services-grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
+  .mail-flow { grid-template-columns: 1fr 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .tab-btn { font-size: .875rem; padding: 8px 14px; }
 }
@@ -1047,6 +1073,15 @@ select.form-control {
     flex-basis: 100%;
   }
   .float-line { bottom: 16px; right: 16px; padding: 11px 16px; font-size: .875rem; }
+  .mail-repair-promo { padding-top: 20px; }
+  .mail-repair-card { padding: 19px 18px; }
+  .mail-repair-card h2 { font-size: 1.12rem; }
+  .mail-section { margin-top: 22px; padding: 22px 18px; }
+  .mail-flow { grid-template-columns: 1fr; gap: 9px; }
+  .mail-flow li { min-height: 0; padding: 16px 14px 16px 52px; }
+  .mail-flow li::before { top: 15px; }
+  .mail-fee-grid { grid-template-columns: 1fr; }
+  .mail-cta .btn { width: 100%; }
 }
 /* FAQ Section */
 .faq-section {
