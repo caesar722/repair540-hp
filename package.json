@@ -1,0 +1,8 @@
+{
+  "name": "repair540-hp",
+  "private": true,
+  "scripts": {
+    "cleanup": "node scripts/cleanup-rejected-apple-newsroom-drafts.mjs",
+    "test": "node --test scripts/*.test.mjs amazon-order-line-notification/*.test.mjs"
+  }
+}

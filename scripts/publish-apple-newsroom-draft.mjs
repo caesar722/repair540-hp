@@ -5,6 +5,7 @@ import path from 'node:path';
 import process from 'node:process';
 import {
   collectActionableDraftEntries,
+  extractDraftTitleDetails,
   resolveDraftSelection,
   upsertMetaContent
 } from './apple-newsroom-draft-utils.mjs';
@@ -212,7 +213,11 @@ async function main() {
     throw new Error('posts.json does not contain a posts array.');
   }
 
-  const title = decodeHtmlEntities(extractMatch(draftHtml, /<h1 class="draft-title">([\s\S]*?)<\/h1>/i, 'draft title'));
+  const titleDetails = extractDraftTitleDetails(draftHtml, resolvedDraftFile);
+  if (!titleDetails.title || titleDetails.source === 'filename') {
+    throw new Error('Cannot publish a draft without a title extracted from its content.');
+  }
+  const title = titleDetails.title;
   const excerpt = extractMetaContent(draftHtml, 'description');
   const sourceUrl = extractMetaContent(draftHtml, 'draft-source-url');
   const sourceDate = extractMetaContent(draftHtml, 'draft-source-date') || parseDateFromFileName(resolvedDraftFile);

@@ -26,11 +26,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test cleanup behavior
+        run: npm test
 
       - name: Remove stale drafts
-        run: node scripts/cleanup-rejected-apple-newsroom-drafts.mjs
+        id: cleanup
+        run: npm run cleanup
 
       - name: Rebuild draft index
+        if: steps.cleanup.outputs.removed != '0'
         run: node scripts/build-apple-newsroom-drafts-index.mjs
 
       - name: Commit cleanup changes
@@ -42,7 +51,7 @@ jobs:
           git add blog/posts
 
           if git diff --cached --quiet; then
-            echo "No cleanup changes were staged."
+            echo "No cleanup changes to commit."
             exit 0
           fi
 

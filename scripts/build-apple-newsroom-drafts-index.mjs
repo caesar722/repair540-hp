@@ -45,12 +45,10 @@ function renderLinks(entry) {
 
 function renderSelectionBadge(selectionNumber) {
   if (!selectionNumber) return '';
-  return `
-            <div class="draft-selection-card">
+  return `          <div class="draft-selection-card">
               <div class="draft-cell-label">選択番号</div>
               <div class="draft-selection-number">${selectionNumber}</div>
-            </div>
-  `;
+            </div>`;
 }
 
 function renderRows(entries, selectionNumbers) {
@@ -63,7 +61,7 @@ function renderRows(entries, selectionNumbers) {
         <div class="draft-cell draft-cell-title">
           <div class="draft-cell-label">記事タイトル</div>
           <h2>${escapeHtml(entry.title)}</h2>
-          ${renderSelectionBadge(selectionNumbers.get(entry.relativePath))}
+${renderSelectionBadge(selectionNumbers.get(entry.relativePath))}
           <div class="draft-links">${renderLinks(entry)}</div>
         </div>
         <div class="draft-cell">
@@ -78,8 +76,7 @@ function renderRows(entries, selectionNumbers) {
           <div class="draft-cell-label">公開状態</div>
           <div class="draft-status-badge status-${escapeHtml(entry.status)}">${escapeHtml(getStatusLabel(entry.status))}</div>
         </div>
-      </article>
-  `).join('\n');
+      </article>`).join('\n');
 }
 
 function buildHtml(entries, actionableEntries) {
@@ -173,6 +170,15 @@ async function main() {
   const actionableEntries = await collectActionableDraftEntries();
   const html = buildHtml(entries, actionableEntries);
   await fs.mkdir(path.dirname(DRAFT_INDEX_HTML_FILE), { recursive: true });
+  try {
+    const currentHtml = await fs.readFile(DRAFT_INDEX_HTML_FILE, 'utf8');
+    if (currentHtml === html) {
+      console.log(`Draft index unchanged: ${DRAFT_INDEX_HTML_FILE}`);
+      return;
+    }
+  } catch (error) {
+    if (error && error.code !== 'ENOENT') throw error;
+  }
   await fs.writeFile(DRAFT_INDEX_HTML_FILE, html, 'utf8');
   console.log(`Updated draft index: ${DRAFT_INDEX_HTML_FILE}`);
 }
