@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": 24,
+      "slug": "2026-08-27-iphone-14-pro-max-recovery-mode-update",
+      "url": "blog/posts/2026-08-27-iphone-14-pro-max-recovery-mode-update.html",
+      "title": "バックアップ中の不具合改善",
+      "date": "2026-08-27",
+      "category": "修理事例",
+      "emoji": "📱",
+      "thumbImage": "assets/blog/iphone-14-pro-max-recovery-mode.jpg",
+      "thumbAlt": "リカバリーモードになったiPhone 14 Pro Max",
+      "ogImage": "assets/blog/iphone-14-pro-max-recovery-mode.jpg",
+      "excerpt": "バックアップ中のエラーでリカバリーモードになったiPhone 14 Pro Maxを、データを消去せずアップデートで改善しました。",
+      "seoTitle": "バックアップ中の不具合改善｜iPhone 14 Pro Max修理事例｜Repair540",
+      "seoDescription": "バックアップ中のエラーでリカバリーモードになったiPhone 14 Pro Maxを、データを消去せず約20分のアップデート作業で改善した修理事例です。",
+      "keywords": "iPhone 14 Pro Max リカバリーモード, iPhone バックアップ エラー, データアップデート, iPhone 修理 大分, Repair540",
+      "content": "パソコンへiPhoneのデータをバックアップ中にエラーが発生し、リカバリーモードのままになってしまったiPhone 14 Pro Maxをお預かりしました。\n\n![リカバリーモードになったiPhone 14 Pro Max](assets/blog/iphone-14-pro-max-recovery-mode.jpg)\n\n当店のMacBookに接続してアップデートを行ったところ、データを消去することなく無事に改善しました。\n\nお客様は出張で大分にいらしており、ホテルでバックアップをされていたとのことでした。\nホテルのWi-Fiなど通信環境が不安定だったことが、エラーの原因の一つだった可能性も考えられます。\n\n大切なデータが消えることなく、無事に通常通り使える状態に戻って良かったです。\n\n## 修理内容\n\n・機種：iPhone 14 Pro Max\n・修理内容：データアップデート\n・所要時間：約20分\n・修理代金：3,300円（税込）"
+    },
+    {
       "id": 23,
       "slug": "2026-08-21-mail-in-repair-service",
       "url": "blog/posts/2026-08-21-mail-in-repair-service.html",
