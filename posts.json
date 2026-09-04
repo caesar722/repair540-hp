@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": 25,
+      "slug": "2026-09-01-iphone11-water-damage-touch-panel",
+      "url": "blog/posts/2026-09-01-iphone11-water-damage-touch-panel.html",
+      "title": "iPhone11 水没によるタッチパネル不良",
+      "date": "2026-09-01",
+      "category": "修理事例",
+      "emoji": "💧",
+      "thumbImage": "assets/blog/iphone11-water-damage-touch-panel.jpg",
+      "thumbAlt": "iPhoneは使用できませんと表示されたiPhone11",
+      "ogImage": "assets/blog/iphone11-water-damage-touch-panel.jpg",
+      "excerpt": "水没後に画面が映らなくなったiPhone11を、水没処置と液晶パネル交換でデータを初期化せずに修理しました。",
+      "seoTitle": "iPhone11 水没によるタッチパネル不良｜修理事例｜Repair540",
+      "seoDescription": "水没後に画面が映らなくなったiPhone11を内部クリーニング・乾燥と液晶パネル交換で修理。ゴーストタッチによるパスコード誤入力も疑われましたが、データを初期化せず復旧できた事例です。",
+      "keywords": "iPhone11 水没修理, iPhone11 タッチパネル不良, ゴーストタッチ, 液晶パネル交換, iPhone 修理 大分, Repair540",
+      "content": "今回は、前日に水没して動かなくなったiPhone11の修理をお受けしました。\n\nまず本体を開いて内部をクリーニングし、しっかり乾燥させてから組み立てました。\n\nすると液晶パネルは真っ暗なままでしたが、どうやら本体の電源自体は入っているようです。\n\nそこで液晶パネルを交換して確認したところ、画面に\n\n「iPhoneは使用できません　1時間後にやり直してください」\n\nと表示されました。\n\n![iPhoneは使用できませんと表示されたiPhone11](assets/blog/iphone11-water-damage-touch-panel.jpg)\n\n※掲載している参照画像は「1分後にやり直してください」と表示されているものです。\n\nこれは、水没したあともiPhoneの電源が入ったままで、画面は真っ暗でもタッチパネル自体は反応しており、パスコードが何度も誤入力されていたためと考えられます。\n\n今回はすでにパスコードを9回間違えた状態でした。あと1回間違えてしまうと、状況によっては初期化が必要になる可能性もありました。\n\n水没によるタッチパネルの故障で、勝手に画面が操作される「ゴーストタッチ」が起きていた可能性もあります。\n\nとにかく今回は、大切なデータを初期化せずに済んで良かったです。\n\n水没したiPhoneは、画面が映らなくても内部では電源が入っていたり、タッチ操作が反応していたりする場合があります。\n\n水没した場合は、可能であれば電源を切り、なるべく早く修理店へお持ちいただくことをおすすめします。\n\n## 修理内容\n\n・機種：iPhone11\n・修理内容：水没処置＋液晶パネル交換\n・所要時間：3時間以上\n・修理代金：3,300円＋8,500円＝11,800円（税込）"
+    },
+    {
       "id": 24,
       "slug": "2026-08-27-iphone-14-pro-max-recovery-mode-update",
       "url": "blog/posts/2026-08-27-iphone-14-pro-max-recovery-mode-update.html",
