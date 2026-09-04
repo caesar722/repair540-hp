@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": 26,
+      "slug": "2026-09-03-android-to-iphone-data-transfer",
+      "url": "blog/posts/2026-09-03-android-to-iphone-data-transfer.html",
+      "title": "AndroidからiPhoneへデータ移行",
+      "date": "2026-09-03",
+      "category": "修理事例",
+      "emoji": "📲",
+      "thumbImage": "assets/blog/android-to-iphone-data-transfer.jpg",
+      "thumbAlt": "AndroidからiPhoneへデータを移行する画面",
+      "ogImage": "assets/blog/android-to-iphone-data-transfer.jpg",
+      "excerpt": "画面が割れて操作できないAndroidを修理し、中古iPhoneへ電話帳や写真などのデータを移行しました。",
+      "seoTitle": "AndroidからiPhoneへデータ移行｜修理事例｜Repair540",
+      "seoDescription": "画面が割れて操作できないAndroidを修理し、中古iPhoneへ電話帳や写真などのデータを移行したRepair540の修理事例です。",
+      "keywords": "Android iPhone データ移行, iOSに移行, Android 画面修理, スマホ データ移行 大分, Repair540",
+      "content": "画面が割れて操作できなくなったAndroidを修理し、中古iPhoneへのデータ移行まで完了しました。\n\n## AndroidからiPhoneへのデータ移行は「iOSに移行」が便利\n\nAppleの「iOSに移行」アプリを使うと、連絡先や写真などを移行できます。\n\n## 修理情報\n\n・機種：Android → iPhone\n・修理内容：データ移行\n・所要時間：約1時間（パーツ取り寄せ・画面修理時間を除く）\n・修理代金：3,300円（税込）"
+    },
+    {
       "id": 25,
       "slug": "2026-09-01-iphone11-water-damage-touch-panel",
       "url": "blog/posts/2026-09-01-iphone11-water-damage-touch-panel.html",
