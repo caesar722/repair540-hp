@@ -174,6 +174,7 @@ async function loadPrices() {
 
   try {
     const res  = await fetch('prices.json');
+    if (!res.ok) throw new Error(`料金データの取得に失敗しました（HTTP ${res.status}）`);
     const data = await res.json();
 
     const tabNav    = document.getElementById('tab-nav');
@@ -263,12 +264,19 @@ async function loadPosts() {
 
   try {
     const res  = await fetch('posts.json');
+    if (!res.ok) throw new Error(`記事データの取得に失敗しました（HTTP ${res.status}）`);
     const data = await res.json();
+    if (!data || !Array.isArray(data.posts)) throw new Error('記事データの形式が正しくありません');
     const limit = parseInt(grid.dataset.limit || '', 10);
     const posts = data.posts
       .slice()
       .sort((a, b) => new Date(b.date) - new Date(a.date));
     const visiblePosts = Number.isFinite(limit) ? posts.slice(0, limit) : posts;
+
+    if (visiblePosts.length === 0) {
+      grid.innerHTML = '<p>現在、記事はありません。</p>';
+      return;
+    }
 
     grid.innerHTML = visiblePosts.map(post => {
       const date = new Date(post.date).toLocaleDateString('ja-JP', {
@@ -295,7 +303,8 @@ async function loadPosts() {
         </article>`;
     }).join('');
   } catch (e) {
-    grid.innerHTML = '<p>記事の読み込みに失敗しました。</p>';
+    console.error('ブログ記事の読み込みに失敗しました:', e);
+    grid.innerHTML = '<p>記事の読み込みに失敗しました。時間をおいてページを再読み込みしてください。</p>';
   }
 }
 
