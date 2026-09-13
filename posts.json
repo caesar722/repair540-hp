@@ -1,6 +1,20 @@
 {
   "posts": [
     {
+      "id": 27,
+      "slug": "2026-09-13-iphone18-siri-ai",
+      "url": "blog/posts/2026-09-13-iphone18-siri-ai.html",
+      "title": "iPhone18シリーズ発表とSiri AI",
+      "date": "2026-09-13",
+      "category": "コラム",
+      "emoji": "🤖",
+      "excerpt": "iPhone18シリーズで注目されるSiri AIとApple Intelligenceの主な対応機種、日本語対応時期、買い替えの考え方をご紹介します。",
+      "seoTitle": "iPhone18シリーズ発表とSiri AI｜Repair540",
+      "seoDescription": "iPhone18シリーズで注目されるSiri AIとApple Intelligenceの主な対応機種、日本語対応時期、買い替えの考え方をご紹介します。",
+      "keywords": "iPhone18, Siri AI, Apple Intelligence, 対応機種, 中古iPhone, Repair540",
+      "content": "新しいiPhone 18シリーズが発表されました。Apple Intelligenceを活用したSiri AIの対応機種や日本語対応時期、買い替えの考え方をご紹介します。"
+    },
+    {
       "id": 26,
       "slug": "2026-09-03-android-to-iphone-data-transfer",
       "url": "blog/posts/2026-09-03-android-to-iphone-data-transfer.html",
