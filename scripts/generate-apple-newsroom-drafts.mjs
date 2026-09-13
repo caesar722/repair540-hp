@@ -482,7 +482,7 @@ function buildDraftFileContent(entry, article) {
     .map((paragraph) => {
       if (paragraph.startsWith('ニュース元：\n')) {
         const url = paragraph.split('\n').slice(1).join('\n').trim();
-        return `<div class="draft-source-box"><h2>ニュース元</h2><p><a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(url)}</a></p><p>内容を確認後、公開してください。</p></div>`;
+        return `<div class="draft-source-box"><h2>ニュース元</h2><p><a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(url)}</a></p></div>`;
       }
       return `<p>${escapeHtml(paragraph)}</p>`;
     })
@@ -511,8 +511,6 @@ function buildDraftFileContent(entry, article) {
     .draft-meta { display: flex; flex-wrap: wrap; gap: 10px 18px; color: var(--text-sub); font-size: .95rem; margin-bottom: 24px; }
     .draft-lead { font-size: 1rem; line-height: 1.9; color: var(--text); }
     .draft-lead p { margin-bottom: 1.15em; }
-    .draft-note { margin-top: 28px; padding: 18px 20px; border-left: 4px solid var(--primary); background: #f7fbff; border-radius: 12px; }
-    .draft-note p { margin: 0; color: var(--text-sub); }
     .draft-source-box { margin-top: 28px; padding: 20px; border: 1px solid var(--border); border-radius: 14px; background: #fafcff; }
     .draft-source-box h2 { font-size: 1rem; margin-bottom: 10px; }
     .draft-source-box p { margin-bottom: .75em; }
@@ -536,9 +534,6 @@ function buildDraftFileContent(entry, article) {
       </div>
       <div class="draft-lead">
         ${renderedBody}
-      </div>
-      <div class="draft-note">
-        <p>このファイルは自動生成された下書きです。Repair540向けの表現や補足を確認したうえで、GitHub Actions の <code>Publish Apple Newsroom Draft</code> を実行してください。ブログの投稿日は公開時点の日付で自動設定されます。</p>
       </div>
     </article>
   </main>
