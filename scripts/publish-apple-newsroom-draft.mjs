@@ -111,9 +111,12 @@ function parseDateFromFileName(filePath) {
 }
 
 function buildDraftContent(html, sourceUrl) {
-  const leadHtml = extractMatch(
+  const legacyLeadMatch = html.match(
+    /<div class="draft-lead">\s*([\s\S]*?)\s*<\/div>\s*<div class="draft-note">/i
+  );
+  const leadHtml = legacyLeadMatch?.[1]?.trim() || extractMatch(
     html,
-    /<div class="draft-lead">\s*([\s\S]*?)\s*<\/div>\s*<div class="draft-note">/i,
+    /<div class="draft-lead">\s*([\s\S]*)\s*<\/div>\s*<\/article>/i,
     'draft body'
   );
 
