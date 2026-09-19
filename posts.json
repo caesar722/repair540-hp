@@ -1,6 +1,20 @@
 {
   "posts": [
     {
+      "id": 28,
+      "slug": "2026-09-19-iphone-battery-replacement",
+      "url": "blog/posts/2026-09-19-iphone-battery-replacement.html",
+      "title": "iPhoneのバッテリー交換について",
+      "date": "2026-09-19",
+      "category": "コラム",
+      "emoji": "🔋",
+      "excerpt": "iPhoneのバッテリー交換先の選び方、互換バッテリーの品質や注意点、iPhone 15以降の充電サイクル数をご紹介します。",
+      "seoTitle": "iPhoneのバッテリー交換について｜Repair540",
+      "seoDescription": "iPhoneのバッテリー交換は正規店と非正規店のどちらがよい？交換先の選び方、互換バッテリーの品質、iPhone 15以降の充電サイクル数を解説します。",
+      "keywords": "iPhone バッテリー交換, 正規店, 非正規修理店, 互換バッテリー, 大分市, Repair540",
+      "content": "iPhoneのバッテリー交換について、正規店と非正規修理店の選び方、互換バッテリーの品質や注意点、交換後も減りが早い場合の原因、機種ごとの充電サイクル数をご紹介します。"
+    },
+    {
       "id": 27,
       "slug": "2026-09-13-iphone18-siri-ai",
       "url": "blog/posts/2026-09-13-iphone18-siri-ai.html",
