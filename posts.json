@@ -1,6 +1,20 @@
 {
   "posts": [
     {
+      "id": 29,
+      "slug": "2026-09-21-iphone11-pro-logic-board-repair",
+      "url": "blog/posts/2026-09-21-iphone11-pro-logic-board-repair.html",
+      "title": "基板修理について ～突然電源が入らなくなったiPhone 11 Pro～",
+      "date": "2026-09-21",
+      "category": "修理事例",
+      "emoji": "🔧",
+      "excerpt": "突然電源が入らなくなったiPhone 11 Proを診断し、基板修理専門業者へ依頼。データ復旧の結果とバックアップの大切さをご紹介します。",
+      "seoTitle": "基板修理について｜突然電源が入らなくなったiPhone 11 Pro｜Repair540",
+      "seoDescription": "突然電源が入らなくなったiPhone 11 Proの基板修理事例です。バッテリー交換では改善せず、基板修理専門業者で診断。基板修理やデータ復旧、バックアップの大切さをご案内します。",
+      "keywords": "iPhone 11 Pro 基板修理, iPhone 電源が入らない, iPhone データ復旧, iPhone 修理 大分, Repair540",
+      "content": "突然電源が入らなくなったiPhone 11 Proを診断し、基板修理専門業者へ依頼した修理事例です。故障状態によって修理やデータの取り出しができない場合があることと、定期的なバックアップの大切さをご案内します。"
+    },
+    {
       "id": 28,
       "slug": "2026-09-19-iphone-battery-replacement",
       "url": "blog/posts/2026-09-19-iphone-battery-replacement.html",
