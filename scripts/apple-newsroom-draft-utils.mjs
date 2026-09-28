@@ -86,94 +86,38 @@ function extractMetaAttributeContent(html, attributeName, attributeValue) {
   return '';
 }
 
-function extractFrontMatterTitle(html) {
-  const frontMatter = String(html).match(/^\uFEFF?[ \t]*---[ \t]*\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/);
-  if (!frontMatter) return '';
-
-  const titleLine = frontMatter[1].match(/^[ \t]*title[ \t]*:[ \t]*(.*)$/im);
-  if (!titleLine) return '';
-
-  let title = titleLine[1].trim();
-  if (
-    (title.startsWith('"') && title.endsWith('"')) ||
-    (title.startsWith("'") && title.endsWith("'"))
-  ) {
-    title = title.slice(1, -1);
-  }
-  return cleanExtractedTitle(title);
-}
-
-function extractDataAttributeTitle(html) {
-  for (const match of String(html).matchAll(/<(?:article|main|header|h1)\b[^>]*>/gi)) {
-    const attributes = parseTagAttributes(match[0]);
-    for (const attributeName of ['data-draft-title', 'data-post-title', 'data-title', 'data-headline']) {
-      const title = cleanExtractedTitle(attributes.get(attributeName) || '');
-      if (title) return title;
-    }
-  }
-  return '';
-}
-
-function cleanDocumentTitle(value) {
-  return cleanExtractedTitle(value)
-    .replace(/\s*[｜|]\s*Repair540(?:\s+下書き)?\s*$/i, '')
-    .trim();
-}
-
-function inferTitleFromFilename(filePath) {
-  const basename = path.basename(String(filePath), path.extname(String(filePath)));
-  const slug = basename.replace(/^\d{4}-\d{2}-\d{2}-/, '').trim();
-  if (!slug || !/[a-z0-9\u3040-\u30ff\u3400-\u9fff]/i.test(slug)) return '';
-  let decodedSlug = slug;
+function isAppleNewsroomUrl(value) {
   try {
-    decodedSlug = decodeURIComponent(slug);
+    const url = new URL(value);
+    return (
+      url.protocol === 'https:' &&
+      ['apple.com', 'www.apple.com'].includes(url.hostname.toLowerCase()) &&
+      /^\/(?:[a-z]{2}\/)?newsroom\//i.test(url.pathname)
+    );
   } catch {
-    // Keep the original slug when it contains malformed percent escapes.
+    return false;
   }
-  return normalizeTitle(decodedSlug.replace(/[-_]+/g, ' '));
 }
 
-export function extractDraftTitleDetails(html, filePath = '') {
+export function isAppleNewsroomDraftHtml(html) {
+  const draftType = extractMetaContent(html, 'draft-type').toLowerCase();
+  if (draftType === 'apple-newsroom') return true;
+
+  return isAppleNewsroomUrl(extractMetaContent(html, 'draft-source-url'));
+}
+
+export function extractDraftTitleDetails(html) {
   const source = String(html);
-  const frontMatterTitle = extractFrontMatterTitle(source);
-  if (frontMatterTitle) return { title: frontMatterTitle, source: 'frontmatter' };
-
-  const dataAttributeTitle = extractDataAttributeTitle(source);
-  if (dataAttributeTitle) return { title: dataAttributeTitle, source: 'data-attribute' };
-
-  const h1Matches = [...source.matchAll(/<h1\b([^>]*)>([\s\S]*?)<\/h1\s*>/gi)];
-  const preferredH1 = h1Matches.find((match) => {
+  for (const match of source.matchAll(/<h1\b([^>]*)>([\s\S]*?)<\/h1\s*>/gi)) {
     const attributes = parseTagAttributes(match[1]);
-    const titleHint = `${attributes.get('class') || ''} ${attributes.get('id') || ''}`;
-    return /\b(?:draft-|post-)?(?:title|headline)\b/i.test(titleHint);
-  });
-
-  for (const h1 of preferredH1 ? [preferredH1, ...h1Matches.filter((match) => match !== preferredH1)] : h1Matches) {
-    const title = cleanExtractedTitle(h1[2]);
-    if (title) return { title, source: 'h1' };
+    const classes = String(attributes.get('class') || '').split(/\s+/);
+    if (!classes.includes('draft-title')) continue;
+    const title = cleanExtractedTitle(match[2]);
+    if (title) return { title, source: 'h1.draft-title' };
   }
 
-  const documentTitle = source.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i);
-  if (documentTitle) {
-    const title = cleanDocumentTitle(documentTitle[1]);
-    if (title) return { title, source: 'title' };
-  }
-
-  const openGraphTitle = extractMetaAttributeContent(source, 'property', 'og:title');
-  if (openGraphTitle) return { title: cleanDocumentTitle(openGraphTitle), source: 'og:title' };
-
-  const twitterTitle = extractMetaAttributeContent(source, 'name', 'twitter:title');
-  if (twitterTitle) return { title: cleanDocumentTitle(twitterTitle), source: 'twitter:title' };
-
-  const body = source.match(/<body\b[^>]*>([\s\S]*?)<\/body\s*>/i)?.[1] || source;
-  const firstHeading = body.match(/<(h[2-6])\b[^>]*>([\s\S]*?)<\/\1\s*>/i);
-  if (firstHeading) {
-    const title = cleanExtractedTitle(firstHeading[2]);
-    if (title) return { title, source: 'heading' };
-  }
-
-  const filenameTitle = inferTitleFromFilename(filePath);
-  if (filenameTitle) return { title: filenameTitle, source: 'filename' };
+  const metaTitle = extractMetaContent(source, 'draft-title');
+  if (metaTitle) return { title: cleanExtractedTitle(metaTitle), source: 'meta.draft-title' };
 
   return { title: '', source: '' };
 }
@@ -183,7 +127,10 @@ export function tryExtractDraftTitle(html, filePath = '') {
 }
 
 export function extractDraftTitle(html, filePath = '') {
-  return tryExtractDraftTitle(html, filePath) || 'Unknown Title';
+  const title = tryExtractDraftTitle(html, filePath);
+  if (title) return title;
+  const location = filePath ? `: ${relativeDraftPath(filePath)}` : '';
+  throw new Error(`Failed to extract Apple Newsroom draft title from draft HTML${location}.`);
 }
 
 export function buildDraftUrl(relativePath) {
@@ -336,12 +283,9 @@ export async function collectDraftEntries() {
         if (!dirEntry.isFile() || !isDraftHtmlFilename(dirEntry.name)) continue;
         const filePath = path.join(directory, dirEntry.name);
         try {
+          const html = await fs.readFile(filePath, 'utf8');
+          if (!isAppleNewsroomDraftHtml(html)) continue;
           const draftEntry = await readDraftEntry(filePath, byDraftFile);
-          const isManagedDraft = (
-            ['draft', 'published', 'rejected'].includes(draftEntry.declaredStatus) &&
-            /^https:\/\/(?:www\.)?apple\.com\/(?:[a-z]{2}\/)?newsroom\//i.test(draftEntry.sourceUrl)
-          );
-          if (!isManagedDraft) continue;
           if (!draftEntry.titleFound) {
             console.warn(`[WARN] Draft index skipped: ${draftEntry.relativePath}`);
             console.warn('Reason: draft title could not be extracted');

@@ -8,6 +8,7 @@ import {
   BLOG_POSTS_DIR,
   REJECTED_DRAFTS_DIR,
   getTokyoTodayIso,
+  isAppleNewsroomDraftHtml,
   isDraftHtmlFilename,
   readDraftEntry,
   readPostsMap
@@ -184,6 +185,11 @@ export async function runCleanup({ dryRun = false } = {}) {
       const relativePath = path.relative(process.cwd(), filePath).replace(/\\/g, '/');
 
       try {
+        const html = await fs.readFile(filePath, 'utf8');
+        if (!isAppleNewsroomDraftHtml(html)) {
+          infoSkipped(summary, relativePath, 'not an identified Apple Newsroom draft');
+          continue;
+        }
         const draftEntry = await readDraftEntry(filePath, byDraftFile);
         successfullyRead += 1;
         const decision = getDeletionDecision(draftEntry, today);

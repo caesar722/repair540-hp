@@ -496,6 +496,7 @@ function buildDraftFileContent(entry, article) {
   <title>${escapeHtml(blogTitle)}｜Repair540 下書き</title>
   <meta name="description" content="${escapeHtml(excerpt)}">
   <meta name="robots" content="noindex,nofollow">
+  <meta name="draft-type" content="apple-newsroom">
   <meta name="draft-status" content="draft">
   <meta name="draft-source" content="${escapeHtml(DEFAULT_SOURCE_NAME)}">
   <meta name="draft-source-url" content="${escapeHtml(entry.url)}">

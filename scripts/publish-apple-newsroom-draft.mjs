@@ -6,6 +6,7 @@ import process from 'node:process';
 import {
   collectActionableDraftEntries,
   extractDraftTitleDetails,
+  isAppleNewsroomDraftHtml,
   resolveDraftSelection,
   upsertMetaContent
 } from './apple-newsroom-draft-utils.mjs';
@@ -209,6 +210,9 @@ async function main() {
   const selectedDraft = await resolveDraft(options);
   const draftHtml = selectedDraft.html;
   const resolvedDraftFile = selectedDraft.filePath;
+  if (!isAppleNewsroomDraftHtml(draftHtml)) {
+    throw new Error('Selected file is not an identified Apple Newsroom draft.');
+  }
   const posts = JSON.parse(await fs.readFile(options.postsFile, 'utf8'));
   const sitemapXml = await fs.readFile(options.sitemapFile, 'utf8');
 

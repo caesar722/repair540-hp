@@ -122,12 +122,12 @@ test('continues after one malformed file and processes the next file', async (t)
   const malformed = await writeDraft(
     cwd,
     'blog/posts/malformed.html',
-    '<html><head><meta charset="Shift_JIS"></head><h1>壊れたHTML</h1>'
+    `<html><head><meta charset="Shift_JIS"><meta name="draft-source-url" content="${appleUrl}"></head><h1 class="draft-title">壊れたHTML</h1>`
   );
   const removable = await writeDraft(
     cwd,
     'blog/posts/2020-01-01-valid.html',
-    draftHtml({ title: '<h1>削除対象</h1>' })
+    draftHtml({ title: '<h1 class="draft-title featured">削除対象</h1>' })
   );
 
   const { stdout, stderr } = await runCleanup(cwd);
@@ -150,12 +150,12 @@ test('does not use similar titles for matching or delete the published file', as
   const published = await writeDraft(
     cwd,
     publishedRelativePath,
-    draftHtml({ title: '<h1>同じようなタイトル</h1>', status: 'published' })
+    draftHtml({ title: '<h1 id="x" class="draft-title">同じようなタイトル</h1>', status: 'published' })
   );
   const removable = await writeDraft(
     cwd,
     'blog/posts/2020-01-01-active.html',
-    draftHtml({ title: '<h1>同じようなタイトル</h1>' })
+    draftHtml({ title: '<h1 class="draft-title featured">同じようなタイトル</h1>' })
   );
 
   const { stdout } = await runCleanup(cwd);
@@ -163,6 +163,22 @@ test('does not use similar titles for matching or delete the published file', as
   assert.match(stdout, /Removed: 1/);
   await fs.access(published);
   await assert.rejects(fs.access(removable));
+});
+
+test('never sends a normal Repair540 blog post to deletion logic', async (t) => {
+  const cwd = await createWorkspace(t);
+  const relativePath = 'blog/posts/2020-01-01-normal-repair-post.html';
+  const filePath = await writeDraft(
+    cwd,
+    relativePath,
+    '<!doctype html><title>通常記事</title><h1>ブログ</h1><h1 class="post-title">修理事例</h1>'
+  );
+
+  const { stdout, stderr } = await runCleanup(cwd);
+  assert.match(stdout, /not an identified Apple Newsroom draft/);
+  assert.match(stdout, /Removed: 0/);
+  assert.equal(stderr, '');
+  await fs.access(filePath);
 });
 
 test('missing required directory is the only kind of fatal workspace error', async (t) => {
