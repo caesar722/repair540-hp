@@ -48,6 +48,7 @@ async function main() {
 
         const filePath = path.join(directory, entry.name);
         const draftEntry = await readDraftEntry(filePath, byDraftFile);
+        if (!draftEntry) continue; // 通常のブログ記事は削除対象外
 
         if (draftEntry.status === 'draft') {
           const generatedDate = draftEntry.generatedDate || parseDateFromFileName(filePath);

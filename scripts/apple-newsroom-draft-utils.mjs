@@ -142,10 +142,17 @@ export async function readPostsMap() {
   };
 }
 
+const DRAFT_TITLE_REGEX = /<h1 class="draft-title">([\s\S]*?)<\/h1>/i;
+
+export function isAppleNewsroomDraftHtml(html) {
+  return DRAFT_TITLE_REGEX.test(html);
+}
+
 export async function readDraftEntry(filePath, postsByDraftFile) {
   const html = await fs.readFile(filePath, 'utf8');
+  if (!isAppleNewsroomDraftHtml(html)) return null;
   const relativePath = relativeDraftPath(filePath);
-  const title = decodeHtmlEntities(extractMatch(html, /<h1 class="draft-title">([\s\S]*?)<\/h1>/i, 'draft title'));
+  const title = decodeHtmlEntities(extractMatch(html, DRAFT_TITLE_REGEX, 'draft title'));
   const sourceDate = extractMetaContent(html, 'draft-source-date') || parseDateFromFileName(filePath);
   const sourceUrl = extractMetaContent(html, 'draft-source-url');
   const generatedDate = extractMetaContent(html, 'draft-generated-date') || await getGitFirstTrackedDate(filePath) || sourceDate;
@@ -186,7 +193,8 @@ export async function collectDraftEntries() {
       for (const dirEntry of dirEntries) {
         if (!dirEntry.isFile() || !isDraftHtmlFilename(dirEntry.name)) continue;
         const filePath = path.join(directory, dirEntry.name);
-        entries.push(await readDraftEntry(filePath, byDraftFile));
+        const entry = await readDraftEntry(filePath, byDraftFile);
+        if (entry) entries.push(entry);
       }
     } catch (error) {
       if (error && error.code === 'ENOENT') continue;
