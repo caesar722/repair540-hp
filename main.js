@@ -167,96 +167,6 @@ function initTabs() {
   });
 }
 
-/* ── 料金表レンダリング（menu.html） ────── */
-async function loadPrices() {
-  const container = document.getElementById('prices-root');
-  if (!container) return;
-
-  try {
-    const res  = await fetch('prices.json');
-    if (!res.ok) throw new Error(`料金データの取得に失敗しました（HTTP ${res.status}）`);
-    const data = await res.json();
-
-    const tabNav    = document.getElementById('tab-nav');
-    const tabPanels = document.getElementById('tab-panels');
-
-    data.categories.forEach((cat, i) => {
-      /* タブボタン */
-      const btn = document.createElement('button');
-      btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
-      btn.dataset.tab = cat.id;
-      btn.textContent = cat.name;
-      tabNav.appendChild(btn);
-
-      /* パネル */
-      const panel = document.createElement('div');
-      panel.id = cat.id;
-      panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
-
-      if (cat.items) {
-        /* iPhone / 複数カラム */
-        panel.innerHTML = `
-          <div class="table-wrap">
-            <table class="price-table">
-              <thead><tr>${cat.columns.map(c => `<th>${c}</th>`).join('')}</tr></thead>
-              <tbody>
-                ${cat.items.map(it => `
-                  <tr>
-                    <td>${it.model}</td>
-                    <td><span class="price-num">¥${it.screen}</span></td>
-                    <td><span class="price-num">¥${it.battery}</span></td>
-                    <td><span class="price-num">¥${it.camera}</span></td>
-                    <td><span class="price-num">¥${it.charging}</span></td>
-                  </tr>`).join('')}
-              </tbody>
-            </table>
-          </div>
-          <p class="price-note">※ ${cat.note}</p>`;
-      } else if (cat.items_android) {
-        /* Android / 3カラム */
-        panel.innerHTML = `
-          <div class="table-wrap">
-            <table class="price-table">
-              <thead><tr>${cat.columns.map(c => `<th>${c}</th>`).join('')}</tr></thead>
-              <tbody>
-                ${cat.items_android.map(it => `
-                  <tr>
-                    <td>${it.model}</td>
-                    <td><span class="price-num">¥${it.screen}</span></td>
-                    <td><span class="price-num">¥${it.battery}</span></td>
-                    <td><span class="price-num">¥${it.charging}</span></td>
-                  </tr>`).join('')}
-              </tbody>
-            </table>
-          </div>
-          <p class="price-note">※ ${cat.note}</p>`;
-      } else if (cat.items_simple) {
-        /* その他 / シンプル2カラム */
-        panel.innerHTML = `
-          <div class="table-wrap">
-            <table class="price-table">
-              <thead><tr>${cat.columns.map(c => `<th>${c}</th>`).join('')}</tr></thead>
-              <tbody>
-                ${cat.items_simple.map(it => `
-                  <tr>
-                    <td>${it.service}</td>
-                    <td><span class="price-num">¥${it.price}</span></td>
-                  </tr>`).join('')}
-              </tbody>
-            </table>
-          </div>
-          <p class="price-note">※ ${cat.note}</p>`;
-      }
-
-      tabPanels.appendChild(panel);
-    });
-
-    initTabs();
-  } catch (e) {
-    container.innerHTML = '<p style="color:#FF3B30">料金データの読み込みに失敗しました。ページを更新してください。</p>';
-  }
-}
-
 /* ── ブログ記事レンダリング（blog.html） ─── */
 async function loadPosts() {
   const grid = document.getElementById('blog-grid');
@@ -311,6 +221,5 @@ async function loadPosts() {
 /* ── 初期化 ──────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   initAnalytics();
-  loadPrices();
   loadPosts();
 });
