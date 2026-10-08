@@ -1,6 +1,20 @@
 {
   "posts": [
     {
+      "id": 30,
+      "slug": "2026-10-07-iphone-se3-ghost-touch-repair",
+      "url": "blog/posts/2026-10-07-iphone-se3-ghost-touch-repair.html",
+      "title": "ゴーストタッチの修理（iPhone SE 第3世代）",
+      "date": "2026-10-07",
+      "category": "修理事例",
+      "emoji": "📱",
+      "excerpt": "画面が勝手に動くiPhone SE（第3世代）のゴーストタッチを、液晶パネル交換で約40分で改善しました。",
+      "seoTitle": "ゴーストタッチの修理（iPhone SE 第3世代）｜修理事例｜Repair540",
+      "seoDescription": "画面が勝手に動くゴーストタッチが発生したiPhone SE（第3世代）を、液晶パネル交換で約40分で修理したRepair540の事例です。",
+      "keywords": "iPhone SE 第3世代 ゴーストタッチ, iPhone SE3 画面修理, 液晶パネル交換, iPhone 修理 大分, Repair540",
+      "content": "画面に触れていないのに勝手にスクロールしたり、ホーム画面に戻ったりするiPhone SE（第3世代）のゴーストタッチを、液晶パネル交換で改善した修理事例です。"
+    },
+    {
       "id": 29,
       "slug": "2026-09-21-iphone11-pro-logic-board-repair",
       "url": "blog/posts/2026-09-21-iphone11-pro-logic-board-repair.html",
