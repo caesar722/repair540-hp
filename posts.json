@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": 31,
+      "slug": "2026-10-11-iphone15-back-panel-repair",
+      "url": "blog/posts/2026-10-11-iphone15-back-panel-repair.html",
+      "title": "iPhoneの背面修理について",
+      "date": "2026-10-11",
+      "category": "修理事例",
+      "emoji": "📱",
+      "thumbImage": "assets/blog/iphone15-back-panel-after.jpg",
+      "thumbAlt": "背面パネル交換後のブルーのiPhone 15",
+      "ogImage": "assets/blog/iphone15-back-panel-after.jpg",
+      "excerpt": "背面ガラスが大きく割れたブルーのiPhone 15を、背面パネル交換で約2時間できれいに修理しました。",
+      "seoTitle": "iPhoneの背面修理について｜iPhone 15背面パネル交換｜Repair540",
+      "seoDescription": "背面ガラスが大きく割れたブルーのiPhone 15を、背面パネル交換で約2時間で修理した大分市都町のRepair540の修理事例です。",
+      "keywords": "iPhone 15 背面修理, iPhone 背面ガラス割れ, 背面パネル交換, iPhone 修理 大分, Repair540",
+      "content": "背面ガラスが大きく割れ、細かいヒビが全体に広がったブルーのiPhone 15を、背面パネル交換で修理した事例です。作業は約2時間で完了しました。"
+    },
+    {
       "id": 30,
       "slug": "2026-10-07-iphone-se3-ghost-touch-repair",
       "url": "blog/posts/2026-10-07-iphone-se3-ghost-touch-repair.html",
