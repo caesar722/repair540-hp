@@ -1,0 +1,81 @@
+{
+  "categories": [
+    {
+      "id": "iphone",
+      "name": "iPhone修理",
+      "columns": ["機種", "画面修理", "バッテリー交換", "カメラ修理", "充電口修理"],
+      "items": [
+        { "model": "iPhone 16 Pro Max", "screen": "19,800", "battery": "9,800", "camera": "15,800", "charging": "10,800" },
+        { "model": "iPhone 16 Pro",     "screen": "18,800", "battery": "9,800", "camera": "14,800", "charging": "10,800" },
+        { "model": "iPhone 16 Plus",    "screen": "18,800", "battery": "8,800", "camera": "13,800", "charging": "9,800" },
+        { "model": "iPhone 16",         "screen": "16,800", "battery": "8,800", "camera": "13,800", "charging": "9,800" },
+        { "model": "iPhone 15 Pro Max", "screen": "18,800", "battery": "8,800", "camera": "14,800", "charging": "9,800" },
+        { "model": "iPhone 15 Pro",     "screen": "17,800", "battery": "8,800", "camera": "13,800", "charging": "9,800" },
+        { "model": "iPhone 15 Plus",    "screen": "17,800", "battery": "7,800", "camera": "12,800", "charging": "8,800" },
+        { "model": "iPhone 15",         "screen": "15,800", "battery": "7,800", "camera": "12,800", "charging": "8,800" },
+        { "model": "iPhone 14 Pro Max", "screen": "17,800", "battery": "7,800", "camera": "13,800", "charging": "9,800" },
+        { "model": "iPhone 14 Pro",     "screen": "16,800", "battery": "7,800", "camera": "12,800", "charging": "9,800" },
+        { "model": "iPhone 14 Plus",    "screen": "16,800", "battery": "6,800", "camera": "11,800", "charging": "8,800" },
+        { "model": "iPhone 14",         "screen": "14,800", "battery": "6,800", "camera": "11,800", "charging": "8,800" },
+        { "model": "iPhone 13 Pro Max", "screen": "16,800", "battery": "6,800", "camera": "12,800", "charging": "8,800" },
+        { "model": "iPhone 13 Pro",     "screen": "15,800", "battery": "6,800", "camera": "11,800", "charging": "8,800" },
+        { "model": "iPhone 13 mini",    "screen": "13,800", "battery": "5,800", "camera": "9,800",  "charging": "7,800" },
+        { "model": "iPhone 13",         "screen": "14,800", "battery": "5,800", "camera": "10,800", "charging": "7,800" },
+        { "model": "iPhone 12 Pro Max", "screen": "15,800", "battery": "5,800", "camera": "11,800", "charging": "7,800" },
+        { "model": "iPhone 12 Pro",     "screen": "14,800", "battery": "5,800", "camera": "10,800", "charging": "7,800" },
+        { "model": "iPhone 12 mini",    "screen": "12,800", "battery": "4,800", "camera": "8,800",  "charging": "6,800" },
+        { "model": "iPhone 12",         "screen": "13,800", "battery": "4,800", "camera": "9,800",  "charging": "6,800" },
+        { "model": "iPhone SE（第3世代）","screen": "9,800",  "battery": "4,800", "camera": "7,800",  "charging": "5,800" },
+        { "model": "iPhone SE（第2世代）","screen": "8,800",  "battery": "4,800", "camera": "6,800",  "charging": "5,800" },
+        { "model": "iPhone 11 Pro Max", "screen": "14,800", "battery": "4,800", "camera": "10,800", "charging": "7,800" },
+        { "model": "iPhone 11 Pro",     "screen": "13,800", "battery": "4,800", "camera": "9,800",  "charging": "7,800" },
+        { "model": "iPhone 11",         "screen": "12,800", "battery": "4,800", "camera": "8,800",  "charging": "6,800" },
+        { "model": "iPhone XS Max",     "screen": "13,800", "battery": "4,800", "camera": "9,800",  "charging": "6,800" },
+        { "model": "iPhone XS",         "screen": "12,800", "battery": "4,800", "camera": "8,800",  "charging": "6,800" },
+        { "model": "iPhone XR",         "screen": "11,800", "battery": "4,800", "camera": "7,800",  "charging": "5,800" },
+        { "model": "iPhone X",          "screen": "12,800", "battery": "4,800", "camera": "8,800",  "charging": "6,800" },
+        { "model": "iPhone 8 Plus",     "screen": "9,800",  "battery": "3,800", "camera": "6,800",  "charging": "4,800" },
+        { "model": "iPhone 8",          "screen": "8,800",  "battery": "3,800", "camera": "5,800",  "charging": "4,800" }
+      ],
+      "note": "記載の料金はすべて税込です。機種・損傷状態によって料金が異なる場合があります。詳しくはお問い合わせください。"
+    },
+    {
+      "id": "android",
+      "name": "Android修理",
+      "columns": ["機種", "画面修理", "バッテリー交換", "充電口修理"],
+      "items_android": [
+        { "model": "Galaxy S25 Ultra",  "screen": "24,800", "battery": "10,800", "charging": "11,800" },
+        { "model": "Galaxy S25+",       "screen": "22,800", "battery": "9,800",  "charging": "10,800" },
+        { "model": "Galaxy S25",        "screen": "20,800", "battery": "9,800",  "charging": "9,800" },
+        { "model": "Galaxy S24 Ultra",  "screen": "22,800", "battery": "9,800",  "charging": "10,800" },
+        { "model": "Galaxy S24+",       "screen": "20,800", "battery": "8,800",  "charging": "9,800" },
+        { "model": "Galaxy S24",        "screen": "18,800", "battery": "8,800",  "charging": "9,800" },
+        { "model": "Galaxy A55",        "screen": "14,800", "battery": "6,800",  "charging": "6,800" },
+        { "model": "Galaxy A35",        "screen": "12,800", "battery": "5,800",  "charging": "5,800" },
+        { "model": "Google Pixel 9 Pro","screen": "22,800", "battery": "9,800",  "charging": "10,800" },
+        { "model": "Google Pixel 9",    "screen": "18,800", "battery": "8,800",  "charging": "8,800" },
+        { "model": "Google Pixel 8 Pro","screen": "20,800", "battery": "8,800",  "charging": "9,800" },
+        { "model": "Google Pixel 8",    "screen": "16,800", "battery": "7,800",  "charging": "7,800" },
+        { "model": "Xperia 1 VI",       "screen": "22,800", "battery": "9,800",  "charging": "10,800" },
+        { "model": "Xperia 10 VI",      "screen": "14,800", "battery": "6,800",  "charging": "6,800" },
+        { "model": "AQUOS sense8",      "screen": "14,800", "battery": "5,800",  "charging": "5,800" },
+        { "model": "AQUOS wish4",       "screen": "12,800", "battery": "4,800",  "charging": "4,800" }
+      ],
+      "note": "Androidは機種によって対応できない場合があります。事前にお問い合わせください。記載のない機種もお気軽にご相談ください。"
+    },
+    {
+      "id": "other",
+      "name": "その他・オプション",
+      "items_simple": [
+        { "service": "iPad ガラス交換",             "price": "8,800〜" },
+        { "service": "iPad バッテリー交換",          "price": "6,800〜" },
+        { "service": "AirPods 修理",               "price": "3,800〜" },
+        { "service": "防水テープ貼り替え",            "price": "1,500〜" },
+        { "service": "ガラスフィルム貼り（iPhone）",  "price": "1,500〜" },
+        { "service": "データバックアップ",            "price": "3,300〜" },
+        { "service": "初期化・データ消去",            "price": "2,200〜" }
+      ],
+      "note": "記載のない修理もご相談ください。見積もりは無料です。"
+    }
+  ]
+}
