@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 
-const siteUrl = 'https://caesar722.github.io/repair540-hp/';
+const siteUrl = 'https://repair540.com/';
 const key = process.env.INDEXNOW_KEY?.trim();
 const before = process.env.BEFORE_SHA;
 const after = process.env.AFTER_SHA || 'HEAD';
@@ -35,7 +35,7 @@ const changedPaths = new Set(changedFiles.filter(file => file.endsWith('.html'))
 const urlList = submitAll
   ? sitemapUrls
   : sitemapUrls.filter(url => {
-      const path = decodeURI(new URL(url).pathname).replace('/repair540-hp/', '');
+      const path = decodeURI(new URL(url).pathname).replace(/^\/+/, '');
       return changedPaths.has(path) || (path === '' && changedPaths.has('index.html'));
     });
 
@@ -48,7 +48,7 @@ const response = await fetch('https://api.indexnow.org/indexnow', {
   method: 'POST',
   headers: { 'content-type': 'application/json; charset=utf-8' },
   body: JSON.stringify({
-    host: 'caesar722.github.io',
+    host: 'repair540.com',
     key,
     keyLocation: `${siteUrl}${key}.txt`,
     urlList

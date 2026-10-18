@@ -113,6 +113,19 @@ async function verifyPageAndAssets(pageUrl, options, failures, label) {
   if (!contentType.includes('text/html')) return;
 
   const html = await response.text();
+  if (label.startsWith('new ')) {
+    const canonicalMatch = html.match(/<link\s+[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i);
+    if (!canonicalMatch) {
+      failures.push(`${label}: canonical link is missing`);
+    } else {
+      const expectedCanonical = new URL(pageUrl);
+      expectedCanonical.search = '';
+      if (normalizeUrl(new URL(canonicalMatch[1], pageUrl)) !== normalizeUrl(expectedCanonical)) {
+        failures.push(`${label}: canonical is ${canonicalMatch[1]}, expected ${expectedCanonical}`);
+      }
+    }
+  }
+
   for (const assetUrl of localAssetUrls(html, pageUrl)) {
     let assetResponse;
     try {

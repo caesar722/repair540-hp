@@ -8,7 +8,7 @@ import { promisify } from 'node:util';
 
 const execFileAsync = promisify(execFile);
 
-export const SITE_BASE_URL = 'https://caesar722.github.io/repair540-hp/';
+export const SITE_BASE_URL = 'https://repair540.com/';
 export const BLOG_POSTS_DIR = path.resolve(process.cwd(), 'blog/posts');
 export const REJECTED_DRAFTS_DIR = path.join(BLOG_POSTS_DIR, 'rejected');
 export const POSTS_JSON_FILE = path.resolve(process.cwd(), 'posts.json');

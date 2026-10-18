@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 
-const DEFAULT_SITE_BASE_URL = 'https://caesar722.github.io/repair540-hp/';
+const DEFAULT_SITE_BASE_URL = 'https://repair540.com/';
 
 function parseArgs(argv) {
   const options = {

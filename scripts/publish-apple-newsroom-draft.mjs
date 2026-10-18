@@ -14,7 +14,7 @@ const DEFAULT_SITEMAP_FILE = path.resolve(process.cwd(), 'sitemap.xml');
 const DEFAULT_DRAFTS_DIR = path.resolve(process.cwd(), 'blog/posts');
 const DEFAULT_CATEGORY = 'コラム';
 const DEFAULT_EMOJI = '📰';
-const SITE_BASE_URL = 'https://caesar722.github.io/repair540-hp/';
+const SITE_BASE_URL = 'https://repair540.com/';
 
 function parseArgs(argv) {
   const options = {
