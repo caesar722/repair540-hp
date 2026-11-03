@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": 33,
+      "slug": "2026-11-03-galleria-takemachi-onico",
+      "url": "blog/posts/2026-11-03-galleria-takemachi-onico.html",
+      "title": "ガレリア竹町で発見！スマホ充電と無料Wi-Fiが使える「ONICO」",
+      "date": "2026-11-03",
+      "category": "コラム",
+      "emoji": "🔌",
+      "thumbImage": "assets/blog/galleria-takemachi-onico-20261103.jpg",
+      "thumbAlt": "ガレリア竹町に設置された、コンセントを思わせる形の充電ステーションONICO",
+      "ogImage": "assets/blog/galleria-takemachi-onico-20261103.jpg",
+      "excerpt": "通勤途中のガレリア竹町で、スマホ充電と無料Wi-Fiが使える「ONICO」を発見。街の便利さと防災につながる取り組みをご紹介します。",
+      "seoTitle": "ガレリア竹町で発見！スマホ充電と無料Wi-Fiが使える「ONICO」｜Repair540",
+      "seoDescription": "大分市のガレリア竹町で見つけたスマホ充電・無料Wi-Fiスポット「ONICO」を紹介。地元企業と芸短の協働によるアートと、災害時の充電支援につながる取り組みをお伝えします。",
+      "keywords": "ガレリア竹町, ONICO, 大分市 スマホ充電, 無料Wi-Fi, 鬼塚電気工事, Repair540",
+      "content": "大分市のガレリア竹町で見つけた、携帯電話の充電と無料Wi-Fiを利用できるスポット「ONICO」。地元企業と大分県立芸術文化短期大学などの協働による、街の便利さやにぎわい、防災につながる取り組みを紹介します。"
+    },
+    {
       "id": 32,
       "slug": "2026-11-03-smartphone-pc-security",
       "url": "blog/posts/2026-11-03-smartphone-pc-security.html",
