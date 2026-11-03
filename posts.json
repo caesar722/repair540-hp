@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": 32,
+      "slug": "2026-11-03-smartphone-pc-security",
+      "url": "blog/posts/2026-11-03-smartphone-pc-security.html",
+      "title": "スマホとパソコンを守るために。不正アクセス対策と、もしものときの対応",
+      "date": "2026-11-03",
+      "category": "コラム",
+      "emoji": "🔒",
+      "thumbImage": "assets/blog/smartphone-pc-security-20261103.jpg",
+      "thumbAlt": "スマホとパソコンを守る不正アクセス対策のブログ画像",
+      "ogImage": "assets/blog/smartphone-pc-security-20261103.jpg",
+      "excerpt": "偽メールへの注意、端末のアップデート、パスワード管理、バックアップなど、日頃の備えと被害が疑われるときの対応をまとめました。",
+      "seoTitle": "スマホとパソコンを守るために。不正アクセス対策と、もしものときの対応｜Repair540",
+      "seoDescription": "iPhone・Android・パソコンを守る不正アクセス対策を紹介。偽メールの見分け方、アップデート、パスワード管理、バックアップと、被害が疑われるときの対応をまとめました。",
+      "keywords": "不正アクセス対策, フィッシング対策, iPhone, Android, パソコン, 大分市, Repair540",
+      "content": "スマートフォンとパソコンの不正アクセス対策について、メールやSMSへの注意、アップデート、パスワードと多要素認証、バックアップ、被害が疑われるときの対応をご紹介します。"
+    },
+    {
       "id": 31,
       "slug": "2026-10-11-iphone15-back-panel-repair",
       "url": "blog/posts/2026-10-11-iphone15-back-panel-repair.html",
