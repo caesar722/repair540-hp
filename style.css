@@ -151,6 +151,8 @@ ul { list-style: none; }
   top: var(--header-h); left: 0; right: 0;
   background: var(--header-bg);
   z-index: 999;
+  max-height: calc(100dvh - var(--header-h));
+  overflow-y: auto;
   padding: 8px 0 20px;
   box-shadow: 0 8px 24px rgba(0,0,0,.3);
 }
@@ -1009,11 +1011,14 @@ select.form-control {
   .contact-grid { grid-template-columns: 1fr; }
 }
 
+@media (max-width: 1024px) {
+  .site-nav, .btn-line-sm { display: none; }
+  .hamburger { display: flex; }
+}
+
 @media (max-width: 768px) {
   :root { --header-h: 56px; }
   .header-inner { width: 100%; }
-  .site-nav, .btn-line-sm { display: none; }
-  .hamburger { display: flex; }
   .section { padding: 52px 0; }
   .section-title { font-size: 1.45rem; }
   .hero { padding: 64px 0 56px; }
@@ -1352,3 +1357,10 @@ select.form-control {
     }
     .footer-brand .site-logo { white-space: normal; }
 }
+
+.soudan-card { margin-top: 32px; }
+.soudan-content { padding-bottom: 56px; }
+.soudan-content .faq-cta { margin-top: 24px; }
+.soudan-content details { border-top: 1px solid var(--border); }
+.soudan-content summary { padding: 14px 0; font-weight: 700; cursor: pointer; }
+.soudan-content details p { padding-bottom: 16px; }
