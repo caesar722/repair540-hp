@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": 34,
+      "slug": "2026-11-07-iphone-lcd-oled-comparison",
+      "url": "blog/posts/2026-11-07-iphone-lcd-oled-comparison.html",
+      "title": "iPhoneの画面交換、LCDとOLEDの違いをご存じですか？",
+      "date": "2026-11-07",
+      "category": "コラム",
+      "emoji": "📱",
+      "thumbImage": "assets/blog/iphone-lcd-oled-comparison-20261107.png",
+      "thumbAlt": "iPhoneのLCD（液晶）とOLED（有機EL）の価格・色・黒の表現・消費電力・厚み・応答速度を比較した図",
+      "ogImage": "assets/blog/iphone-lcd-oled-comparison-20261107.png",
+      "excerpt": "LCDとOLEDの違いを、画質・価格・消費電力などで比較。交換時の注意点やOLEDの品質差、Repair540がおすすめする理由を解説します。",
+      "seoTitle": "iPhoneの画面交換、LCDとOLEDの違いをご存じですか？｜Repair540",
+      "seoDescription": "iPhoneの画面交換で迷うLCDとOLED（有機EL）の違いを、画質・価格・消費電力などで比較。OLED搭載機へのLCD互換パネル使用時の注意点や品質差を、大分市のRepair540が解説します。",
+      "keywords": "iPhone 画面交換, iPhone OLED LCD 違い, iPhone 液晶交換, iPhone 有機EL, iPhone修理 大分",
+      "content": "iPhoneの画面交換で迷うLCDとOLED（有機EL）の違いを、画質・価格・消費電力などで比較。OLED搭載機へのLCD互換パネル使用時の注意点や品質差を、大分市のRepair540が解説します。"
+    },
+    {
       "id": 33,
       "slug": "2026-11-03-galleria-takemachi-onico",
       "url": "blog/posts/2026-11-03-galleria-takemachi-onico.html",
