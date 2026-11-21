@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": 35,
+      "slug": "2026-11-21-iphone-digital-legacy",
+      "url": "blog/posts/2026-11-21-iphone-digital-legacy.html",
+      "title": "故人のiPhoneは初期化して使える？写真を残す「故人アカウント管理連絡先」の備え",
+      "date": "2026-11-21",
+      "category": "コラム",
+      "emoji": "📱",
+      "thumbImage": "assets/blog/iphone-digital-legacy-20261121.jpg",
+      "thumbAlt": "iPhoneの『故人アカウント管理連絡先』設定画面",
+      "ogImage": "assets/blog/iphone-digital-legacy-20261121.jpg",
+      "excerpt": "故人のiPhoneの再利用と、写真などのデータを残す手続きの違いを解説。アクティベーションロック、パスコード、故人アカウント管理連絡先の設定とアクセスキーの共有についてご紹介します。",
+      "seoTitle": "故人のiPhoneは初期化して使える？写真を残す「故人アカウント管理連絡先」の備え｜Repair540",
+      "seoDescription": "故人のiPhoneの再利用と、写真などのデータを残す手続きの違いを解説。アクティベーションロック、パスコード、故人アカウント管理連絡先の設定とアクセスキーの共有についてご紹介します。",
+      "keywords": "故人のiPhone, 故人アカウント管理連絡先, アクティベーションロック, iCloud 写真, デジタル遺産, Repair540",
+      "content": "故人のiPhoneの再利用と、写真などのデータを残す手続きの違いを解説。アクティベーションロック、パスコード、故人アカウント管理連絡先の設定とアクセスキーの共有についてご紹介します。"
+    },
+    {
       "id": 34,
       "slug": "2026-11-07-iphone-lcd-oled-comparison",
       "url": "blog/posts/2026-11-07-iphone-lcd-oled-comparison.html",
